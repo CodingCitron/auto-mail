@@ -1,12 +1,12 @@
-version: 3
+version: "3"
 services:
   react:
     build:
       context: ./frontend
-      dockerfile: dockerfile.dev
+      dockerfile: Dockerfile.dev
     ports:
       - "3000:4000"
     volumes:
       - /usr/src/app/node_modules
-      - ./:usr/src/app
+      - ./frontend:/usr/src/app
     stdin_open: true
