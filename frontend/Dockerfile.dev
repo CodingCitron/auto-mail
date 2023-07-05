@@ -1,4 +1,9 @@
-FROM node:alpine
+FROM node:18
+
+RUN cd home \
+    && mkdir /usr/src/app
+RUN chmod -R 777 /usr/src/app
+
 WORKDIR /usr/src/app
 COPY package.json ./
 RUN npm install
