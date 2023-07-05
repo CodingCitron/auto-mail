@@ -1,10 +1,10 @@
-FROM node:18 as builder
+FROM node:16 as builder
 
 RUN mkdir -p /usr/src/app
 RUN chmod -R 777 /usr/src/app
 
 WORKDIR /usr/src/app
-COPY package.json ./
+COPY package*.json ./
 RUN npm install
 COPY ./ ./
 CMD ["npm", "run", "build"]
