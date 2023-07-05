@@ -23,8 +23,14 @@ services:
     - ports: 포트 맵핑 [로컬 포트] : [컨테이너 포트]
     - volumes: 로컬 머신에 있는 파일들 맵핑
     - stdin_open: 리액트 앱을 종료할때 필요   
-
+ 
 ### 실행
 ```
-docker-compose up
+docker-compose up --build
 ```
+
+### 도커 리액트 앱 테스트
+```
+docker run -it [리액트 앱 이미지] npm run test
+```
+- 지금은 테스트가 없어서 안됨

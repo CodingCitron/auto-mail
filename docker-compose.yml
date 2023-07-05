@@ -10,3 +10,15 @@ services:
       - /usr/src/app/node_modules
       - ./frontend:/usr/src/app
     stdin_open: true
+
+  # test 파일이 없어서 안됨
+  # tests: 
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - "3000:4000"
+  #   volumes:
+  #     - /usr/src/app/node_modules
+  #     - ./frontend:/usr/src/app
+  #   command: ["npm", "run", "test"]
