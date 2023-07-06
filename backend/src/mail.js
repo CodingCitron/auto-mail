@@ -1,5 +1,7 @@
-const nodemailer = require('nodemailer')
-require('dotenv').config()
+import nodemailer from 'nodemailer'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const transporter = nodemailer.createTransport({
     // 사용하고자 하는 서비스

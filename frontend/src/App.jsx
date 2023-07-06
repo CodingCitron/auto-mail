@@ -1,12 +1,16 @@
 import './index.css'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 function App() {
   return (
     <>
-      <div className="text-3xl font-bold underline bg-red-200">
-        redasdfsaㄴㄹㄴㅇㅁㄹ
-        asdasda
-        asd
+      <div>
+        <Header />
+        <div>
+
+        </div>
+        <Footer />
       </div>
     </>
   )

@@ -4,8 +4,12 @@ RUN mkdir -p /usr/src/app
 RUN chmod -R 777 /usr/src/app
 
 WORKDIR /usr/src/app
+# ↓ 없으면 tailwindcss 에러 나옴 
+ENV PATH /usr/src/app/node_modules/.bin:$PATH  
+
 COPY package*.json ./
 RUN npm install
-RUN npx tailwindcss init -p
+
 COPY ./ ./
+
 CMD ["npm", "run", "dev"]
