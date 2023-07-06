@@ -1,7 +1,10 @@
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from "url"; 
 
-dotenv.config()
+const __dirname = fileURLToPath(new URL(".", import.meta.url))
+dotenv.config({ path: path.join(__dirname, '..', '.env') })
 
 const transporter = nodemailer.createTransport({
     // 사용하고자 하는 서비스
@@ -30,6 +33,20 @@ async function sendMail({ from, to, subject, html }) {
         console.log(error)
     }
 }
+
+// sendMail({
+//     from: `"test" <dummyoub@gmail.com>`,
+//     to: 'xectler@naver.com',
+//     subject: '테스트',
+//     html: '테스트'
+// })
+
+sendMail({
+    from: `"test" <dummyoub@gmail.com>`,
+    to: 'mojo@tpay.co.kr',
+    subject: '테스트',
+    html: '테스트'
+})
 
 export {
     transporter,

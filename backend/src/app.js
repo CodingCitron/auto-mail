@@ -3,8 +3,9 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import cookieParser from "cookie-parser"
 import morgan from "morgan"
-
+import { swaggerUi, specs } from "./swagger.js"
 import planRoutes from './routes/plan.js'
+import AppDataSource from "./data-source.js"
 
 dotenv.config()
 
@@ -22,7 +23,22 @@ app.use(express.static("public")) // public 폴더 사용
 
 const port = 5000
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }))
+
+/**
+ * @swagger
+ * tags:
+ *   name: plan
+ *   description: 계획 정보 관리
+ */
 app.use("/api/plan", planRoutes)
 
 app.get("/", (_, res) => res.send("running"))
-app.listen(port, () => console.log(`app listening on port ${port}`))
+
+app.listen(port, () => {
+    AppDataSource.initialize().then(async () => {
+        console.log("database initialized")
+    }).catch(error => console.log(error))
+    console.log(`app listening on port ${port}`)
+})
+

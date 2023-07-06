@@ -1,17 +1,12 @@
-import './index.css'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import BaseLayout from "./layouts/BaseLayout"
+import Calendar from "./components/Calendar"
 
 function App() {
   return (
     <>
-      <div>
-        <Header />
-        <div>
-
-        </div>
-        <Footer />
-      </div>
+      <BaseLayout>
+        <Calendar />
+      </BaseLayout>
     </>
   )
 }
