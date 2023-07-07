@@ -42,6 +42,12 @@ app.listen(port, async () => {
     // }).catch(error => console.log(error))
 
     console.log(`app listening on port ${port}`)
-    db.connectToPostgres()
+
+    try {
+        db.sequelize.sync()
+        console.log('sql connected')
+    } catch (error) {
+        console.log(error)
+    } 
 })
 

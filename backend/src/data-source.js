@@ -1,3 +1,5 @@
+// 사용 X
+
 // import "reflect-metadata"
 // import { DataSource } from "typeorm"
 import { Sequelize } from 'sequelize'
