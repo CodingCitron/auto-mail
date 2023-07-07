@@ -5,7 +5,8 @@ import cookieParser from "cookie-parser"
 import morgan from "morgan"
 import { swaggerUi, specs } from "./swagger.js"
 import planRoutes from './routes/plan.js'
-import AppDataSource from "./data-source.js"
+// import { connectToPostgres } from "./data-source.js"
+import db from "./models/index.js"
 
 dotenv.config()
 
@@ -35,10 +36,12 @@ app.use("/api/plan", planRoutes)
 
 app.get("/", (_, res) => res.send("running"))
 
-app.listen(port, () => {
-    AppDataSource.initialize().then(async () => {
-        console.log("database initialized")
-    }).catch(error => console.log(error))
+app.listen(port, async () => {
+    // AppDataSource.initialize().then(async () => {
+    //     console.log("database initialized")
+    // }).catch(error => console.log(error))
+
     console.log(`app listening on port ${port}`)
+    db.connectToPostgres()
 })
 
