@@ -4,11 +4,9 @@ import Footer from '../components/Footer'
 
 const BaseLayout = ({ children }) => {
   return (
-    <div>
+    <div className='base-layout'>
         <Header />
-        <main>
           { children }
-        </main>
         <Footer />
     </div>
   )

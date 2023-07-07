@@ -1,8 +1,13 @@
 import React from 'react'
+import BaseLayout from '../layouts/BaseLayout'
 
 const Login = () => {
   return (
-    <div>Login</div>
+    <BaseLayout>
+        <main className='flex-1'>
+            Login
+        </main>
+    </BaseLayout>
   )
 }
 
