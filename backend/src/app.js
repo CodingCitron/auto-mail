@@ -4,7 +4,9 @@ import cors from 'cors'
 import cookieParser from "cookie-parser"
 import morgan from "morgan"
 import { swaggerUi, specs } from "./swagger.js"
-import planRoutes from './routes/plan.js'
+import planRouter from './routes/plan.js'
+import userRouter from './routes/user.js'
+
 // import { connectToPostgres } from "./data-source.js"
 import db from "./models/index.js"
 
@@ -26,13 +28,18 @@ const port = 5000
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }))
 
+
+app.use("/api/user", userRouter)
+
 /**
  * @swagger
  * tags:
  *   name: plan
  *   description: 계획 정보 관리
  */
-app.use("/api/plan", planRoutes)
+app.use("/api/plan", planRouter)
+
+
 
 app.get("/", (_, res) => res.send("running"))
 
@@ -44,7 +51,7 @@ app.listen(port, async () => {
     console.log(`app listening on port ${port}`)
 
     try {
-        db.sequelize.sync()
+        await db.sequelize.sync()
         console.log('sql connected')
     } catch (error) {
         console.log(error)
