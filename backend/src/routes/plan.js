@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { isLoggedIn } from "../middlewares/auth";
+import { isLoggedIn } from "../middlewares/auth.js";
 
 const router = Router()
 

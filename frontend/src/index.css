@@ -30,9 +30,15 @@
 
 .header .inner-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
     margin: 0 auto;
+}
+
+.header .inner-header .right {
+    display: flex;
+    gap: 16px;
 }
 
 .header .inner-header,
@@ -108,4 +114,19 @@
 .pagination {
     display: flex;
     gap: 16px;
+}
+
+.btn {
+    text-decoration: none;
+    cursor: pointer;
+    transition: scale 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.9);
+}
+
+.input {
+    width: 100%;
+    border: 1px solid black;
 }

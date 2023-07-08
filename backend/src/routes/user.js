@@ -6,6 +6,26 @@ import { isLoggedIn, isNotLoggedIn } from "../middlewares/auth.js";
 
 const router = Router()
 
+router.get('/', async (req, res, next) => {
+    try {
+        if(req.user) {
+            const user = await User.findOne({
+                where: { id: req.user.id },
+                attibutes: {
+                    exclude: ['password']
+                }
+            })
+        
+            res.json(200).json(user)
+        } else {
+            res.status(200).json(null)
+        }
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
+})
+
 router.post('/login', isNotLoggedIn, (req, res, next) => {
     passport.authenticate('local', (serverError, user, clientError) => {
         if(serverError) { // 서버 에러

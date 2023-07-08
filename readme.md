@@ -1,5 +1,9 @@
+### 데이터베이스
+- postgres
+
 ### 백엔드 
-- express + typeorm + postgresql
+- express + sequelize
+- node schedule
 
 ### 프론트
 - react
@@ -17,5 +21,9 @@ docker-compose down -v
 - v: Compose 정의 파일의 데이터 볼륨을 삭제 
 - 수정 시 패키지의 변동이 일어났으면 -v 옵션을 사용하세요.
 
+### 이름없는 이미지 제거
+- docker rmi $(docker images -f "dangling=true" -q)
+
 ### 날짜를 선택하는 메뉴
 - 드랍다운 메뉴로 선택, 셀렉트 박스는 스타일이 자유롭지 않음
+

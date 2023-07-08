@@ -1,6 +1,9 @@
 import React, { useCallback, useState } from 'react'
 import Day from './Day'
 import Week from './Week'
+import Dropdown from './Dropdown'
+import PlanList from './PlanList'
+import PlanDetail from './PlanDetail'
 
 const Calendar = () => {
     const date = new Date()
@@ -8,18 +11,26 @@ const Calendar = () => {
 
     const [selectedYear, setSelectedYear] = useState(date.getFullYear()) 
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1)
-    const [selectedDate, setSelectedDate] = useState(date.getDate())
-    const [selectedDay, setSelectedDay] = useState(date.getDay())
 
     const dateTotalCount = new Date(selectedYear, selectedMonth, 0).getDate() // 선택된 연도, 달의 마지막 날짜
 
     const prevMonth = useCallback(() => {
-        console.log(date.getMonth() + 1)
-    }, [])
+        if(selectedMonth === 1) {
+            setSelectedMonth(12)
+            setSelectedYear(selectedYear - 1)
+        } else {
+            setSelectedMonth(selectedMonth - 1)
+        }
+    }, [selectedMonth])
 
     const nextMonth = useCallback(() => {
-        console.log(date.getMonth() + 1)
-    }, [])
+        if(selectedMonth === 12) {
+            setSelectedMonth(1)
+            setSelectedYear(selectedYear + 1)
+        } else {
+            setSelectedMonth(selectedMonth + 1)
+        }
+    }, [selectedMonth])
 
     const renderDay = useCallback(() => {
         const days = []
@@ -55,7 +66,7 @@ const Calendar = () => {
         }
 
         return days
-    }, [])
+    }, [selectedYear, selectedMonth, dateTotalCount])
 
     const renderWeek = useCallback(() => {
         return week.map(day => {
@@ -70,14 +81,15 @@ const Calendar = () => {
             <div className='title'>
                 <div>
                     날짜 선택 드랍다운 메뉴
+                    <Dropdown />
                 </div>
                 <div className='pagination'>
-                    <button onClick={prevMonth}>
+                    <button onClick={prevMonth} className='btn'>
                         <span className="material-icons">
                             navigate_before
                         </span>
                     </button>
-                    <button onClick={nextMonth}>
+                    <button onClick={nextMonth} className='btn'>
                         <span className="material-icons">
                             navigate_next
                         </span>
@@ -91,6 +103,10 @@ const Calendar = () => {
                 <div className='date'>
                     { renderDay() }
                 </div>
+            </div>
+            <div>
+                <PlanList />
+                <PlanDetail />
             </div>
         </div>
     </div>
