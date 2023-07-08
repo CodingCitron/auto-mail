@@ -1,12 +1,17 @@
 import { Router } from "express";
+import { isLoggedIn } from "../middlewares/auth";
 
 const router = Router()
 
-function getPlan(req, res) {
+async function getPlans(req, res, next) {
     console.log(req, res)
 }
 
-function createPlan () {
+async function planDetail(req, res, next) {
+    console.log(req, res)
+}
+
+async function createPlan (req, res, next) {
     console.log(req, res)
 }
 
@@ -31,7 +36,7 @@ function createPlan () {
  *                    users:
  *                      type: object
  */
-router.get('/', getPlan)
-router.post('/', createPlan)
+router.get('/', isLoggedIn, getPlans)
+router.post('/', isLoggedIn, createPlan)
 
 export default router

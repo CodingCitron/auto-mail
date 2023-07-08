@@ -4,9 +4,9 @@ import Config from '../config/config.json' assert { type: "json" };
 // console.log(Config)
 // 참조: https://hojung-testbench.tistory.com/entry/ExpressSequelize-MySQL%EA%B3%BC-Express%EC%97%B0%EA%B2%B0-ES6
 
-import User from './User.js';
-import Plan from './Plan.js';
-import Timer from './Timer.js';
+import UserModel from './User.js';
+import PlanModel from './Plan.js';
+import TimerModel from './Timer.js';
 
 const env = process.env.NODE_ENV || 'development';
 const config = Config[env];
@@ -29,9 +29,9 @@ const defaultOption = {
   collate: "utf8mb4_general_ci", // 한글 저장 utf8mb4_general_ci, utf8_general_ci
 }
 
-db.User = User(sequelize, Sequelize, defaultOption)
-db.Plan = Plan(sequelize, Sequelize, defaultOption)
-db.Timer = Timer(sequelize, Sequelize, defaultOption)
+db.User = UserModel(sequelize, Sequelize, defaultOption)
+db.Plan = PlanModel(sequelize, Sequelize, defaultOption)
+db.Timer = TimerModel(sequelize, Sequelize, defaultOption)
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
@@ -43,3 +43,4 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 export default db
+export const { User, Plan, Timer } = db
