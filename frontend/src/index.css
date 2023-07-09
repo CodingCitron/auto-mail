@@ -107,7 +107,7 @@
 }
 
 .day-background.today {
-    color: rgb(26, 26, 26);
+    color: rgb(30, 30, 30);
     font-weight: bold;
 }
 
@@ -129,4 +129,12 @@
 .input {
     width: 100%;
     border: 1px solid black;
+}
+
+.btn-normal {
+    display: block;
+    width: 100%;
+    background-color: rgb(30, 30, 30);
+    color: white;
+    text-align: center;
 }

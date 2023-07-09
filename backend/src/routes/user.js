@@ -6,17 +6,25 @@ import { isLoggedIn, isNotLoggedIn } from "../middlewares/auth.js";
 
 const router = Router()
 
+const mapError = (errors) => {
+    return errors.reduce((prev, err) => {
+        prev[err.property] = Object.entries(err.constraints)[0][1]
+
+        return prev
+    }, {})
+}
+
 router.get('/', async (req, res, next) => {
     try {
         if(req.user) {
             const user = await User.findOne({
                 where: { id: req.user.id },
-                attibutes: {
+                attributes: {
                     exclude: ['password']
                 }
             })
         
-            res.json(200).json(user)
+            res.status(200).json(user)
         } else {
             res.status(200).json(null)
         }
@@ -43,22 +51,36 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
                 return next(loginErr)
             }
 
-            delete user.password
-            return res.status(200).json(user)
+            return res.status(200).json({
+                id: user.id,
+                email: user.email
+            })
         })
     })(req, res, next)
 })
 
 router.post('/logout', isLoggedIn, async (req, res, next) => {
-    req.logout()
-    req.session.destroy()
-    res.send('logout')
+    req.logout((error) => {
+        if (error) return next(error)
+
+        req.session.destroy()
+        res.send('logout')
+    })
 })
 
 router.post('/register', isNotLoggedIn, async (req, res, next) => {
-    const { email, password } = req.body
+    const { email, password, confirmPassword } = req.body
+    const errors = {}
 
     try {
+        if(email.trim() === '') errors.email = '이메일이 입력되지 않았습니다.'
+        if(password.trim() === '') errors.password = '비밀번호가 입력되지 않았습니다.'
+        if(confirmPassword.trim() === '') errors.confirmPassword = '비밀번호 확인이 입력되지 않았습니다.'
+
+        if(password !== confirmPassword) {
+            errors.confirmPassword = '비밀번호가 일치하지 않습니다.' 
+        }
+
         const exUser = await User.findOne({
             where: {
                 email
@@ -68,7 +90,11 @@ router.post('/register', isNotLoggedIn, async (req, res, next) => {
         if(exUser) { 
             // 응답은 한번만 보내야 한다. 
             // 두번 보내면 에러
-            return res.status(403).send('이미 사용중인 아이디입니다.')
+            errors.email = '이미 해당 이메일 주소가 사용되었습니다.'
+        }
+
+        if(Object.keys(errors).length > 0) {
+            return res.status(400).json(errors)
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -82,6 +108,7 @@ router.post('/register', isNotLoggedIn, async (req, res, next) => {
     } catch (error) {
         console.error(error)
         next(error) // express가 브라우저로 error를 보내줌 next는 status 500
+        // return res.status(500).json({ error }) 
     }
 })
 

@@ -2,41 +2,68 @@ import React, { useCallback, useState } from 'react'
 import axios from 'axios'
 import { useAuthState } from '../context/auth'
 import InputGroup from '../components/InputGroup'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-const Register = () => {
+const Register = ({ authenticated, location }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [errors, setErrors] = useState({})
 
   const navigate = useNavigate()
 
-  const { authenticated } = useAuthState()
-  if(authenticated) navigate('/')
-
-  const onSubmit = useCallback((e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
-    registerAPI()
-    
-  }, [])
 
-  function registerAPI (data) {
-    return axios.post('/user/register', data)
+    try {
+      const res = await axios.post('/user/register', {
+        email,
+        password,
+        confirmPassword
+      })
+
+      // console.log(res)
+      navigate('/login')
+    } catch (error) {
+      console.error(error)
+      setErrors(error.response.data || {})
+    }
   }
+
+  const { from } = location?.state || { from: { pathname: '/' } }
+  if (authenticated) return <Redirect to={from} />
 
   return (
     <main className='mt-[16px] center flex-1 flex-col'>
       <div className='w-[400px]'>
-      <h3 className='w-full'>회원가입</h3>
+      <h3 className='w-full mb-3 font-semibold text-[18px]'>회원가입</h3>
         <form onSubmit={onSubmit}>
           <InputGroup
             className="mb-2" 
-            type="text" 
+            type="email" 
             value={email}
             setValue={setEmail} 
+            error={errors.email}
             placeholder="이메일" 
           />
-          <button>test</button>
+          <InputGroup
+            className="mb-2" 
+            type="password" 
+            value={password}
+            setValue={setPassword} 
+            error={errors.password}
+            placeholder="비밀번호" 
+          />
+          <InputGroup
+            className="mb-2" 
+            type="password" 
+            value={confirmPassword}
+            setValue={setConfirmPassword} 
+            error={errors.confirmPassword}
+            placeholder="비밀번호 확인" 
+          />
+          <button className='btn-normal mb-2 p-2'>가입하기</button>
+          <Link to='/'className='btn-normal p-2'>취소</Link>
         </form>
       </div>
     </main>

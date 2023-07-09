@@ -9,7 +9,7 @@ const StateContext = createContext({
 const DispatchContext = createContext(null)
 
 const reducer = (state, { type, payload }) => {
-    console.log(state, { type, payload })
+    // console.log(state, type, payload)
     switch(type) {
         case "LOGIN":
             return {

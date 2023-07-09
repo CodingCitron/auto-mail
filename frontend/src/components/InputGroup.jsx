@@ -3,7 +3,7 @@ const InputGroup = ({ className, type, placeholder, value, error, setValue }) =>
     <div className={className}>
       <input 
           type={type}
-          className='w-full'    
+          className='w-full p-2  border border-[#999]'    
           placeholder={placeholder}
           value={value}
           onChange={e => setValue(e.target.value)}
