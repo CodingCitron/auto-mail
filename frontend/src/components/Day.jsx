@@ -5,7 +5,7 @@ const Day = ({ value, day, today }) => {
     const className = isToday ? 'day-background today' : 'day-background'
 
     return (
-        <div className='relative'>
+        <div className='flex flex-col'>
             <div className={className}>
                 { value === 0 ? '' : value }
             </div>

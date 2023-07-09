@@ -1,11 +1,13 @@
 import BaseLayout from "./layouts/BaseLayout"
-import Calendar from "./components/Calendar"
-import Login from "./pages/Login"
-import Reigster from './pages/Register'
+
 import { Navigate, Route, Routes } from "react-router-dom"
 import { useAuthDispatch, useAuthState } from "./context/auth"
 import axios from "axios"
-import { useCallback, useEffect } from "react"
+import { useEffect } from "react"
+
+import Home from "./pages/Home"
+import Login from "./pages/Login"
+import Reigster from './pages/Register'
 
 function App() {
   const authDispacth = useAuthDispatch()
@@ -54,7 +56,7 @@ function App() {
         <Routes>
           <Route path="/" element={
             <PrivateRoute>
-              <Calendar />
+              <Home />
             </PrivateRoute>
           } />
           <Route 
@@ -69,8 +71,8 @@ function App() {
             path="/register" 
             element={
               <PublicRoute>
-              <Reigster />
-            </PublicRoute>
+                <Reigster />
+              </PublicRoute>
           } 
           />
         </Routes>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import Day from './Day'
 import Week from './Week'
 import Dropdown from './Dropdown'
@@ -11,8 +11,6 @@ const Calendar = () => {
 
     const [selectedYear, setSelectedYear] = useState(date.getFullYear()) 
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1)
-
-    const dateTotalCount = new Date(selectedYear, selectedMonth, 0).getDate() // 선택된 연도, 달의 마지막 날짜
 
     const prevMonth = useCallback(() => {
         if(selectedMonth === 1) {
@@ -32,41 +30,62 @@ const Calendar = () => {
         }
     }, [selectedMonth])
 
+    // 총 42개 렌더링 하는데 로직 변경 필요
     const renderDay = useCallback(() => {
         const days = []
-        let empty = 0
+        let nextId = 0
 
-        for (const today of week) {
-            const day = new Date(selectedYear, selectedMonth - 1, 1)
-            // console.log(date.toDateString())
-            // console.log(day.toDateString())
+        const day = new Date(selectedYear, selectedMonth - 1, 1)
+        
+        const prevDateCount = week.findIndex(w => w === week[day.getDay()])
+        const thisDateCount = new Date(selectedYear, selectedMonth, 0).getDate() // 선택된 연도, 달의 마지막 날짜
+        const nextDateCount = 42 - (prevDateCount + thisDateCount)
 
-            if(week[day.getDay()] === today) {
-                for(let i = 0; i < dateTotalCount; i++) {
-                    days.push(
-                        <Day 
-                            key={i + 1} 
-                            value={i + 1}
-                            today={date}
-                            day={new Date(selectedYear, selectedMonth - 1, 1 + i)}
-                        />
-                    )
-                }
-            } else {
-                days.push(
-                    <Day 
-                        key={empty} 
-                        value={0}
-                        today={date}
-                        day={new Date(selectedYear, selectedMonth - 1, 0 + empty)}
-                    />
-                )
-                empty--
-            }
+        for(let i = prevDateCount - 1; i >= 0; i--) {
+            const prevDate = new Date(selectedYear, selectedMonth - 1, 0 - i)
+
+            days.push(
+                <Day 
+                    key={nextId} 
+                    value={prevDate.getDate()}
+                    today={date}
+                    day={prevDate}
+                />
+            )
+            nextId += 1
         }
 
+        for(let i = 0; i < thisDateCount; i++) {
+            const thisDate = new Date(selectedYear, selectedMonth - 1, 1 + i)
+
+            days.push(
+                <Day 
+                    key={nextId} 
+                    value={thisDate.getDate()}
+                    today={date}
+                    day={thisDate}
+                />
+            ) 
+            nextId += 1
+        }
+
+        for(let i = 0; i < nextDateCount; i++) {
+            const nextDate = new Date(selectedYear, selectedMonth, i + 1)
+
+            days.push(
+                <Day 
+                    key={nextId} 
+                    value={nextDate.getDate()}
+                    today={date}
+                    day={nextDate}
+                />
+            ) 
+
+            nextId += 1
+        }
+        
         return days
-    }, [selectedYear, selectedMonth, dateTotalCount])
+    }, [selectedYear, selectedMonth])
 
     const renderWeek = useCallback(() => {
         return week.map(day => {

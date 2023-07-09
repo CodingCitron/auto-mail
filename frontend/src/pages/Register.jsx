@@ -1,10 +1,9 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
-import { useAuthState } from '../context/auth'
 import InputGroup from '../components/InputGroup'
 import { Link, useNavigate } from 'react-router-dom'
 
-const Register = ({ authenticated, location }) => {
+const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -29,9 +28,6 @@ const Register = ({ authenticated, location }) => {
       setErrors(error.response.data || {})
     }
   }
-
-  const { from } = location?.state || { from: { pathname: '/' } }
-  if (authenticated) return <Redirect to={from} />
 
   return (
     <main className='mt-[16px] center flex-1 flex-col'>
