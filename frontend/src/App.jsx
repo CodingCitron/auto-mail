@@ -1,20 +1,42 @@
 import BaseLayout from "./layouts/BaseLayout"
 import Calendar from "./components/Calendar"
-import PlanList from "./components/PlanList"
-import PlanDetail from "./components/PlanDetail"
-import Axios from 'axios'
-
-Axios.defaults.baseURL = 'http://localhost:5000/api'
-Axios.defaults.withCredentials = true
+import Login from "./pages/Login"
+import Reigster from './pages/Register'
+import { Route, Routes } from "react-router-dom"
+import { useAuthDispatch } from "./context/auth"
+import axios from "axios"
 
 function App() {
+  const authDispacth = useAuthDispatch()
+
+  async function loadUser() {
+    try {
+        const res = await axios.get("/user")
+
+        if(res.data) {
+          authDispacth("LOGIN", res.data)
+        }
+    } catch (error) {
+        console.log(error)
+    } finally {
+      authDispacth("STOP_LOADING")
+    }
+  }
+
+  loadUser() 
+
   return (
     <>
       <BaseLayout>
-        <Calendar />
+        <Routes>
+          <Route path="/" element={<Calendar />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Reigster />} />
+        </Routes>
       </BaseLayout>
     </>
   )
 }
 
 export default App
+{/* <Calendar /> */}

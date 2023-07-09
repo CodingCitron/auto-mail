@@ -1,8 +1,17 @@
-import React from 'react'
-
-const InputGroup = () => {
+const InputGroup = ({ className, type, placeholder, value, error, setValue }) => {
   return (
-    <div>InputGroup</div>
+    <div className={className}>
+      <input 
+          type={type}
+          className='w-full'    
+          placeholder={placeholder}
+          value={value}
+          onChange={e => setValue(e.target.value)}
+      />
+      <small className='fopt-medium text-red-500'>
+          {error}
+      </small>
+  </div>
   )
 }
 
