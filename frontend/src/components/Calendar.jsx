@@ -1,16 +1,15 @@
 import React, { useCallback, useRef, useState } from 'react'
 import Day from './Day'
 import Week from './Week'
-import Dropdown from './Dropdown'
-import PlanList from './PlanList'
-import PlanDetail from './PlanDetail'
+import DatePicker from './DatePicker'
 
 const Calendar = () => {
-    const date = new Date()
+    const date = new Date() // 오늘
     const week = '일,월,화,수,목,금,토'.split(',')
 
     const [selectedYear, setSelectedYear] = useState(date.getFullYear()) 
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1)
+    const [selectedDay, setSelectedDay] = useState(date.getDay())
 
     const prevMonth = useCallback(() => {
         if(selectedMonth === 1) {
@@ -36,7 +35,7 @@ const Calendar = () => {
         let nextId = 0
 
         const day = new Date(selectedYear, selectedMonth - 1, 1)
-        
+
         const prevDateCount = week.findIndex(w => w === week[day.getDay()])
         const thisDateCount = new Date(selectedYear, selectedMonth, 0).getDate() // 선택된 연도, 달의 마지막 날짜
         const nextDateCount = 42 - (prevDateCount + thisDateCount)
@@ -94,13 +93,30 @@ const Calendar = () => {
             )
         })
     }, [week])
+
+    const getSelectedDate = useCallback(() => {
+        return new Date(selectedYear, selectedMonth - 1, selectedDay)
+    }, [selectedYear, selectedMonth, selectedDay])
+
+    const setSelectedDate = useCallback((date) => {
+        setSelectedYear(date.getFullYear())
+        setSelectedMonth(date.getMonth() + 1)
+        setSelectedDay(date.getDay())
+    }, [selectedYear, selectedMonth, selectedDay])
+
+    const selectedDayHandle = useCallback(() => {
+
+    })
+
   return (
     <div className='center'>
         <div className='calendar-wrap'>
             <div className='title'>
                 <div>
-                    날짜 선택 드랍다운 메뉴
-                    <Dropdown />
+                    <DatePicker 
+                        selected={getSelectedDate()} 
+                        setSelected={setSelectedDate} 
+                    />
                 </div>
                 <div className='pagination'>
                     <button onClick={prevMonth} className='btn'>
@@ -119,13 +135,9 @@ const Calendar = () => {
                 <div className='week'>
                     { renderWeek() }
                 </div>
-                <div className='date'>
+                <div className='date' onClick={selectedDayHandle}>
                     { renderDay() }
                 </div>
-            </div>
-            <div>
-                <PlanList />
-                <PlanDetail />
             </div>
         </div>
     </div>
