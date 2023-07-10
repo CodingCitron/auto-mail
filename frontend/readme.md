@@ -19,3 +19,6 @@ CMD ["npm", "run", "dev"]
 
 volume 에러
 Error: EACCES: permission denied, mkdir '/usr/src/app/node_modules/.vite/deps_temp_10323547'
+
+### 컨텍스트 API 리렌더링 이슈
+- https://jungpaeng.tistory.com/58

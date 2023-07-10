@@ -9,12 +9,10 @@ const Home = () => {
     const { openModal } = useModals()
 
     const openPlanCreateView = () => {
-        console.log('동작 ?')
+        // Component, props
         openModal (
             PlanCreate,
-            {
-                
-            }
+            {}
         )
     }
 
@@ -27,7 +25,7 @@ const Home = () => {
                     onClick={openPlanCreateView}
                     className='btn-normal p-1 auto rounded-sm'
                 >
-                    일정 추가
+                    일정등록
                 </button>
             </div>
         </div>
