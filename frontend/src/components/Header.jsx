@@ -12,7 +12,7 @@ const Header = () => {
       const res = await axios.post("/user/logout")
       dispatch({ type: 'LOGOUT' })
 
-      window.location.reload()
+      // window.location.reload()
     } catch (error) {
       console.log(error)
     }

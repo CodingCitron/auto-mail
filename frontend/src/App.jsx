@@ -8,6 +8,7 @@ import { useEffect } from "react"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Reigster from './pages/Register'
+import Modals from "./components/Modals"
 
 function App() {
   const authDispacth = useAuthDispatch()
@@ -76,6 +77,7 @@ function App() {
           } 
           />
         </Routes>
+        <Modals />
       </BaseLayout>
     </>
   )

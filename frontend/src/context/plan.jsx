@@ -1,5 +1,9 @@
 import { createContext } from "react"
 
+const StateContext = createContext({
+  
+})
+
 const reducer = (state, { type, payload }) => {
 
 }

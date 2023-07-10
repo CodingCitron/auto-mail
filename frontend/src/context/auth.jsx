@@ -34,7 +34,7 @@ const reducer = (state, { type, payload }) => {
     }
 }
 
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, {
         user: null,
         authenticated: false,
@@ -50,5 +50,6 @@ export const AuthProvider = ({ children }) => {
     )
 }
 
+export default AuthProvider
 export const useAuthState = () => useContext(StateContext)
 export const useAuthDispatch = () => useContext(DispatchContext)

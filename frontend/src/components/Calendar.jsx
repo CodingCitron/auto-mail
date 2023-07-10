@@ -3,6 +3,7 @@ import Day from './Day'
 import Week from './Week'
 import DatePicker from './DatePicker'
 
+// https://im-designloper.tistory.com/87
 const Calendar = () => {
     const date = new Date() // 오늘
     const week = '일,월,화,수,목,금,토'.split(',')
@@ -29,6 +30,10 @@ const Calendar = () => {
         }
     }, [selectedMonth])
 
+    const selectedDateHandle = useCallback((e) => {
+        console.log(e)
+    })
+
     // 총 42개 렌더링 하는데 로직 변경 필요
     const renderDay = useCallback(() => {
         const days = []
@@ -49,6 +54,7 @@ const Calendar = () => {
                     value={prevDate.getDate()}
                     today={date}
                     day={prevDate}
+                    setDate={selectedDateHandle}
                 />
             )
             nextId += 1
@@ -63,6 +69,7 @@ const Calendar = () => {
                     value={thisDate.getDate()}
                     today={date}
                     day={thisDate}
+                    setDate={selectedDateHandle}
                 />
             ) 
             nextId += 1
@@ -77,6 +84,7 @@ const Calendar = () => {
                     value={nextDate.getDate()}
                     today={date}
                     day={nextDate}
+                    setDate={selectedDateHandle}
                 />
             ) 
 
@@ -104,43 +112,37 @@ const Calendar = () => {
         setSelectedDay(date.getDay())
     }, [selectedYear, selectedMonth, selectedDay])
 
-    const selectedDayHandle = useCallback(() => {
-
-    })
-
   return (
-    <div className='center'>
-        <div className='calendar-wrap'>
-            <div className='title'>
-                <div>
-                    <DatePicker 
-                        selected={getSelectedDate()} 
-                        setSelected={setSelectedDate} 
-                    />
-                </div>
-                <div className='pagination'>
-                    <button onClick={prevMonth} className='btn'>
-                        <span className="material-icons">
-                            navigate_before
-                        </span>
-                    </button>
-                    <button onClick={nextMonth} className='btn'>
-                        <span className="material-icons">
-                            navigate_next
-                        </span>
-                    </button>
-                </div>
+    <>
+        <div className='title'>
+            <div>
+                <DatePicker 
+                    selected={getSelectedDate()} 
+                    setSelected={setSelectedDate} 
+                />
             </div>
-            <div className='calendar'>
-                <div className='week'>
-                    { renderWeek() }
-                </div>
-                <div className='date' onClick={selectedDayHandle}>
-                    { renderDay() }
-                </div>
+            <div className='pagination'>
+                <button onClick={prevMonth} className='btn'>
+                    <span className="material-icons">
+                        navigate_before
+                    </span>
+                </button>
+                <button onClick={nextMonth} className='btn'>
+                    <span className="material-icons">
+                        navigate_next
+                    </span>
+                </button>
             </div>
         </div>
-    </div>
+        <div className='calendar'>
+            <div className='week'>
+                { renderWeek() }
+            </div>
+            <div className='date'>
+                { renderDay() }
+            </div>
+        </div>
+    </>
   )
 }
 
