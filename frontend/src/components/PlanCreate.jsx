@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ReactModal from 'react-modal'
+import ReactQuill from 'react-quill'
 
 // 리액트 모달 에러
 // https://velog.io/@seungsang00/React-React-Modal
@@ -17,6 +18,7 @@ const PlanCreate = ({ onSubmit, onClose }) => {
   }
 
   const [scheduleName, setScheduleName] = useState('')
+  const [value, setValue] = useState('')
 
   return (
     <>
@@ -73,14 +75,32 @@ const PlanCreate = ({ onSubmit, onClose }) => {
           </div>
           {/* 상세 내용 */}
           <div> 
-            <h4>일정상세</h4>
-            <div>
-              
-            </div>
+            {/* <h4>일정상세</h4> */}
+            <ReactQuill 
+              theme="snow" 
+              value={value} 
+              placeholder='일정상세'
+              onChange={setValue} 
+            />
           </div>
           {/* 메일 보내기 기능 설정 */}
           <div>
-            
+
+          </div>
+          {/* 일정등록, 취소 버튼 */}
+          <div className='mt-3 flex gap-2 justify-end'>
+            <button 
+              className='btn-normal auto p-1'
+              onClick={handleClickSubmit}
+            >
+              일정등록
+            </button>
+            <button 
+              className='btn-normal auto p-1'
+              onClick={handleClickCancel}
+            >
+              취소
+            </button>
           </div>
         </div>
         <footer>
