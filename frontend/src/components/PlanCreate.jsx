@@ -80,7 +80,7 @@ const PlanCreate = ({ onSubmit, onClose }) => {
           </div>
           {/* 메일 보내기 기능 설정 */}
           <div>
-
+            
           </div>
         </div>
         <footer>

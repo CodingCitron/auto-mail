@@ -31,7 +31,7 @@ const Calendar = () => {
     }, [selectedMonth])
 
     const selectedDateHandle = useCallback((e) => {
-        console.log(e)
+        // console.log(e)
     })
 
     // 총 42개 렌더링 하는데 로직 변경 필요
