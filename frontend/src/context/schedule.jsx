@@ -10,6 +10,14 @@ const reducer = (state, { type, payload }) => {
         ...state,
         payload
       ]
+    case "PREV_MONTH":
+      return
+    case "NEXT_MONTH":
+      return
+    case "SELECT_YEAR_MONTH":
+      return
+    case "SET_YEAR_MONTH":
+      return
     default:
       return state
   }

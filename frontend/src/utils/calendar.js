@@ -1,5 +1,5 @@
 // 날짜 for문 돌리기: https://jsikim1.tistory.com/108#google_vignette
-function getDatesStartToLast(startDate, lastDate) {
+export function getDatesStartToLast(startDate, lastDate) {
 	const regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
 	if(!(regex.test(startDate) && regex.test(lastDate))) return 'Not Date Format'
 
@@ -14,7 +14,7 @@ function getDatesStartToLast(startDate, lastDate) {
 	return result
 }
 
-function dateFor(startDate, count, callback) {
+export function dateFor(startDate, count, callback) {
     const array = []
     const curDate = new Date(startDate)
 
@@ -37,7 +37,33 @@ function dateFor(startDate, count, callback) {
     return array
 }
 
-export {
-    getDatesStartToLast,
-    dateFor
+export const week = '일,월,화,수,목,금,토'.split(',')
+
+export function getStartDate(year, month) {
+    const day = new Date(year, month - 1, 1)
+    const prevDateCount = week.findIndex(w => w === week[day.getDay()])
+
+    return new Date(year, month - 1, 0 - (prevDateCount - 1))
+}
+
+export function initScheduleData (year, month) {
+    // 1. API 요청
+    // 2. schedules 데이터 필터링
+    const result = []
+    const date = new Date()
+
+    const startDate = getStartDate(year, month)
+    const days = dateFor(startDate, 42, (e, index) => {
+        const { startDate, curDate, lastDate } = e 
+        
+        result.push({
+            index,
+            value: curDate.getDate(),
+            today: date,
+            day: curDate,
+            schedules: []
+        })
+    })
+
+    return result
 }

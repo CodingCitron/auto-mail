@@ -2,14 +2,13 @@ import React, { useCallback, useContext, useRef, useState } from 'react'
 import Day from './Day'
 import Week from './Week'
 import DatePicker from './DatePicker'
-import { dateFor } from '../utils/calendar'
+import { dateFor, getStartDate, week } from '../utils/calendar'
 import { ScheduleStateContext } from '../context/schedule'
+
+const date = new Date() // 오늘
 
 // https://im-designloper.tistory.com/87
 const Calendar = () => {
-    const date = new Date() // 오늘
-    const week = '일,월,화,수,목,금,토'.split(',')
-    
     // const scheduleList = useContext(ScheduleStateContext)
 
     const [selectedYear, setSelectedYear] = useState(date.getFullYear()) 
@@ -36,20 +35,18 @@ const Calendar = () => {
 
     const selectedDateHandle = useCallback((e) => {
         // console.log(e)
-    })
+    }, [])
 
     // 총 42개 렌더링 하는데 로직 변경 필요
     const renderDay = useCallback(() => {
         // Reload
 
         // 렌더 준비 과정
-        const day = new Date(selectedYear, selectedMonth - 1, 1)
-        const prevDateCount = week.findIndex(w => w === week[day.getDay()])
-        const startDate = new Date(selectedYear, selectedMonth - 1, 0 - (prevDateCount - 1))
-        
+        const startDate = getStartDate(selectedYear, selectedMonth)
         const days = dateFor(startDate, 42, (e, index) => {
             const { startDate, curDate, lastDate } = e 
             // const schedules = scheduleList.filter(schedule => schedule.compareDate(curDate))
+            // selectedDateHandle()
 
             return (
                 <Day 

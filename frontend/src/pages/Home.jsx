@@ -71,8 +71,6 @@ const Home = () => {
                 date: new Date(2023, 6, 4), 
             })
         )
-
-        console.log(testData)
     }
 
     console.log(scheduleDispatch)
