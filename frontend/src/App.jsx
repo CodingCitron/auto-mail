@@ -2,6 +2,8 @@ import BaseLayout from "./layouts/BaseLayout"
 
 import { Navigate, Route, Routes } from "react-router-dom"
 import { useAuthDispatch, useAuthState } from "./context/auth"
+import { ScheduleProvider } from './context/schedule'
+
 import axios from "axios"
 import { useEffect } from "react"
 
@@ -57,7 +59,9 @@ function App() {
         <Routes>
           <Route path="/" element={
             <PrivateRoute>
-              <Home />
+              <ScheduleProvider>
+                <Home />
+              </ScheduleProvider>
             </PrivateRoute>
           } />
           <Route 

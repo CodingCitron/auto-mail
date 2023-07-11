@@ -101,13 +101,14 @@ body {
 }
 
 .calendar .date > div {
-    height: 80px;
+    height: 100px;
     overflow: auto;
 }
 
 .day-background {
     width: 100%;
-    padding: 0 8px;
+    padding: 2px 6px;
+    /* margin-bottom: 2px; */
     color: #777;
     pointer-events: none;
 }
@@ -115,6 +116,10 @@ body {
 .day-background.today {
     color: rgb(30, 30, 30);
     font-weight: bold;
+}
+
+.schedules > li{
+    padding: 0 6px;
 }
 
 .pagination {

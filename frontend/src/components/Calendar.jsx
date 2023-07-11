@@ -1,12 +1,16 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useContext, useRef, useState } from 'react'
 import Day from './Day'
 import Week from './Week'
 import DatePicker from './DatePicker'
+import { dateFor } from '../utils/calendar'
+import { ScheduleStateContext } from '../context/schedule'
 
 // https://im-designloper.tistory.com/87
 const Calendar = () => {
     const date = new Date() // 오늘
     const week = '일,월,화,수,목,금,토'.split(',')
+    
+    // const scheduleList = useContext(ScheduleStateContext)
 
     const [selectedYear, setSelectedYear] = useState(date.getFullYear()) 
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1)
@@ -36,61 +40,30 @@ const Calendar = () => {
 
     // 총 42개 렌더링 하는데 로직 변경 필요
     const renderDay = useCallback(() => {
-        const days = []
-        let nextId = 0
+        // Reload
 
+        // 렌더 준비 과정
         const day = new Date(selectedYear, selectedMonth - 1, 1)
-
         const prevDateCount = week.findIndex(w => w === week[day.getDay()])
-        const thisDateCount = new Date(selectedYear, selectedMonth, 0).getDate() // 선택된 연도, 달의 마지막 날짜
-        const nextDateCount = 42 - (prevDateCount + thisDateCount)
+        const startDate = new Date(selectedYear, selectedMonth - 1, 0 - (prevDateCount - 1))
+        
+        const days = dateFor(startDate, 42, (e, index) => {
+            const { startDate, curDate, lastDate } = e 
+            // const schedules = scheduleList.filter(schedule => schedule.compareDate(curDate))
 
-        for(let i = prevDateCount - 1; i >= 0; i--) {
-            const prevDate = new Date(selectedYear, selectedMonth - 1, 0 - i)
-
-            days.push(
+            return (
                 <Day 
-                    key={nextId} 
-                    value={prevDate.getDate()}
+                    key={index}
+                    value={curDate.getDate()}
                     today={date}
-                    day={prevDate}
+                    day={curDate}
                     setDate={selectedDateHandle}
+                    // schedules={schedules}
                 />
             )
-            nextId += 1
-        }
+        })
 
-        for(let i = 0; i < thisDateCount; i++) {
-            const thisDate = new Date(selectedYear, selectedMonth - 1, 1 + i)
-
-            days.push(
-                <Day 
-                    key={nextId} 
-                    value={thisDate.getDate()}
-                    today={date}
-                    day={thisDate}
-                    setDate={selectedDateHandle}
-                />
-            ) 
-            nextId += 1
-        }
-
-        for(let i = 0; i < nextDateCount; i++) {
-            const nextDate = new Date(selectedYear, selectedMonth, i + 1)
-
-            days.push(
-                <Day 
-                    key={nextId} 
-                    value={nextDate.getDate()}
-                    today={date}
-                    day={nextDate}
-                    setDate={selectedDateHandle}
-                />
-            ) 
-
-            nextId += 1
-        }
-        
+        console.log('캘린더 호출?')
         return days
     }, [selectedYear, selectedMonth])
 
