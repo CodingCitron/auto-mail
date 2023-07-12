@@ -1,18 +1,27 @@
-import React, { useCallback, useContext, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import Day from './Day'
 import Week from './Week'
 import DatePicker from './DatePicker'
-import { dateFor, getStartDate, week } from '../utils/calendar'
-import { ScheduleStateContext } from '../context/schedule'
-import { CalendarDispatchContext } from '../context/Calendar'
+import { dateFor, getStartDate, initScheduleData, week } from '../utils/calendar'
+import { CalendarDispatchContext, CalendarStateContext } from '../context/Calendar'
 
 const date = new Date() // 오늘
 
 // https://im-designloper.tistory.com/87
-const Calendar = ({ scheduleList, year, month }) => {
-    // const scheduleList = useContext(ScheduleStateContext)
-    const calendarDispatch = useContext(CalendarDispatchContext)
-    console.log(year, month)
+const Calendar = () => {
+    const calendarState = useContext(CalendarStateContext) 
+    const calendarDispatch = useContext(CalendarDispatchContext) 
+    
+    useEffect(() => {
+        calendarDispatch.init({
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            day: 1
+        })
+    }, [])
+
+    console.log('캘린더 호출')
+
     // const [selectedYear, setSelectedYear] = useState(date.getFullYear()) 
     // const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1)
     // const [selectedDay, setSelectedDay] = useState(date.getDay())
@@ -67,6 +76,7 @@ const Calendar = ({ scheduleList, year, month }) => {
     // }, [selectedYear, selectedMonth])
 
     // const renderDay = useCallback(() => {
+    //     console.log('render')
     //     return scheduleList.map(({
     //         index, 
     //         value,
@@ -83,7 +93,14 @@ const Calendar = ({ scheduleList, year, month }) => {
     //             setDate={selectedDateHandle}
     //         />
     //     ))
-    // }, [scheduleList, year, month])
+    // }, [year, month])
+
+    // useEffect(() => {
+    //     console.log('test')
+    //     // scheduleDispatch.init(
+    //     //     initScheduleData(year, month)
+    //     // )
+    // }, [year, month])
 
     const renderWeek = useCallback(() => {
         return week.map(day => (
@@ -91,9 +108,11 @@ const Calendar = ({ scheduleList, year, month }) => {
         ))
     }, [])
 
-    // const getSelectedDate = useCallback(() => {
-    //     return new Date(selectedYear, selectedMonth - 1, selectedDay)
-    // }, [selectedYear, selectedMonth, selectedDay])
+    const getSelectedDate = useMemo(() => {
+        const { year, month, day } = calendarState
+        console.log(year, month, day)
+        return new Date(year, month - 1, day)
+    }, [calendarState])
 
     // const setSelectedDate = useCallback((date) => {
     //     setSelectedYear(date.getFullYear())
@@ -105,10 +124,11 @@ const Calendar = ({ scheduleList, year, month }) => {
     <>
         <div className='title'>
             <div>
-                {/* <DatePicker 
-                    selected={getSelectedDate()} 
-                    setSelected={setSelectedDate} 
-                /> */}
+                <DatePicker
+                    dateFormat="yyyy년 MM월"
+                    selected={getSelectedDate} 
+                    setSelected={calendarDispatch.setDate} 
+                />
             </div>
             <div className='pagination'>
                 <button 
@@ -134,9 +154,9 @@ const Calendar = ({ scheduleList, year, month }) => {
                 { renderWeek() }
             </div>
             <div className='date'>
-                {
-                    scheduleList &&
-                    scheduleList.map(({
+                {   
+                    calendarState.scheduleList &&
+                    calendarState.scheduleList.map(({
                         index, 
                         value,
                         today,

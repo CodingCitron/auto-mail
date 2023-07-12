@@ -60,11 +60,11 @@ function App() {
         <Routes>
           <Route path="/" element={
             <PrivateRoute>
-              <CalendarProvider>
-                <ScheduleProvider>
-                  <Home />
-                </ScheduleProvider>
-              </CalendarProvider>
+              {/* <ScheduleProvider> */}
+                <CalendarProvider>
+                    <Home />
+                </CalendarProvider>
+              {/* </ScheduleProvider> */}
             </PrivateRoute>
           } />
           <Route 

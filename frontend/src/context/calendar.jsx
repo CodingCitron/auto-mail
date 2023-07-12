@@ -1,4 +1,5 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react'
+import React, { createContext, useMemo, useState, useContext, useCallback } from 'react'
+import { initScheduleData } from '../utils/calendar'
 
 export const CalendarStateContext = createContext(null)
 export const CalendarDispatchContext = createContext(null)
@@ -7,43 +8,101 @@ export const CalendarProvider = ({ children }) => {
     const [calendar, setCalendar] = useState({
         year: null,
         month: null,
-        day: null
+        day: null,
+        focus: null,
+        scheduleList: []
     })
-    
+
+     const init = useCallback((year, month, day = 1) => {
+        const scheduleList = initScheduleData(
+            year,
+            month
+        )
+
+        return { year, month, day, scheduleList }
+    }, [])
+
     const actions = useMemo(
         () => ({
             init(payload) {
-                setCalendar((prev) => ({
-                    year: payload.year,
-                    month: payload.month,
-                    day: payload.day
-                }))
+                // setCalendar((prev) => ({
+                //     year: payload.year,
+                //     month: payload.month,
+                //     day: payload.day,
+                //     scheduleList: list
+                // }))
+
+                setCalendar({
+                    ...prev,
+                    ...init(
+                        payload.year,
+                        payload.month,
+                        payload.day
+                    )
+                })
             },
 
             prev() {
                 setCalendar((prev) => {
-                    const data = {}
+                    const data = {
+                        ...prev,
+                        scheduleList: []
+                    }
 
                     if(prev.month === 1) {
                         data.month = 12
-                        data.year = prev.yaer - 1
+                        data.year = prev.year - 1
                     } else {
                         data.month = prev.month - 1
                     }
 
+                    const list = init(
+                        data.year, 
+                        data.month,
+                    )
+
                     return {
                         ...prev,
-                        ...data
+                        ...list
                     }
                 })
             },
 
             next() {
-                setCalendar((prev) =>  {
-                    console.log(prev)
+                setCalendar((prev) =>   {
+                    const data = {
+                        ...prev,
+                        scheduleList: []
+                    }
 
-                    return prev
+                    if(prev.month === 12) {
+                        data.month = 1
+                        data.year = prev.year + 1
+                    } else {
+                        data.month = prev.month + 1
+                    }
+
+                    const list = init(
+                        data.year, 
+                        data.month,
+                    )
+
+                    return {
+                        ...prev,
+                        ...list
+                    }
                 })
+            },
+
+            setDate() {
+
+            },
+
+            create(data) {
+                // 현재 보여주는 달력에 있다면
+
+
+                // 없다면
             }
         })
     )

@@ -96,8 +96,13 @@ export function filteredData (startDate, count, data) {
 }
 
 export function findIndex(year, month, date) {
-    
-} 
+    const startDate = getStartDate(year, month)
+}
+
+export function diffDay(first, second) {
+    let diffTime = first.getTime() - second.getTime()
+    return diffTime / (1000 * 60 *60 * 24)
+}
 
 export function initScheduleData (year, month) {
     const date = new Date()

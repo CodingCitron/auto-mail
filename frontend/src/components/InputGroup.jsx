@@ -9,6 +9,7 @@ const InputGroup = ({ className, type, placeholder, value, error, setValue }) =>
           placeholder={placeholder}
           value={value}
           onChange={e => setValue(e.target.value)}
+          autoComplete="on"
       />
       <small className='fopt-medium text-red-500'>
           {error}

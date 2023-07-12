@@ -5,8 +5,8 @@ import { ko } from 'date-fns/esm/locale'
 
 // https://www.npmjs.com/package/react-datepicker
 // https://reactdatepicker.com/
-const DatePicker = ({ selected, setSelected }) => {
-  // console.log(selected)
+const DatePicker = ({ dateFormat, selected, setSelected }) => {
+  console.log(selected)
 
   // const renderMonthContent = (month, shortMonth, longMonth) => {
   //   console.log(month, shortMonth, longMonth)
@@ -17,7 +17,7 @@ const DatePicker = ({ selected, setSelected }) => {
   return (
     <ReactDatePicker
       locale={ko}
-      dateFormat="yyyy년 MM월"
+      dateFormat={dateFormat}
       // renderMonthContent={renderMonthContent}
       showMonthYearPicker
       selected={selected} 
@@ -26,4 +26,4 @@ const DatePicker = ({ selected, setSelected }) => {
   )
 }
 
-export default DatePicker
+export default React.memo(DatePicker)

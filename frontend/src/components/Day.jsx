@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { ScheduleStateContext } from '../context/schedule'
 
 // value, day, today, setDate, schedules
-const Day = ({ value, day, today, setDate, schedules }) => {
+const Day = ({ value, year, month, day, today, setDate, schedules }) => {
     // const scheduleList = useContext(ScheduleStateContext)
     
     const isToday = day.toDateString() === today.toDateString()
@@ -10,7 +10,7 @@ const Day = ({ value, day, today, setDate, schedules }) => {
 
     // const schedules = scheduleList.filter(schedule => schedule.compareDate(day))
 
-    // console.log(`${key} 데이 호출?`)
+    console.log(`데이 호출`)
     return (
         <div className='flex flex-col' onClick={() => setDate(day)}>
             <div className={className}>
