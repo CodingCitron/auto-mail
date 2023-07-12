@@ -1,3 +1,5 @@
+import React from "react"
+
 const InputGroup = ({ className, type, placeholder, value, error, setValue }) => {
   return (
     <div className={className}>
@@ -15,4 +17,4 @@ const InputGroup = ({ className, type, placeholder, value, error, setValue }) =>
   )
 }
 
-export default InputGroup
+export default React.memo(InputGroup)

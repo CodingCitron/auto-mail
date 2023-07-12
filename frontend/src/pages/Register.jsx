@@ -30,7 +30,7 @@ const Register = () => {
   }
 
   return (
-    <main className='mt-[16px] center flex-1 flex-col'>
+    <main className='center flex-1 flex-col'>
       <div className='w-[400px]'>
       <h3 className='w-full mb-3 font-semibold text-[18px]'>회원가입</h3>
         <form onSubmit={onSubmit}>

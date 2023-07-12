@@ -1,4 +1,8 @@
 import { createContext, useCallback, useMemo, useReducer } from "react"
+import { initScheduleData } from '../utils/calendar'
+
+export const ScheduleStateContext = createContext(null)
+export const ScheduleDispatchContext = createContext(null)
 
 const reducer = (state, { type, payload }) => {
   switch(type) {
@@ -10,14 +14,6 @@ const reducer = (state, { type, payload }) => {
         ...state,
         payload
       ]
-    case "PREV_MONTH":
-      return
-    case "NEXT_MONTH":
-      return
-    case "SELECT_YEAR_MONTH":
-      return
-    case "SET_YEAR_MONTH":
-      return
     default:
       return state
   }
@@ -33,12 +29,10 @@ export const ScheduleProvider = ({ children }) => {
    */
   const init = useCallback((data) => {
     dispatch({ type: "INIT", payload: data })
-    console.log(state)
   }, [])
 
   const create = useCallback((data) => {
     dispatch({ type: "CREATE", payload: data })
-    console.log(state)
   }, [])
 
   const memoizedDispatch = useMemo(() => {
@@ -53,6 +47,3 @@ export const ScheduleProvider = ({ children }) => {
     </ScheduleStateContext.Provider>
   )
 }
-
-export const ScheduleStateContext = createContext(null)
-export const ScheduleDispatchContext = createContext(null)

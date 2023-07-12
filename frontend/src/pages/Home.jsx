@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { ScheduleDispatchContext } from '../context/schedule'
+import { ScheduleDispatchContext, ScheduleStateContext } from '../context/schedule'
 import Calendar from '../components/Calendar'
 import PlanList from '../components/PlanList'
 import PlanDetail from '../components/PlanDetail'
@@ -7,10 +7,15 @@ import PlanCreate from '../components/PlanCreate'
 import useModals from '../components/hooks/useModal'
 
 import Schedule from '../utils/Schedule'
+import { initScheduleData } from '../utils/calendar'
+import { CalendarDispatchContext, CalendarStateContext } from '../context/Calendar'
 
 const Home = () => {
     const { openModal } = useModals()
+    const scheduleList = useContext(ScheduleStateContext)
     const scheduleDispatch = useContext(ScheduleDispatchContext)
+    const calenderState = useContext(CalendarStateContext) 
+    const calenderDispatch = useContext(CalendarDispatchContext) 
 
     const openPlanCreateView = () => {
         // Component, props
@@ -19,49 +24,6 @@ const Home = () => {
             {}
         )
     }
-
-    const testData = [
-        new Schedule({
-            id: 0,
-            name: '테스트 일정',
-            date: new Date(), 
-        }),
-        new Schedule({
-            id: 1,
-            name: '테스트 일정 2',
-            date: new Date(2023, 6, 15), 
-        }),
-        new Schedule({
-            id: 2,
-            name: '테스트 일정 2',
-            date: new Date(2023, 7, 15), 
-        }),
-        new Schedule({
-            id: 3,
-            name: '테스트 일정 2',
-            date: new Date(2023, 6, 10), 
-        }),
-        new Schedule({
-            id: 4,
-            name: '테스트 일정 2',
-            date: new Date(2023, 6, 10), 
-        }),
-        new Schedule({
-            id: 5,
-            name: '테스트 일정 2',
-            date: new Date(2023, 6, 10), 
-        }),
-        new Schedule({
-            id: 6,
-            name: '테스트 일정 2',
-            date: new Date(2023, 6, 10), 
-        }),
-        new Schedule({
-            id: 7,
-            name: '테스트 일정 2',
-            date: new Date(2023, 6, 5), 
-        }),
-    ]
 
     function addData() {
         scheduleDispatch.create(
@@ -73,17 +35,27 @@ const Home = () => {
         )
     }
 
-    console.log(scheduleDispatch)
-
     // https://velog.io/@pon06188/Warning-Cannot-update-a-component-A-while-rendering-a-different-component-B.-To-locate-the-bad-setState-call-inside-B-follow-the-stack-trace-as-described-in-%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0
     useEffect(() => {
-        scheduleDispatch.init(testData)
+        const date = new Date()
+
+        calenderDispatch.init({
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            day: date.getDay(),
+        })
+
+        scheduleDispatch.init(initScheduleData(2023, 7))
     }, [])
 
   return (
     <main className='center flex-col'>
         <div className='calendar-wrap'>
-            <Calendar />
+            <Calendar 
+                scheduleList={scheduleList} 
+                year={calenderState.year}
+                month={calenderState.month}
+            />
             <div className='calendar-tool mt-2 flex items-start w-full'>
                 <button 
                     onClick={openPlanCreateView}

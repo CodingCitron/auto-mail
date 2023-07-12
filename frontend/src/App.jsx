@@ -3,6 +3,7 @@ import BaseLayout from "./layouts/BaseLayout"
 import { Navigate, Route, Routes } from "react-router-dom"
 import { useAuthDispatch, useAuthState } from "./context/auth"
 import { ScheduleProvider } from './context/schedule'
+import { CalendarProvider } from "./context/Calendar"
 
 import axios from "axios"
 import { useEffect } from "react"
@@ -59,9 +60,11 @@ function App() {
         <Routes>
           <Route path="/" element={
             <PrivateRoute>
-              <ScheduleProvider>
-                <Home />
-              </ScheduleProvider>
+              <CalendarProvider>
+                <ScheduleProvider>
+                  <Home />
+                </ScheduleProvider>
+              </CalendarProvider>
             </PrivateRoute>
           } />
           <Route 

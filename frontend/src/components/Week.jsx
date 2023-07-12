@@ -18,4 +18,4 @@ const Week = ({ day }) => {
   )
 }
 
-export default Week
+export default React.memo(Week)
