@@ -129,3 +129,9 @@ export function initScheduleData (year, month) {
         }
     })
 }
+
+export function CompareDay(first, second) {
+    return first.getFullYear() === second.getFullYear()
+    && first.getMonth() === second.getMonth()
+    && first.getDate() === second.getDate()
+}

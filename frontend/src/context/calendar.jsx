@@ -1,5 +1,5 @@
 import React, { createContext, useMemo, useState, useContext, useCallback } from 'react'
-import { initScheduleData } from '../utils/calendar'
+import { findIndex, initScheduleData } from '../utils/calendar'
 
 export const CalendarStateContext = createContext(null)
 export const CalendarDispatchContext = createContext(null)
@@ -25,21 +25,16 @@ export const CalendarProvider = ({ children }) => {
     const actions = useMemo(
         () => ({
             init(payload) {
-                // setCalendar((prev) => ({
-                //     year: payload.year,
-                //     month: payload.month,
-                //     day: payload.day,
-                //     scheduleList: list
-                // }))
-
-                setCalendar({
-                    ...prev,
-                    ...init(
-                        payload.year,
-                        payload.month,
-                        payload.day
-                    )
-                })
+                setCalendar(
+                    (prev) => ({
+                        ...prev,
+                        ...init(
+                            payload.year,
+                            payload.month,
+                            payload.day
+                        )
+                    })
+                )
             },
 
             prev() {
@@ -100,7 +95,12 @@ export const CalendarProvider = ({ children }) => {
 
             create(data) {
                 // 현재 보여주는 달력에 있다면
-
+                console.log(data)
+                setCalendar((prev) => {
+                    console.log(prev.year)
+                    console.log(prev.month)
+                    
+                })
 
                 // 없다면
             }
