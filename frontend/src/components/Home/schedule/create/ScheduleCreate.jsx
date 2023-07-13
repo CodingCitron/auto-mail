@@ -19,8 +19,8 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
             const res = await axios.post('/schedule', {
                 title,
                 content,
-                startDate: startDate.getTime(),
-                endDate: endDate.getTime()
+                startDate: startDate, // startDate.getTime() - 문자열
+                endDate: endDate // endDate.getTime()
             })
 
             console.log(res)

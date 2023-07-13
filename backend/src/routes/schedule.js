@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { isLoggedIn } from "../middlewares/auth.js";
 import { Schedule } from "../models/index.js";
+import { and, or } from "sequelize";
 
 const router = Router()
 
@@ -8,8 +9,39 @@ async function getSchedule(req, res, next) {
     console.log(req, res)
 }
 
-async function scheduleDetail(req, res, next) {
+// https://s0n9h2.tistory.com/110
+// https://stackoverflow.com/questions/29798357/sequelize-where-statement-with-date
+async function getSchedules(req, res, next) {
     console.log(req, res)
+    const  { startDate, endDate, keyword, title, content, attribute, include, order } = req.body
+
+    try {
+        // 날짜 기간 검색 
+        // ex) 6 ~ 8월 42일치 데이터 - 기간 검색
+        const schedules = await Schedule.findAll({
+            where: {
+                [and]: [
+                    {
+                        [or]: [
+                            {
+                                start_date: [Op.lte]
+                            }
+                        ]
+                    },
+                    {
+                        [or]: [
+
+                        ]
+                    }
+                ]
+            }
+        }) 
+
+
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
 }
 
 async function createSchedule(req, res, next) {
@@ -30,6 +62,10 @@ async function createSchedule(req, res, next) {
         console.log(error)
         next(error)
     }   
+}
+
+async function scheduleDetail(req, res, next) {
+    console.log(req, res)
 }
 
 /**
@@ -53,7 +89,7 @@ async function createSchedule(req, res, next) {
  *                    users:
  *                      type: object
  */
-router.get('/', isLoggedIn, getSchedule)
+router.get('/', isLoggedIn, getSchedules)
 router.post('/', isLoggedIn, createSchedule)
 
 export default router
