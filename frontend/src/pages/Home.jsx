@@ -1,5 +1,5 @@
 import React from 'react'
-import Calendar from '../components/Home/Calendar/Calendar'
+import Calendar from '../components/home/calendar/Calendar'
 
 const Home = () => {
   return (
@@ -11,4 +11,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default React.memo(Home)

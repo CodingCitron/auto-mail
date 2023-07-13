@@ -8,9 +8,8 @@
    "license": "ISC",
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "ts-node src/index.ts",
-      "dev": "nodemon --exec babel-node ./src/app.js",
-      "typeorm": "typeorm-ts-node-commonjs"
+      "start": "nodemon src/index.ts",
+      "dev": "nodemon -L ./src/app.js"
    },
    "dependencies": {
       "bcryptjs": "^2.4.3",

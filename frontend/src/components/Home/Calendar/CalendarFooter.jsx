@@ -1,6 +1,6 @@
 import React from 'react'
 import useModals from '../../../hooks/useModal'
-import ScheduleCreate from '../Schedule/ScheduleCreate'
+import ScheduleCreateModal from '../modals/ScheduleCreateModal'
 
 const CalendarFooter = ({ create }) => {
     const { openModal } = useModals()
@@ -8,7 +8,7 @@ const CalendarFooter = ({ create }) => {
     const openPlanCreateView = () => {
         // Component, props
         openModal (
-            ScheduleCreate,
+            ScheduleCreateModal,
             {}
         )
     }

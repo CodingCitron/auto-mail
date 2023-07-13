@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import InputGroup from '../components/Common/InputGroup'
+import InputGroup from '../components/common/InputGroup'
 import axios from 'axios'
 import { useAuthStore } from '../store/auth'
 
@@ -58,4 +58,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default React.memo(Login)

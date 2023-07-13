@@ -13,7 +13,7 @@ import path from 'path'
 import { fileURLToPath } from "url"
 
 import { swaggerUi, specs } from "./swagger.js"
-import planRouter from './routes/plan.js'
+import scheduleRouter from './routes/schedule.js'
 import userRouter from './routes/user.js'
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url))
@@ -51,10 +51,10 @@ app.use("/api/user", userRouter)
 /**
  * @swagger
  * tags:
- *   name: plan
+ *   name: schedule
  *   description: 계획 정보 관리
  */
-app.use("/api/plan", planRouter)
+app.use("/api/schedule", scheduleRouter)
 
 // app.get("/", (_, res) => res.send("running"))
 // 에러 처리 미들웨어 에러시 동작 변경할 떄 사용

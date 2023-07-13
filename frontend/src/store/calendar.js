@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { filteredData, initSchedules } from '../services/calendar'
+import { initSchedules } from '../services/calendar'
 
 const DEFAULT_PROPS = {
     year: null,
@@ -76,7 +76,7 @@ const createCalendarStore = (initProps) => {
         },
         createSchedule: (index, data) => set(
             (state) => {
-                // console.log(state)
+                console.log(state)
                 console.log(state.list[5].schedules.push({ 
                     id: 9, name: '테스트' 
                 }))

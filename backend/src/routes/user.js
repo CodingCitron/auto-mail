@@ -9,7 +9,6 @@ const router = Router()
 const mapError = (errors) => {
     return errors.reduce((prev, err) => {
         prev[err.property] = Object.entries(err.constraints)[0][1]
-
         return prev
     }, {})
 }

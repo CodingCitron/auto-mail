@@ -33,7 +33,7 @@ const Timer = (sequelize, DataTypes, option) => {
 
 	Timer.associate = (db) => {
         db.Timer.belongsTo(db.User, { foreignKey: 'creater', targetKey: 'id', onDelete: 'cascade' })
-        db.Timer.belongsTo(db.Plan, { foreignKey: 'planner', targetKey: 'id', onDelete: 'cascade' })
+        db.Timer.belongsTo(db.Schedule, { foreignKey: 'writer', targetKey: 'id', onDelete: 'cascade' })
 	};
 
 	return Timer;

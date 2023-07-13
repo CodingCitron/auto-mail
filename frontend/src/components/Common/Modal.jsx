@@ -1,22 +1,12 @@
 import React from 'react'
 import ReactModal from 'react-modal'
 
-const Modal = ({ children, isOpen }) => {
+const Modal = ({ children }) => {
   return (
     <ReactModal isOpen ariaHideApp={false}>
-        <div className='modal-backdrop'>
-            <div>
-                <header>
-                    <h3>일정등록</h3>
-                </header>
-                <div>
-                    { children }
-                </div>
-                <footer></footer>
-            </div>
-        </div>
+        { children }
     </ReactModal>
   )
 }
 
-export default Modal
+export default React.memo(Modal)

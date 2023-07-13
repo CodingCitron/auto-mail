@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import InputGroup from '../components/Common/InputGroup'
+import InputGroup from '../components/common/InputGroup'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Register = () => {
@@ -66,4 +66,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default React.memo(Register)

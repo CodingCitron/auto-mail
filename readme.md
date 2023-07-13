@@ -8,8 +8,8 @@
 <br/>
 
 ### 프론트
-- react
-- 구글 아이콘
+- react + zustand
+
 <br/>
 <hr/><br/>
 
@@ -19,7 +19,8 @@ docker-compose up --build --no-cache
 ```
 - build: 
 - no-cache: 캐시 
-<br/>
+<br/><br/>
+
 
 ### 컨테이너 정지
 ```
@@ -31,11 +32,11 @@ docker-compose down -v
 
 ### 이름없는 이미지 제거
 - docker rmi $(docker images -f "dangling=true" -q)
-<br/><br/>  
+<br/><br/>
 
 ### 날짜를 선택하는 메뉴
 - 드랍다운 메뉴로 선택, 셀렉트 박스는 스타일이 자유롭지 않음
-<br/><br/>  
+<br/><br/>
 ### 도커 캐시 삭제 명령어
 - docker system prune -a
 <br/><br/>

@@ -5,7 +5,7 @@ import Config from '../config/config.json' assert { type: "json" };
 // 참조: https://hojung-testbench.tistory.com/entry/ExpressSequelize-MySQL%EA%B3%BC-Express%EC%97%B0%EA%B2%B0-ES6
 
 import UserModel from './User.js';
-import PlanModel from './Plan.js';
+import ScheduleModel from './Schedule.js';
 import TimerModel from './Timer.js';
 
 const env = process.env.NODE_ENV || 'development';
@@ -30,7 +30,7 @@ const defaultOption = {
 }
 
 db.User = UserModel(sequelize, Sequelize, defaultOption)
-db.Plan = PlanModel(sequelize, Sequelize, defaultOption)
+db.Schedule = ScheduleModel(sequelize, Sequelize, defaultOption)
 db.Timer = TimerModel(sequelize, Sequelize, defaultOption)
 
 Object.keys(db).forEach(modelName => {
@@ -43,4 +43,4 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 export default db
-export const { User, Plan, Timer } = db
+export const { User, Schedule, Timer } = db
