@@ -1,22 +1,21 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuthDispatch, useAuthState } from '../context/auth'
 import axios from 'axios'
+import { useAuthStore } from '../../store/auth'
 
 const Header = () => {
-  const { authenticated, user } = useAuthState()
-  const dispatch = useAuthDispatch()
+  const { user, logout } = useAuthStore(state => state)
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     try {
       const res = await axios.post("/user/logout")
-      dispatch({ type: 'LOGOUT' })
+      logout()
 
       // window.location.reload()
     } catch (error) {
       console.log(error)
     }
-  } 
+  }, [])
   
   return (
     <header className='header'>
@@ -29,7 +28,7 @@ const Header = () => {
             </h1>
         </div>
         <div className='right'>
-          { authenticated ? (
+          { user.isLogin ? (
             <>
               <button>{ user.email }</button>
               <button onClick={handleLogout}>로그아웃</button>

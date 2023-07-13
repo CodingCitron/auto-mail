@@ -1,11 +1,7 @@
 import React, { useCallback, useContext, useEffect } from 'react'
-import { ScheduleDispatchContext, ScheduleStateContext } from '../context/schedule'
 import Calendar from '../components/Home/Calendar/Calendar'
-import PlanList from '../components/PlanList'
-import PlanDetail from '../components/PlanDetail'
-import PlanCreate from '../components/PlanCreate'
-import useModals from '../components/hooks/useModal'
-
+import useModals from '../hooks/useModal'
+import ScheduleCreate from '../components/Home/Schedule/ScheduleCreate'
 import Schedule from '../utils/Schedule'
 import { CalendarStateContext, CalendarDispatchContext } from '../context/Calendar'
 
@@ -17,7 +13,7 @@ const Home = () => {
     const openPlanCreateView = () => {
         // Component, props
         openModal (
-            PlanCreate,
+            ScheduleCreate,
             {}
         )
     }

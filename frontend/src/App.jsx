@@ -1,8 +1,6 @@
 import BaseLayout from "./layouts/BaseLayout"
 
 import { Navigate, Route, Routes } from "react-router-dom"
-import { useAuthDispatch, useAuthState } from "./context/auth"
-import { ScheduleProvider } from './context/schedule'
 import { CalendarProvider } from "./context/Calendar"
 
 import axios from "axios"
@@ -11,48 +9,50 @@ import { useEffect } from "react"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Reigster from './pages/Register'
-import Modals from "./components/Modals"
+import Modals from './components/Common/Modals'
+import { useAuthStore } from "./store/auth"
+
+
+const PrivateRoute = ({ children }) => {
+  const user = useAuthStore(state => state.user)
+
+  if (!user.isLogin) {
+    return <Navigate to="/login" replace />
+  }
+
+  return children
+}
+
+const PublicRoute = ({ children }) => {
+  const user = useAuthStore(state => state.user)
+
+  if (user.isLogin) {
+    return <Navigate to="/" replace />
+  }
+
+  return children
+}
 
 function App() {
-  const authDispacth = useAuthDispatch()
+  const { login } = useAuthStore(state => state)
 
   useEffect(() => {
     async function loadUser () {
       try {
         const res = await axios.get("/user")
-  
+
         if(res.data) {
-          authDispacth({ type: 'LOGIN', payload: res.data })
+          login(res.data)
         }
       } catch (error) {
           console.log(error)
       } finally {
-        authDispacth({ type: 'STOP_LOADING' })
+        // authDispacth({ type: 'STOP_LOADING' })
       }
     }
 
     loadUser()
   }, [])
-
-  const PrivateRoute = ({ children }) => {
-    const { authenticated } = useAuthState()
-  
-    if (!authenticated) {
-      return <Navigate to="/login" replace />
-    }
-  
-    return children
-  }
-
-  const PublicRoute = ({ children }) => {
-    const { authenticated } = useAuthState()
-  
-    if (authenticated) {
-      return <Navigate to="/" replace />
-    }
-  
-    return children
-  }
 
   return (
     <>

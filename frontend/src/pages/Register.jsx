@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import InputGroup from '../components/InputGroup'
+import InputGroup from '../components/Common/InputGroup'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Register = () => {

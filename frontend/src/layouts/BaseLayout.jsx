@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../components/Layout/Header'
+import Footer from '../components/Layout/Footer'
 
 const BaseLayout = ({ children }) => {
   return (
@@ -12,4 +12,4 @@ const BaseLayout = ({ children }) => {
   )
 }
 
-export default BaseLayout
+export default React.memo(BaseLayout)

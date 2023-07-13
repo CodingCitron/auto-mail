@@ -4,7 +4,6 @@ import './index.css'
 import 'react-quill/dist/quill.snow.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
-import AuthProvider from './context/auth'
 import ModalProvider from './context/modal'
 import axios from "axios"
 
@@ -13,12 +12,10 @@ axios.defaults.withCredentials = true
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
-    <AuthProvider>
-      <ModalProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ModalProvider>
-    </AuthProvider>
+    <ModalProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ModalProvider>
   // </React.StrictMode>
 )

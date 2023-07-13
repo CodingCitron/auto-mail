@@ -1,6 +1,5 @@
 import { useContext } from "react"
-import { ModalDispatchContext } from "../../context/modal"
-
+import { ModalDispatchContext } from "../context/modal"
 
 export default function useModals() {
     const { open, close } = useContext(ModalDispatchContext)  

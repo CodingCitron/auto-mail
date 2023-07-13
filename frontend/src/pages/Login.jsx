@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuthState, useAuthDispatch } from '../context/auth'
-import InputGroup from '../components/InputGroup'
+import InputGroup from '../components/Common/InputGroup'
 import axios from 'axios'
+import { useAuthStore } from '../store/auth'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState('')
 
-  const navigate = useNavigate()
-  const dispatch = useAuthDispatch()
+  // const navigate = useNavigate()
+  const { login } = useAuthStore(state => state)
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -21,9 +21,8 @@ const Login = () => {
         password,
       })
 
-      // console.log(res.data)
-      dispatch({ type: 'LOGIN', payload: res.data })
-      navigate('/')
+      login(res.data)
+      // navigate('/')
     } catch (error) {
       console.error(error)
       setErrors(error.response.data || {})
