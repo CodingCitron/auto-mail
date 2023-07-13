@@ -1,7 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
+
 import 'react-quill/dist/quill.snow.css'
+import "react-datepicker/dist/react-datepicker.css"
+import './index.css'
+
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import ModalProvider from './context/modal'

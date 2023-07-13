@@ -1,49 +1,30 @@
-import React, { useContext } from 'react'
-import Schedule from './Schedule'
-import { CalendarStateContext } from '../../../context/Calendar'
-import { CompareDay } from '../../../utils/calendar'
-import ScheduleList from './ScheduleList'
+import React, { useMemo } from 'react'
+import Schedules from './Schedules'
 
-// value, day, today, setDate, schedules
-function areEqual(prevProps, nextProps) {
-    // 날짜 비교
-    if(CompareDay(prevProps.day, nextProps.day)) {
-       return true  
-    }
-
-    return false
-}
-
-const Day = ({ index, value, day, setDate }) => {
+const Day = ({ index, date }) => {
     // const state = useContext(CalendarStateContext)
-    
-    const isToday = day.toDateString() === new Date().toDateString()
-    const className = isToday ? 'day-background today' : 'day-background'
+    const day = useMemo(() => date.getDate(), [date])
+    const className = useMemo(() => {
+        if(date.toDateString() === new Date().toDateString()) {
+            return 'day-background today' 
+        } else {
+            return 'day-background'
+        }
+    }, [date])
 
-    console.log(`데이 호출`)
-    // console.log(index)
-    // console.log(state.scheduleList[index].schedules)
     return (
-        <div className='flex flex-col' onClick={() => setDate(day)}>
+        <div 
+            className='flex flex-col' 
+            // onClick={() => setDate(date)}
+        >
             <div className={className}>
-                { value === 0 ? '' : value }
+                { day }
             </div>
-            {/* 이날 계획 목록 */}
-            <ScheduleList
+            <Schedules
                 index={index}
             />
-            {/* <ul className='schedules'>
-                {   state.scheduleList[index] &&
-                    state.scheduleList[index].schedules.map(schedule => (
-                        <Schedule 
-                            key={schedule.id}
-                            name={schedule.name}
-                        />
-                    ))
-                }
-            </ul> */}
         </div>
     )
 }
 
-export default React.memo(Day, areEqual)
+export default React.memo(Day)

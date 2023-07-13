@@ -1,4 +1,4 @@
-import Schedule from "./Schedule"
+import Schedule from "../utils/Schedule"
 
 // 날짜 for문 돌리기: https://jsikim1.tistory.com/108#google_vignette
 export function getDatesStartToLast(startDate, lastDate) {
@@ -104,10 +104,8 @@ export function diffDay(first, second) {
     return diffTime / (1000 * 60 *60 * 24)
 }
 
-export function initScheduleData (year, month) {
-    const date = new Date()
+export function initSchedules (year, month) {
     const count = 42
-
     const startDate = getStartDate(year, month)
 
     // 1. API 요청
@@ -120,11 +118,7 @@ export function initScheduleData (year, month) {
         
         return {
             index,
-            selectedYear: year,
-            selectedMonth: month,
-            value: curDate.getDate(),
-            today: date,
-            day: curDate,
+            date: curDate,
             schedules: schedules[index]
         }
     })

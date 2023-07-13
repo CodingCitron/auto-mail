@@ -1,5 +1,5 @@
 import React, { createContext, useMemo, useState, useContext, useCallback } from 'react'
-import { findIndex, initScheduleData } from '../utils/calendar'
+// import { findIndex, initSchedules } from '../utils/calendar'
 
 export const CalendarStateContext = createContext(null)
 export const CalendarDispatchContext = createContext(null)

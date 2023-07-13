@@ -1,17 +1,14 @@
-import BaseLayout from "./layouts/BaseLayout"
-
-import { Navigate, Route, Routes } from "react-router-dom"
-import { CalendarProvider } from "./context/Calendar"
-
-import axios from "axios"
 import { useEffect } from "react"
+import { Navigate, Route, Routes } from "react-router-dom"
+import { useAuthStore } from "./store/auth"
+import axios from "axios"
 
+// 컴포넌트
+import BaseLayout from "./layouts/BaseLayout"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Reigster from './pages/Register'
 import Modals from './components/Common/Modals'
-import { useAuthStore } from "./store/auth"
-
 
 const PrivateRoute = ({ children }) => {
   const user = useAuthStore(state => state.user)
@@ -60,11 +57,7 @@ function App() {
         <Routes>
           <Route path="/" element={
             <PrivateRoute>
-              {/* <ScheduleProvider> */}
-                <CalendarProvider>
-                    <Home />
-                </CalendarProvider>
-              {/* </ScheduleProvider> */}
+              <Home />
             </PrivateRoute>
           } />
           <Route 

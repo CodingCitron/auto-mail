@@ -1,19 +1,26 @@
-import React from 'react'
+import React, { useMemo } from 'react'
+import { week } from '../../../services/calendar'
 
-const Week = ({ day }) => {
-    let className = ''
+const option = {
+  '토': 'saturday',
+  '일': 'sunday'
+}
 
-    if(day === '일') {
-        className = 'sunday'
-    } 
-
-    if(day === '토') {
-        className = 'saturday'
-    }
+const Week = () => {
+  const drawWeek = useMemo(() => {
+    return week.map(day => (
+      <div 
+        key={day}
+        className={option[day] || ''}
+      >
+        {day}요일
+      </div>
+    ))
+  }, [])
 
   return (
-    <div className={className}>
-        {day}요일
+    <div className='week'>
+      { drawWeek }
     </div>
   )
 }

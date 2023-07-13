@@ -1,20 +1,14 @@
-import React, { useEffect } from 'react'
-
-// function areEqual(prev, next) {
-//   console.log(prev, next)
-
-//   return true
-// }
+import React, { useMemo } from 'react'
 
 const Schedule = ({
     name
 }) => {
-  useEffect(() => {
-    console.log('Schedule 재렌더')
-  })
-
+  const memorized = useMemo(() => {
+    return { name }
+  }, [name])
+  
   return (
-    <li>{ name }</li>
+    <li>{ memorized.name }</li>
   )
 }
 

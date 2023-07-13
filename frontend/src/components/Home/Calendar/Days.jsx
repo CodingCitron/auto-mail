@@ -1,31 +1,27 @@
-import React, { useCallback, useContext } from 'react'
-import { CalendarStateContext } from '../../../context/Calendar'
+import React, { useMemo } from 'react'
 import Day from './Day'
+import { dateFor, getStartDate } from '../../../services/calendar'
 
-const Days = () => {
-    const state = useContext(CalendarStateContext)
+const Days = ({ year, month }) => {
+    const dates = useMemo(() => {
+        return dateFor(
+            getStartDate(year, month), 
+            42, 
+            ({ curDate }, index) =>{ 
+                return (
+                    <Day
+                        key={index}
+                        index={index}
+                        date={curDate}
+                    />
+                )
+            }
+            )
+    }, [year, month])
 
-    const selectedDateHandle = useCallback((e) => {
-        console.log(e)
-    }, [])
   return (
     <div className='date'>
-        {   
-            state.scheduleList &&
-            state.scheduleList.map(({
-                index, 
-                value,
-                day,
-            }) => (
-                <Day 
-                    key={index}
-                    index={index}
-                    value={value}
-                    day={day}
-                    setDate={selectedDateHandle}
-                />
-            ))
-        }
+        { dates }
     </div>
   )
 }
