@@ -1,4 +1,5 @@
 import Schedule from "../utils/Schedule"
+// import axios from "axios"
 
 // 날짜 for문 돌리기: https://jsikim1.tistory.com/108#google_vignette
 export function getDatesStartToLast(startDate, lastDate) {
@@ -39,6 +40,18 @@ export function dateFor(startDate, count, callback) {
     return array
 }
 
+export function getIndexDate(year, month, index) {
+    const startDate = getStartDate(year, month)
+
+    if(index === 0) return startDate
+    else {
+        const indexDate = new Date(startDate)
+        indexDate.setDate(startDate.getDate() + index)
+
+        return indexDate
+    }
+}
+
 export const week = '일,월,화,수,목,금,토'.split(',')
 
 export function getStartDate(year, month) {
@@ -46,6 +59,14 @@ export function getStartDate(year, month) {
     const prevDateCount = week.findIndex(w => w === week[day.getDay()])
 
     return new Date(year, month - 1, 0 - (prevDateCount - 1))
+}
+
+export function getEndDate(year, month) {
+    const startDate = getStartDate(year, month)
+    const endDate = new Date(startDate)
+    endDate.setDate(startDate.getDate() + 41)
+
+    return endDate
 }
 
 const testData = [
@@ -104,11 +125,43 @@ export function diffDay(first, second) {
     return diffTime / (1000 * 60 *60 * 24)
 }
 
-export function initSchedules (year, month) {
+export function initSchedules(year, month) {
     const count = 42
     const startDate = getStartDate(year, month)
+    // const endDate = getEndDate(year, month)
+    const schedules = filteredData(startDate, count, testData)
+
+    return dateFor(
+        startDate, 42, 
+        ({ curDate }, index) => {
+        
+        return {
+            index,
+            date: curDate,
+            schedules: schedules[index]
+        }
+    })
+}
+
+export async function setSchedules(year, month) {
+    const count = 42
+    const startDate = getStartDate(year, month)
+    const endDate = getEndDate(year, month)
+
+    console.log(startDate, endDate)
 
     // 1. API 요청
+    // try {
+    //     const res = await axios.get('/schedule', {
+    //         startDate: startDate,
+    //         endDate: endDate
+    //     })
+
+    //     console.log(res)
+    // } catch (error) {
+    //     console.log(error)
+    // }
+
     // 2. schedules 데이터 필터링
     const schedules = filteredData(startDate, count, testData)
 

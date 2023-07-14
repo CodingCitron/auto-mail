@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { isLoggedIn } from "../middlewares/auth.js";
 import { Schedule } from "../models/index.js";
-import { and, or } from "sequelize";
+import { and, or, Op } from "sequelize";
 
 const router = Router()
 
@@ -20,24 +20,27 @@ async function getSchedules(req, res, next) {
         // ex) 6 ~ 8월 42일치 데이터 - 기간 검색
         const schedules = await Schedule.findAll({
             where: {
+                writer: req.user.id,
                 [and]: [
                     {
                         [or]: [
                             {
-                                start_date: [Op.lte]
-                            }
+                                start_date: { [Op.lte]: startDate }
+                            },
                         ]
                     },
                     {
                         [or]: [
-
+                            {
+                                end_date: { [Op.lte]: endDate }
+                            },
                         ]
                     }
                 ]
             }
         }) 
 
-
+        res.status(200).json(schedules)
     } catch (error) {
         console.error(error)
         next(error)

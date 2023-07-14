@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import Day from './Day'
 import { dateFor, getStartDate } from '../../../services/calendar'
 

@@ -11,6 +11,7 @@ const ScheduleList = ({ index }) => {
     }, shallow)
 
     const memorizedList = useMemo(() => {
+        // console.log(schedules)
         return schedules.map(schedule => (
             <Schedule 
                 key={schedule.id}

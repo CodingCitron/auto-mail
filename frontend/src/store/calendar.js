@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { initSchedules } from '../services/calendar'
+import { initSchedules, setSchedules } from '../services/calendar'
 
 const DEFAULT_PROPS = {
     year: null,
@@ -8,7 +8,29 @@ const DEFAULT_PROPS = {
     list: [],
 }
 
-const createCalendarStore = (initProps) => {
+const createCalendarStore = initProps => {
+
+    async function prev (set, get) {
+        const { month, year } = get()
+        const data = {}
+
+        if(month === 1) {
+            data.year = year - 1
+            data.month = 12
+        } else {
+            data.year = year
+            data.month = month - 1
+        }
+        
+        const list = await setSchedules(data.year, data.month)
+        console.log(list)
+        return set(state => ({
+            ...state,
+            ...data,
+            ...list
+        }))
+    }
+
     return create((set, get) => ({
         ...DEFAULT_PROPS,
         ...initProps,
@@ -16,7 +38,7 @@ const createCalendarStore = (initProps) => {
             const { year, month, day } = get()
             return new Date(year, month - 1, (day || 1))
         },
-        setDate: (date) => set(
+        setDate: date => set(
             (state) => {
                 const year = date.getFullYear()
                 const month = date.getMonth() + 1  
@@ -31,26 +53,7 @@ const createCalendarStore = (initProps) => {
                 }
             }
         ),
-        prev: () => set(
-            (state) => {
-                const data = {}
-                if(state.month === 1) {
-                    data.year = state.year - 1
-                    data.month = 12
-                } else {
-                    data.year = state.year
-                    data.month = state.month - 1
-                }
-
-                return {
-                    ...state,
-                    ...data,
-                    list: [
-                        ...initSchedules(data.year, data.month)
-                    ]
-                }
-            }
-        ),
+        prev: () => prev(set, get),
         next: () => set(
             (state) => {
                 const data = {}
@@ -95,10 +98,12 @@ const createCalendarStore = (initProps) => {
     }))
 } 
 
-const init = () => {
+const initProps = () => {
     const date = new Date()
     const year =  date.getFullYear()
     const month = date.getMonth() + 1
+
+    // console.log(initSchedules(year, month))
 
     return {
         year,
@@ -109,5 +114,5 @@ const init = () => {
     }
 }
 
-export const useCalendarStore = createCalendarStore(init())
+export const useCalendarStore = createCalendarStore(initProps())
 

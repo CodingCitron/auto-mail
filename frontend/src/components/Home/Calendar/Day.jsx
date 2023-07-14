@@ -2,9 +2,9 @@ import React, { useMemo } from 'react'
 import Schedules from './Schedules'
 
 const Day = ({ index, date }) => {
-    // const state = useContext(CalendarStateContext)
     const day = useMemo(() => date.getDate(), [date])
     const className = useMemo(() => {
+        console.log('day')
         if(date.toDateString() === new Date().toDateString()) {
             return 'day-background today' 
         } else {
