@@ -1,7 +1,6 @@
 import axios from "axios"
-import Schedule from "../utils/Schedule"
-// import axios from "axios"
 
+// 날짜 계산 관련: https://gurtn.tistory.com/113
 // 날짜 for문 돌리기: https://jsikim1.tistory.com/108#google_vignette
 export function getDatesStartToLast(startDate, lastDate) {
 	const regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
@@ -87,6 +86,16 @@ export function filteredData (startDate, count, data) {
     )
 }
 
+export function findIndex(year, month, date) {
+    const startDate = getStartDate(year, month)
+    const endDate = getEndDate(year, month)
+
+    if(!includes(startDate, endDate, date)) return -1
+    
+    const diffDate = startDate.getTime() - date.getTime()
+    return Math.floor(Math.abs(diffDate / (1000 * 60 * 60 * 24)))
+}
+
 export function diffDay(first, second) {
     let diffTime = first.getTime() - second.getTime()
     return diffTime / (1000 * 60 *60 * 24)
@@ -134,6 +143,6 @@ export function includeDay({ startDate, a, b }) {
     && a.getDate() === b.getDate()
 }
 
-export function includes({ year, month, count, date }) {
-    return
+export function includes( start, end, date ) {
+    return start.getTime() <= date.getTime() && end.getTime() >= date.getTime()
 }

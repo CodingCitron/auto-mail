@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { isLoggedIn } from "../middlewares/auth.js";
-import { Schedule } from "../models/index.js";
+import { Schedule, User } from "../models/index.js";
 import { and, or, Op } from "sequelize";
+// 시퀄라이즈: https://velog.io/@jujube0/Sequelize-%EB%AC%B8%EC%A0%9C%ED%95%B4%EA%B2%B0
 
 const router = Router()
 
@@ -15,7 +16,6 @@ async function getSchedules(req, res, next) {
     // console.log(req, res)
     const  { startDate, endDate, date, keyword, title, content, attribute, include, order } = req.query
 
-    console.log(startDate, endDate)
     try {
         // 날짜 기간 검색 
         // ex) 6 ~ 8월 42일치 데이터 - 기간 검색
@@ -24,11 +24,17 @@ async function getSchedules(req, res, next) {
                 writer: req.user.id,
                 date: {
                     [Op.between]: [startDate, endDate]
-                }
-            }
+                },
+            },
+            attributes: {
+                exclude: ['content']
+            },
+            include: {
+                model: User,
+                attributes: ['email']
+            },
         }) 
 
-        console.log(schedules)
         res.status(200).json(schedules)
     } catch (error) {
         // console.error(error)
@@ -48,7 +54,13 @@ async function createSchedule(req, res, next) {
             date: date,
         })
 
-        res.status(200).json(schedule)
+        res.status(200).json({
+            id: schedule.id,
+            writer: schedule.writer,
+            title: schedule.title,
+            date: schedule.date,
+            created_at: schedule.created_at
+        })
     } catch (error) {
         console.log(error)
         next(error)

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { dateFor, getEndDate, getStartDate, setSchedules } from '../services/calendar'
+import { dateFor, filteredData, findIndex, getStartDate, setSchedules } from '../services/calendar'
 
 const DEFAULT_PROPS = {
     year: null,
@@ -97,10 +97,28 @@ const createCalendarStore = () => {
         const { year, month } = get()
         const list = await setSchedules(year, month)
 
+        console.log(list)
         return set(state => ({
             ...state,
             list: [ ...list ]
         }))
+    }
+
+    async function setSchedule(data, set, get) {
+        const { year, month } = get()
+        const index = findIndex(year, month, data.date)
+
+        if(index === -1) return
+
+        return set(state => {
+            const schedules = state.list[index].schedules
+            state.list[index].schedules = [...schedules, { ...data }]
+
+            return {
+                ...state,
+                list: [...state.list]
+            }
+        })
     }
 
     return create((set, get) => ({
@@ -112,24 +130,7 @@ const createCalendarStore = () => {
         prev: () => prev(set, get),
         next: () => next(set, get),
         getSchedules: () => get().list,
-        setSchedule: (index, data) => set(
-            (state) => {
-                console.log(state)
-                console.log(state.list[5].schedules.push({ 
-                    id: 9, name: '테스트' 
-                }))
-                // console.log(state.list)
-                const schedules = state.list[5].schedules
-
-                const newData = state.list
-                newData[5].schedules = [...schedules]
-                // // console.log(state.list[5].schedules)
-                return {
-                    ...state,
-                    list: [...newData]
-                }
-            }
-        ),
+        setSchedule: data => setSchedule(data, set, get),
         removeSchedule: () => set((state) => {}),
         updateSchedule: () => set((state) => {}),
     }))

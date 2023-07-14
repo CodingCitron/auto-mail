@@ -1,15 +1,22 @@
 import React, { useEffect, useMemo } from 'react'
-import DatePicker from './DatePicker'
+import ReactDatePicker from 'react-datepicker'
+import { ko } from 'date-fns/esm/locale'
 
-const CalendarHeader = ({ prev, next }) => {
-    useEffect(() => {
-        console.log('헤더 재렌더')
-    })
+const CalendarHeader = ({ year, month, day, prev, next, setDate }) => {
+    const getDate = useMemo(() => new Date(year, month - 1, (day || 1)), [year, month, day])
+
+    // useEffect(() => {
+    //     console.log('CalenderHeader renderer')
+    // })
 
   return (
     <header className='title'>
-        <DatePicker
+        <ReactDatePicker
+            locale={ko}
             dateFormat="yyyy년 MM월"
+            showMonthYearPicker
+            selected={getDate} 
+            onChange={setDate} 
         />
         <div className='pagination'>
             <button 

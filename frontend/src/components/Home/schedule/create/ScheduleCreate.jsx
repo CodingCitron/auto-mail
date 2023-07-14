@@ -23,9 +23,9 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
                 // endDate: endDate // endDate.getTime()
             })
 
-            console.log(res)
-            // create(res.data)
+            res.data.date = new Date(res.data.date) 
 
+            setSchedule(res.data)
             return onSubmit()
         } catch (error) {
             console.error(error)
@@ -71,12 +71,12 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
                 <h4 className='py-1 min-w-[50px] text-left'>일시</h4>
                 <div className='flex-1 custom-datepicker'>
                     <ReactDatePicker
-                        dateFormat="yyyy년 MM월 dd일 h:mm aa"
+                        dateFormat="yyyy년 MM월 dd일"
                         className='p-1 border text-center w-full'
                         locale={memorizedKo}
                         selected={date}
                         onChange={setDate}
-                        showTimeSelect
+                        // showTimeSelect
                     />
                 </div>
                 {/* <div>

@@ -1,24 +1,3 @@
-### 테스트 데이터 형식 변경 필요
-- 일정을 검색하는 것도 일치 검색이 아닌 범위 검색으로 변경 해야함
-```javascript
-// 기존
-{
-    id: 0,
-    name: '테스트 일정',
-    date: new Date(), 
-}
-// 신규
-{
-    id: 0,
-    title: '테스트 일정'
-    content: '테스트 일정 상세'
-    start_date: '일정 시작일'
-    end_date: '일정 종료일'
-    created_at: '일정 생성일'
-}
-```
-<br/>
-
 ### 데이터베이스
 - postgres  
 <br/>
