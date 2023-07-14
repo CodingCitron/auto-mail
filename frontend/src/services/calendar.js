@@ -1,3 +1,4 @@
+import axios from "axios"
 import Schedule from "../utils/Schedule"
 // import axios from "axios"
 
@@ -69,55 +70,21 @@ export function getEndDate(year, month) {
     return endDate
 }
 
-const testData = [
-    new Schedule({
-        id: 0,
-        name: '테스트 일정',
-        date: new Date(), 
-    }),
-    new Schedule({
-        id: 1,
-        name: '테스트 일정 2',
-        date: new Date(2023, 6, 15), 
-    }),
-    new Schedule({
-        id: 2,
-        name: '테스트 일정 2',
-        date: new Date(2023, 7, 15), 
-    }),
-    new Schedule({
-        id: 3,
-        name: '테스트 일정 2',
-        date: new Date(2023, 6, 10), 
-    }),
-    new Schedule({
-        id: 4,
-        name: '테스트 일정 2',
-        date: new Date(2023, 6, 10), 
-    }),
-    new Schedule({
-        id: 5,
-        name: '테스트 일정 2',
-        date: new Date(2023, 6, 10), 
-    }),
-    new Schedule({
-        id: 6,
-        name: '테스트 일정 2',
-        date: new Date(2023, 6, 10), 
-    }),
-    new Schedule({
-        id: 7,
-        name: '테스트 일정 2',
-        date: new Date(2023, 6, 5), 
-    }),
-]
-
 export function filteredData (startDate, count, data) {
-    return dateFor(startDate, 42, ({ curDate }, index) => data.filter(schedule => schedule.compareDate(curDate)))
-}
-
-export function findIndex(year, month, date) {
-    const startDate = getStartDate(year, month)
+    return dateFor(startDate, 42, ({ curDate }, index) => {
+            const filtered = data.filter(schedule => includeDay(
+                    {
+                        startDate,
+                        a: schedule.date,
+                        b: curDate
+                    }
+                )
+            )
+            
+            return filtered
+            // return filtered.map(schedule => ({...schedule, index: index}))
+        }
+    )
 }
 
 export function diffDay(first, second) {
@@ -125,60 +92,48 @@ export function diffDay(first, second) {
     return diffTime / (1000 * 60 *60 * 24)
 }
 
-export function initSchedules(year, month) {
-    const count = 42
-    const startDate = getStartDate(year, month)
-    // const endDate = getEndDate(year, month)
-    const schedules = filteredData(startDate, count, testData)
-
-    return dateFor(
-        startDate, 42, 
-        ({ curDate }, index) => {
-        
-        return {
-            index,
-            date: curDate,
-            schedules: schedules[index]
-        }
-    })
-}
-
 export async function setSchedules(year, month) {
     const count = 42
     const startDate = getStartDate(year, month)
     const endDate = getEndDate(year, month)
 
-    console.log(startDate, endDate)
+    try {
+        const res = await axios.get('/schedule', {
+            params: {
+                startDate: startDate,
+                endDate: endDate
+            }
+        })
 
-    // 1. API 요청
-    // try {
-    //     const res = await axios.get('/schedule', {
-    //         startDate: startDate,
-    //         endDate: endDate
-    //     })
+        const data = res.data.map(schedule => {
+            schedule.date = new Date(schedule.date)
+            return schedule
+        })
 
-    //     console.log(res)
-    // } catch (error) {
-    //     console.log(error)
-    // }
+        const schedules = filteredData(startDate, count, data)
 
-    // 2. schedules 데이터 필터링
-    const schedules = filteredData(startDate, count, testData)
+        return dateFor(
+            startDate, 42, 
+            ({ curDate }, index) => {
+            
+            return {
+                index,
+                date: curDate,
+                schedules: schedules[index]
+            }
+        })
 
-    return dateFor(
-        startDate, 42, 
-        ({ curDate }, index) => {
-        
-        return {
-            index,
-            date: curDate,
-            schedules: schedules[index]
-        }
-    })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
-export function CompareDay(first, second) {
-    return first.getFullYear() === second.getFullYear()
-    && first.getMonth() === second.getMonth()
-    && first.getDate() === second.getDate()
+export function includeDay({ startDate, a, b }) {
+    return a.getFullYear() === b.getFullYear()
+    && a.getMonth() === b.getMonth()
+    && a.getDate() === b.getDate()
+}
+
+export function includes({ year, month, count, date }) {
+    return
 }

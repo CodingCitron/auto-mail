@@ -8,19 +8,19 @@ import axios from 'axios'
 const ScheduleCreate = ({ onClose, onSubmit }) => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
-    const [startDate, setStartDate] = useState(new Date())
-    const [endDate, setEndDate] = useState(new Date())
+    const [date, setDate] = useState(new Date())
+    // const [endDate, setEndDate] = useState(new Date())
 
     const memorizedKo = useMemo(() => ko, [])
-    const create = useCalendarStore(state => state.createSchedule)
+    const setSchedule = useCalendarStore(state => state.setSchedule)
 
     const handleClickSubmit = useCallback(async () => {
         try {
             const res = await axios.post('/schedule', {
                 title,
                 content,
-                startDate: startDate, // startDate.getTime() - 문자열
-                endDate: endDate // endDate.getTime()
+                date: date, // startDate.getTime() - 문자열
+                // endDate: endDate // endDate.getTime()
             })
 
             console.log(res)
@@ -34,7 +34,7 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
             onClose()
         }
 
-    }, [title, content, startDate, endDate])
+    }, [title, content, date])
 
     const handleClickCancel = useCallback(() => onClose(
 
@@ -74,12 +74,12 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
                         dateFormat="yyyy년 MM월 dd일 h:mm aa"
                         className='p-1 border text-center w-full'
                         locale={memorizedKo}
-                        selected={startDate}
-                        onChange={setStartDate}
+                        selected={date}
+                        onChange={setDate}
                         showTimeSelect
                     />
                 </div>
-                <div>
+                {/* <div>
                     ~
                 </div>
                 <div className='flex-1 custom-datepicker'>
@@ -91,7 +91,7 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
                         onChange={setEndDate}
                         showTimeSelect
                     />
-                </div>
+                </div> */}
             </div>
           </div>
           {/* 상세 내용 */}

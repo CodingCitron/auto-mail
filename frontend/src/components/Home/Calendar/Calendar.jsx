@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { shallow } from 'zustand/shallow'
 import { useCalendarStore } from '../../../store/calendar'
 
@@ -9,22 +9,31 @@ import Days from './Days'
 
 // https://im-designloper.tistory.com/87
 const Calendar = () => {
-    const { year, month, day, prev, next, create } = useCalendarStore(state => {
+    const { year, month, day, prev, next, setSchedule, initData } = useCalendarStore(state => {
         return {
             year: state.year,
             month: state.month,
             day: state.day,
             prev: state.prev,
             next: state.next,
-            create: state.createSchedule,
+            setSchedule: state.setSchedule,
+            initData: state.initData,
         }
     }, shallow)
+    
+    const memorized = useMemo(() => {
+        return { prev, next, setSchedule }
+    }, [])
+
+    useEffect(() => {
+        initData()
+    }, [])
 
   return (
     <>
         <CalendarHeader 
-            prev={prev}
-            next={next}
+            prev={memorized.prev}
+            next={memorized.next}
         />
         <div className='calendar'>
             <Week />
@@ -34,7 +43,7 @@ const Calendar = () => {
             />
         </div>
         <CalendarFooter 
-            create={create}
+            setSchedule={memorized.setSchedule}
         />
     </>
   )

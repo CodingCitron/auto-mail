@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { initSchedules, setSchedules } from '../services/calendar'
+import { dateFor, getEndDate, getStartDate, setSchedules } from '../services/calendar'
 
 const DEFAULT_PROPS = {
     year: null,
@@ -8,8 +8,30 @@ const DEFAULT_PROPS = {
     list: [],
 }
 
-const createCalendarStore = initProps => {
+const initProps = () => {
+    const date = new Date(),
+    year = date.getFullYear(),
+    month = date.getMonth() + 1
+    
+    const startDate = getStartDate(year, month)
+    const list = dateFor(startDate, 42, 
+        ({ curDate }, index) => {
+            return {
+                index,
+                date: curDate,
+                schedules: []
+            }
+        }
+    )
 
+    return {
+        year,
+        month,
+        list
+    }
+}
+
+const createCalendarStore = () => {
     async function prev (set, get) {
         const { month, year } = get()
         const data = {}
@@ -23,61 +45,74 @@ const createCalendarStore = initProps => {
         }
         
         const list = await setSchedules(data.year, data.month)
-        console.log(list)
+        
         return set(state => ({
             ...state,
             ...data,
-            ...list
+            list: [ ...list ]
+        }))
+    }
+
+    async function next (set, get) {
+        const { month, year } = get()
+        const data = {}
+
+        if(month === 12) {
+            data.year = year + 1
+            data.month = 1
+        } else {
+            data.year = year
+            data.month = month + 1
+        }
+        
+        const list = await setSchedules(data.year, data.month)
+
+        return set(state => ({
+            ...state,
+            ...data,
+            list: [ ...list ]
+        }))
+    }
+
+    function getDate(get) {
+        const { year, month, day } = get()
+        return new Date(year, month - 1, (day || 1))
+    }
+
+    async function setDate(date, set) {
+        const year = date.getFullYear()
+        const month = date.getMonth() + 1  
+
+        const list = await setSchedules(year, month)
+
+        return set(state => ({
+            ...state,
+            year: year,
+            month: month,
+            list: [ ...list ]
+        }))
+    }
+
+    async function initData (set, get) {
+        const { year, month } = get()
+        const list = await setSchedules(year, month)
+
+        return set(state => ({
+            ...state,
+            list: [ ...list ]
         }))
     }
 
     return create((set, get) => ({
         ...DEFAULT_PROPS,
-        ...initProps,
-        getDate: () => {
-            const { year, month, day } = get()
-            return new Date(year, month - 1, (day || 1))
-        },
-        setDate: date => set(
-            (state) => {
-                const year = date.getFullYear()
-                const month = date.getMonth() + 1  
-            
-                return {
-                    ...state,
-                    year: year,
-                    month: month,
-                    list: [
-                        ...initSchedules(year, month)
-                    ]
-                }
-            }
-        ),
+        ...initProps(),
+        initData: () => initData(set, get),
+        getDate: () => getDate(get),
+        setDate: date => setDate(date, set),
         prev: () => prev(set, get),
-        next: () => set(
-            (state) => {
-                const data = {}
-                if(state.month === 12) {
-                    data.year = state.year + 1
-                    data.month = 1
-                } else {
-                    data.year = state.year
-                    data.month = state.month + 1
-                }
-
-                return {
-                    ...state,
-                    ...data,
-                    list: [
-                        ...initSchedules(data.year, data.month)
-                    ]
-                }
-            }
-        ),
-        getSchedules: (index) => {
-            return get().list[index]
-        },
-        createSchedule: (index, data) => set(
+        next: () => next(set, get),
+        getSchedules: () => get().list,
+        setSchedule: (index, data) => set(
             (state) => {
                 console.log(state)
                 console.log(state.list[5].schedules.push({ 
@@ -94,25 +129,11 @@ const createCalendarStore = initProps => {
                     list: [...newData]
                 }
             }
-        )
+        ),
+        removeSchedule: () => set((state) => {}),
+        updateSchedule: () => set((state) => {}),
     }))
 } 
 
-const initProps = () => {
-    const date = new Date()
-    const year =  date.getFullYear()
-    const month = date.getMonth() + 1
-
-    // console.log(initSchedules(year, month))
-
-    return {
-        year,
-        month,
-        list: [
-            ...initSchedules(year, month)
-        ]
-    }
-}
-
-export const useCalendarStore = createCalendarStore(initProps())
+export const useCalendarStore = createCalendarStore()
 

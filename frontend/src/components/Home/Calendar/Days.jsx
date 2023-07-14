@@ -1,22 +1,38 @@
-import React, { useEffect, useMemo } from 'react'
-import Day from './Day'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { dateFor, getStartDate } from '../../../services/calendar'
+import Schedules from './Schedules'
 
 const Days = ({ year, month }) => {
+    const day = useCallback((date) => date.getDate(), [])
+    const className = useCallback((date) => {
+        if(date.toDateString() === new Date().toDateString()) {
+            return 'day-background today' 
+        } else {
+            return 'day-background'
+        }
+    }, [])
+
     const dates = useMemo(() => {
         return dateFor(
             getStartDate(year, month), 
             42, 
             ({ curDate }, index) =>{ 
                 return (
-                    <Day
+                    <div 
                         key={index}
-                        index={index}
-                        date={curDate}
-                    />
+                        className='flex flex-col' 
+                        // onClick={() => setDate(date)}
+                    >
+                        <div className={className(curDate)}>
+                            { day(curDate) }
+                        </div>
+                        <Schedules
+                            index={index}
+                        />
+                    </div>
                 )
             }
-            )
+        )
     }, [year, month])
 
   return (

@@ -14,11 +14,7 @@ const Schedule = (sequelize, DataTypes, option) => {
 				type: DataTypes.TEXT,
 				allowNull: false,
 			},
-			start_date: {
-				type: DataTypes.DATE,
-				allowNull: false
-			},
-			end_date: {
+			date: {
 				type: DataTypes.DATE,
 				allowNull: false
 			},

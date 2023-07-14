@@ -4,20 +4,23 @@
     "password": "postgres",
     "database": "postgres",
     "host": "postgres",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "timezone": "+09:00"
   },
   "test": {
     "username": "postgres",
     "password": "postgres",
     "database": "postgres",
     "host": "postgres",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "timezone": "+09:00"
   },
   "production": {
     "username": "postgres",
     "password": "postgres",
     "database": "postgres",
     "host": "postgres",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "timezone": "+09:00"
   }
 }

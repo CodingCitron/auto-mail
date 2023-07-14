@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from 'react'
-import Schedule from './Schedule'
 import { useCalendarStore } from '../../../store/calendar'
 import { shallow } from 'zustand/shallow'
 
@@ -11,12 +10,12 @@ const ScheduleList = ({ index }) => {
     }, shallow)
 
     const memorizedList = useMemo(() => {
-        // console.log(schedules)
         return schedules.map(schedule => (
-            <Schedule 
+            <li 
                 key={schedule.id}
-                name={schedule.name}
-            />
+            >
+                {schedule.title}
+            </li>
         ))
     }, [schedules, index])
 

@@ -12,52 +12,40 @@ async function getSchedule(req, res, next) {
 // https://s0n9h2.tistory.com/110
 // https://stackoverflow.com/questions/29798357/sequelize-where-statement-with-date
 async function getSchedules(req, res, next) {
-    console.log(req, res)
-    const  { startDate, endDate, keyword, title, content, attribute, include, order } = req.body
+    // console.log(req, res)
+    const  { startDate, endDate, date, keyword, title, content, attribute, include, order } = req.query
 
+    console.log(startDate, endDate)
     try {
         // 날짜 기간 검색 
         // ex) 6 ~ 8월 42일치 데이터 - 기간 검색
         const schedules = await Schedule.findAll({
             where: {
                 writer: req.user.id,
-                [and]: [
-                    {
-                        [or]: [
-                            {
-                                start_date: { [Op.lte]: startDate }
-                            },
-                        ]
-                    },
-                    {
-                        [or]: [
-                            {
-                                end_date: { [Op.lte]: endDate }
-                            },
-                        ]
-                    }
-                ]
+                date: {
+                    [Op.between]: [startDate, endDate]
+                }
             }
         }) 
 
+        console.log(schedules)
         res.status(200).json(schedules)
     } catch (error) {
-        console.error(error)
+        // console.error(error)
         next(error)
     }
 }
 
 async function createSchedule(req, res, next) {
     // console.log(req, res)
-    const { title, content, startDate, endDate } = req.body
+    const { title, content, startDate, endDate, date } = req.body
 
     try {
         const schedule = await Schedule.create({
             writer: req.user.id,
             title: title,
             content: content,
-            start_date: startDate,
-            end_date: endDate,
+            date: date,
         })
 
         res.status(200).json(schedule)
