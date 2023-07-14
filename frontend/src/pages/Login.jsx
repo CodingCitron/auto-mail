@@ -3,11 +3,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import InputGroup from '../components/common/InputGroup'
 import axios from 'axios'
 import { useAuthStore } from '../store/auth'
+import useInput from '../hooks/useInput'
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [errors, setErrors] = useState('')
+  const [email, setEmail] = useInput('')
+  const [password, setPassword] = useInput('')
+  const [errors, setErrors] = useInput('')
 
   // const navigate = useNavigate()
   const { login } = useAuthStore(state => state)
@@ -37,6 +38,7 @@ const Login = () => {
           <InputGroup
               className="mb-2" 
               type="email" 
+              name="email"
               value={email}
               setValue={setEmail} 
               error={errors.email}
@@ -45,6 +47,7 @@ const Login = () => {
             <InputGroup
               className="mb-2" 
               type="password" 
+              name="password"
               value={password}
               setValue={setPassword} 
               error={errors.password}

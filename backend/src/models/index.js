@@ -3,10 +3,12 @@ import process from 'process';
 import Config from '../config/config.json' assert { type: "json" };
 // console.log(Config)
 // 참조: https://hojung-testbench.tistory.com/entry/ExpressSequelize-MySQL%EA%B3%BC-Express%EC%97%B0%EA%B2%B0-ES6
+// https://tempdev.tistory.com/34
 
 import UserModel from './User.js';
 import ScheduleModel from './Schedule.js';
 import TimerModel from './Timer.js';
+import SpecialDayModel from './SpecialDay.js';
 
 const env = process.env.NODE_ENV || 'development';
 const config = Config[env];
@@ -20,7 +22,7 @@ const sequelize = new Sequelize(
 );
 
 const defaultOption = {
-  timestamps: false, // timestamps가 true면 created_at, updated_at 자동으로 생김
+  timestamps: true, // timestamps가 true면 created_at, updated_at 자동으로 생김
   underscored: true, // createdAt, created_at 차이
   paranoid: true, // soft delete 구현, hard delete할거면 false 하면됨
   // modelName: 'Plan', // 자바스크립트에서 사용하는 이름
@@ -32,6 +34,7 @@ const defaultOption = {
 db.User = UserModel(sequelize, Sequelize, defaultOption)
 db.Schedule = ScheduleModel(sequelize, Sequelize, defaultOption)
 db.Timer = TimerModel(sequelize, Sequelize, defaultOption)
+db.SpecialDay = SpecialDayModel(sequelize, Sequelize, defaultOption)
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
@@ -43,4 +46,4 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 export default db
-export const { User, Schedule, Timer } = db
+export const { User, Schedule, Timer, SpecialDay } = db

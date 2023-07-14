@@ -54,129 +54,15 @@ body {
 }
 
 .header .inner-header,
-.footer .inner-footer,
-.calendar-wrap {
+.footer .inner-footer{
     max-width: 1100px;
     width: 100%;
     padding: 0 32px;
 }
 
-.calendar-wrap {
-    margin-top: 32px;
-}
-
-.calendar-wrap .title {
-    display: flex;
-    justify-content: space-between;
-}
-
-.calendar-wrap .title h3 {
-    font-weight: 600;
-}
-
-
-.calendar .week {
-    border-bottom-width: 1px;
-}
-
-.calendar .week,
-.calendar .date {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-}
-
-.calendar {
-    margin-top: 16px;
-    border-width: 1px;
-    /* border-radius: 8px; */
-}
-
-.calendar .week > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60px;
-    font-weight: 600;
-    color: #444
-}
-
-.calendar .week > div.sunday {
-    color: #222;
-}
-
-.calendar .week > div.saturday {
-    color: #222;
-}
-
-.calendar .date > div {
-    height: 100px;
-    overflow: auto;
-}
-
-.day-background {
-    width: 100%;
-    padding: 2px 6px;
-    /* margin-bottom: 2px; */
-    color: #777;
-    pointer-events: none;
-}
-
-.day-background.today {
-    color: rgb(30, 30, 30);
-    font-weight: bold;
-}
-
-.schedules > li{
-    padding: 0 6px;
-}
-
-.pagination {
-    display: flex;
-    gap: 16px;
-}
-
-.btn {
-    text-decoration: none;
-    cursor: pointer;
-    transition: scale 0.2s;
-}
-
-.btn:active {
-    transform: scale(0.9);
-}
-
 .input {
     width: 100%;
     border: 1px solid black;
-}
-
-.btn-normal {
-    display: block;
-    width: 100%;
-    background-color: rgb(30, 30, 30);
-    color: white;
-    text-align: center;
-}
-
-.btn-normal.auto {
-    width: auto;
-}
-
-.calendar .week > div,
-.calendar .date > div {
-    border-right-width: 1px;
-}
-.calendar .date > div:nth-child(7n),
-.calendar .week > div:nth-child(7) {
-    border-right-width: 0px;
-}
-
-.calendar .date > div {
-    border-bottom-width: 1px;
-}
-
-.calendar .date > div:nth-child(n + 36){
-    border-bottom-width: 0px;
 }
 
 .modal-backdrop {

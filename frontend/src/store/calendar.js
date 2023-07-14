@@ -97,7 +97,6 @@ const createCalendarStore = () => {
         const { year, month } = get()
         const list = await setSchedules(year, month)
 
-        console.log(list)
         return set(state => ({
             ...state,
             list: [ ...list ]

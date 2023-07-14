@@ -2,9 +2,13 @@ import React, { useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useAuthStore } from '../../store/auth'
+import { shallow } from 'zustand/shallow'
 
 const Header = () => {
-  const { user, logout } = useAuthStore(state => state)
+  const { user, logout } = useAuthStore(state => ({
+    user: state.user,
+    logout: state.logout
+  }), shallow)
 
   const handleLogout = useCallback(async () => {
     try {
@@ -45,4 +49,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default React.memo(Header)

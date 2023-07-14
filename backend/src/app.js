@@ -16,6 +16,8 @@ import { swaggerUi, specs } from "./swagger.js"
 import scheduleRouter from './routes/schedule.js'
 import userRouter from './routes/user.js'
 
+import initSpecialDay from "./special-day.js"
+
 const __dirname = fileURLToPath(new URL(".", import.meta.url))
 dotenv.config({ path: path.join(__dirname, '..', '.env') })
 
@@ -64,12 +66,13 @@ app.listen(port, async () => {
     // AppDataSource.initialize().then(async () => {
     //     console.log("database initialized")
     // }).catch(error => console.log(error))
-
     console.log(`app listening on port ${port}`)
 
     try {
         await db.sequelize.sync()
         console.log('sql connected')
+
+        initSpecialDay(false)
     } catch (error) {
         console.log(error)
     } 

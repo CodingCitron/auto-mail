@@ -1,6 +1,6 @@
 import React from "react"
 
-const InputGroup = ({ className, type, placeholder, value, error, setValue }) => {
+const InputGroup = ({ className, type, name, placeholder, value, error, setValue }) => {
   return (
     <div className={className}>
       <input
@@ -8,7 +8,8 @@ const InputGroup = ({ className, type, placeholder, value, error, setValue }) =>
           className='w-full p-2  border border-[#999]'    
           placeholder={placeholder}
           value={value}
-          onChange={e => setValue(e.target.value)}
+          name={name}
+          onChange={setValue}
           autoComplete="on"
       />
       <small className='fopt-medium text-red-500'>
