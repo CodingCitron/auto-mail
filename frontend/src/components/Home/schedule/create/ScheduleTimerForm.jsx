@@ -22,14 +22,18 @@ const checkList = [
 
 // https://stackoverflow.com/questions/54633690/how-can-i-use-multiple-refs-for-an-array-of-elements-with-hooks
 const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memorizedKo }) => {
+    const [date, setDate] = useState(null)
     const [time, setTime] = useState(null)
     const [count, setCount] = useInput(1)
     const [check, setCheck] = useState(checkList)
     const [error, setError] = useState({
+        date: '',
         time: '',
         count: '',
         check: '',
     })
+
+    const [focus, setFocus] = useState(null)
 
     const checkEls = useRef([])
 
@@ -64,13 +68,13 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
     ), [check])
 
     const addSchedule = () => {
-        console.log(time)
-
+        // console.log(time)
         let some = check.filter(item => item.checked === true)
         some = some.map(item => item.name).join(', ')
 
         const data = {
             id: scheduleNextID.current,
+            date,
             time,
             count,
             some,
@@ -89,15 +93,26 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
     }
 
     const dateFormat = useCallback(date => {
+        if(!date) return
         const year = date.getFullYear(),
         month = date.getMonth() + 1,
-        day = date.getDate(), 
-        hour = date.getHours(),
-        min = date.getMinutes()
+        day = date.getDate()
         
-        return `${year}.${month}.${day} 
-        ${String(hour).length === 1 ? '0' + hour : hour } : ${String(min).length === 1 ? '0' + min : min }`
+        return `${year}.${month}.${day}` 
     }, [])
+
+    const timeFormat = useCallback(time => {
+        if(!time) return 
+        const hour = time.getHours()
+        const min = time.getMinutes()
+
+        return `${String(hour).length === 1 ? '0' + hour : hour } : ${String(min).length === 1 ? '0' + min : min }`
+    }, [])  
+
+    const focusedSchedule = useCallback((id) => {
+        const defaultClassName = 'flex justify-between px-[4px] pt-[2px]'
+        return focus === id ? `${defaultClassName} bg-cyan-500` : `${defaultClassName}`
+    }, [focus])
 
   return (
     <AlarmWrap>
@@ -116,13 +131,15 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
                         scheduleList.map((data, index) => (
                             <li 
                                 key={index}
-                                className='flex justify-between px-[4px] pt-[2px]'
+                                className={focusedSchedule(data.id)}
+                                onClick={e => setFocus(data.id)}
                             >
                                 <div>
                                     {data.id}. {data.some}    
                                 </div>
                                 <div className='flex gap-1'>
-                                    { dateFormat(data.time) }
+                                    <span>{ dateFormat(data.date) }</span>
+                                    <span>{ timeFormat(data.time) }</span>
                                     <button>삭제</button>
                                 </div>
                             </li>
@@ -132,13 +149,26 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
             </div>  
             <div className='border flex-1'>
                 <ReactDatePicker
-                    dateFormat="yyyy년 MM월 dd일 h:mm aa"
+                    dateFormat="yyyy년 MM월 dd일"
                     className='p-1 border text-center w-full'
-                    placeholderText="날짜 시간 선택"
+                    placeholderText="날짜 선택"
+                    locale={memorizedKo}
+                    onChange={setDate}
+                    selected={date}
+                    isClearable
+                />
+                <ReactDatePicker
+                    dateFormat="h:mm aa"
+                    className='p-1 border text-center w-full'
+                    placeholderText="시간 선택"
                     locale={memorizedKo}
                     onChange={setTime}
                     selected={time}
-                    showTimeInput
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption="Time"
+                    isClearable
                 />
                 <div>
                     { error.time }

@@ -17,6 +17,7 @@ import scheduleRouter from './routes/schedule.js'
 import userRouter from './routes/user.js'
 
 import initSpecialDay from "./special-day.js"
+import { getSchedules, setSchedule, cancelSchedule } from "./schedule.js" 
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url))
 dotenv.config({ path: path.join(__dirname, '..', '.env') })
@@ -73,6 +74,7 @@ app.listen(port, async () => {
         console.log('sql connected')
 
         initSpecialDay(false)
+        getSchedules()
     } catch (error) {
         console.log(error)
     } 

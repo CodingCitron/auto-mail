@@ -144,8 +144,8 @@ export function includeDay({ startDate, a, b }) {
 }
 
 export function includes( start, end, date ) {
-    console.log('add:',date.getTime())
-    console.log('end:', end.getTime())
+    // console.log('add:',date.getTime())
+    // console.log('end:', end.getTime())
     
     return start.getTime() <= date.getTime() && end.getTime() >= date.getTime()
 }

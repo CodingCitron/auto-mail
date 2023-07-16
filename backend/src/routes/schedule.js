@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { isLoggedIn } from "../middlewares/auth.js";
-import { Schedule, User } from "../models/index.js";
+import { Schedule, User, Timer } from "../models/index.js";
 import { and, or, Op } from "sequelize";
 // 시퀄라이즈: https://velog.io/@jujube0/Sequelize-%EB%AC%B8%EC%A0%9C%ED%95%B4%EA%B2%B0
 
@@ -44,8 +44,8 @@ async function getSchedules(req, res, next) {
 
 async function createSchedule(req, res, next) {
     // console.log(req, res)
-    const { title, content, startDate, endDate, date } = req.body
-
+    const { title, content, startDate, endDate, date, scheduleList } = req.body
+   
     try {
         const schedule = await Schedule.create({
             writer: req.user.id,
@@ -54,6 +54,8 @@ async function createSchedule(req, res, next) {
             date: date,
         })
 
+        const timers = await Timer.bulkCreate(scheduleList)
+        
         res.status(200).json({
             id: schedule.id,
             writer: schedule.writer,

@@ -9,13 +9,13 @@ const ScheduleContentForm = ({ title, setTitle, date, setDate, content, setConte
         {/* 일정명, 일시 */}
         <div className='mb-3'>
             <div className='flex gap-4 mb-3'>
-            <h4 className='py-1 min-w-[50px] text-left'>일정명</h4>
-            <input 
-                type='text'
-                value={title}
-                onChange={setTitle}
-                className='border p-1 flex-1'
-            />
+                <h4 className='py-1 min-w-[50px] text-left'>일정명</h4>
+                <input 
+                    type='text'
+                    value={title}
+                    onChange={setTitle}
+                    className='border p-1 flex-1'
+                />
             </div>
             <div className='flex gap-4'>
                 <h4 className='py-1 min-w-[50px] text-left'>일시</h4>

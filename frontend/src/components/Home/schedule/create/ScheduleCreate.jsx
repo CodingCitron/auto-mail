@@ -25,11 +25,29 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
     }, [])
 
     const handleClickSubmit = useCallback(async () => {
+        const newList = []
+        
+        scheduleList.forEach(schdule => {
+          const types = schdule.some.split(',')
+        
+          for(let i = 0; i < types.length; i++) {
+            newList.push(
+              {
+                date: schdule.date,
+                time: schdule.time,
+                type: types[i],
+                count: schdule.count
+              }
+            )
+          }
+        })
+
         try {
             const res = await axios.post('/schedule', {
                 title,
                 content,
                 date: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+                scheduleList: newList
             })
 
             res.data.date = new Date(res.data.date) 
@@ -43,7 +61,7 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
             onClose()
         }
 
-    }, [title, content, date])
+    }, [title, content, date, scheduleList])
 
     const handleClickCancel = useCallback(() => onClose(
 

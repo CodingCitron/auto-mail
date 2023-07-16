@@ -6,9 +6,17 @@ const Timer = (sequelize, DataTypes, option) => {
 			// 	type: DataTypes.INTEGER,
 			// 	allowNull: false, //필수
 			// },
+			date: {
+				type: DataTypes.DATE, // DATETIME(DATE), DATE(DATEONLY) 
+				allowNull: true,
+			},
 			time: { // 어느 시간에 보낼지
 				type: DataTypes.DATE, // DATETIME(DATE), DATE(DATEONLY) 
-				allowNull: false,
+				allowNull: true,
+			},
+			type: {
+				type: DataTypes.STRING(10),
+				allowNull: false
 			},
             count: { // 보내는 횟수 
                 type: DataTypes.INTEGER, 
@@ -17,6 +25,7 @@ const Timer = (sequelize, DataTypes, option) => {
             count_history: { // 보낸 횟수
                 type: DataTypes.INTEGER,
                 allowNull: true,
+				defaultValue: 0
             },
 			created_at: {  // 생성 시간
 				type: DataTypes.DATE, // DATETIME(DATE), DATE(DATEONLY)  
