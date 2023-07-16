@@ -21,6 +21,7 @@ const transporter = nodemailer.createTransport({
     }
 })
 
+// 메일 보내기
 async function sendMail({ from, to, subject, html }) {
     try {
         const info = await transporter.sendMail({
@@ -28,7 +29,9 @@ async function sendMail({ from, to, subject, html }) {
             to, // 받는 곳의 메일 주소를 입력
             subject, // 보내는 메일의 제목
             html, // html로 작성된 내용
-        })  
+        })
+        
+        console.log('메일 발송')
     } catch (error) {
         console.log(error)
     }
@@ -41,12 +44,12 @@ async function sendMail({ from, to, subject, html }) {
 //     html: '테스트'
 // })
 
-sendMail({
-    from: `"test" <dummyoub@gmail.com>`,
-    to: 'mojo@tpay.co.kr',
-    subject: '테스트',
-    html: '테스트'
-})
+// sendMail({
+//     from: `"test" <dummyoub@gmail.com>`,
+//     to: 'mojo@tpay.co.kr',
+//     subject: '테스트',
+//     html: '테스트'
+// })
 
 export {
     transporter,

@@ -27,6 +27,10 @@ const Timer = (sequelize, DataTypes, option) => {
                 allowNull: true,
 				defaultValue: 0
             },
+			status: {
+				type: DataTypes.STRING(10),
+				allowNull: true
+			},
 			created_at: {  // 생성 시간
 				type: DataTypes.DATE, // DATETIME(DATE), DATE(DATEONLY)  
 				allowNull: false,
@@ -41,8 +45,8 @@ const Timer = (sequelize, DataTypes, option) => {
 	);
 
 	Timer.associate = (db) => {
-        db.Timer.belongsTo(db.User, { foreignKey: 'creater', targetKey: 'id', onDelete: 'cascade' })
-        db.Timer.belongsTo(db.Schedule, { foreignKey: 'writer', targetKey: 'id', onDelete: 'cascade' })
+        db.Timer.belongsTo(db.User, { foreignKey: 'creater_id', targetKey: 'id', onDelete: 'cascade' })
+        db.Timer.belongsTo(db.Schedule, { foreignKey: 'schedule_id', targetKey: 'id', onDelete: 'cascade' })
 	};
 
 	return Timer;

@@ -31,8 +31,8 @@ const User = (sequelize, DataTypes, option) => {
 	);
 
 	User.associate = (db) => {
-		db.User.hasMany(db.Schedule, { foreignKey: 'writer', sourceKey: 'id' })
-		db.User.hasMany(db.Timer, { foreignKey: 'creater', sourceKey: 'id' })
+		db.User.hasMany(db.Schedule, { foreignKey: 'writer_id', sourceKey: 'id' })
+		db.User.hasMany(db.Timer, { foreignKey: 'creater_id', sourceKey: 'id' })
 		// db.User.hasMany(db.Post);
 		// db.User.hasMany(db.Comment);
 		// db.User.belongsToMany(db.Post, { through: "Like", as: "Liked" });

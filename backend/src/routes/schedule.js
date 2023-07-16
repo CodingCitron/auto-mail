@@ -2,6 +2,7 @@ import { Router } from "express";
 import { isLoggedIn } from "../middlewares/auth.js";
 import { Schedule, User, Timer } from "../models/index.js";
 import { and, or, Op } from "sequelize";
+import { setSchedules } from "../schedule.js";
 // 시퀄라이즈: https://velog.io/@jujube0/Sequelize-%EB%AC%B8%EC%A0%9C%ED%95%B4%EA%B2%B0
 
 const router = Router()
@@ -21,7 +22,7 @@ async function getSchedules(req, res, next) {
         // ex) 6 ~ 8월 42일치 데이터 - 기간 검색
         const schedules = await Schedule.findAll({
             where: {
-                writer: req.user.id,
+                writer_id: req.user.id,
                 date: {
                     [Op.between]: [startDate, endDate]
                 },
@@ -48,17 +49,24 @@ async function createSchedule(req, res, next) {
    
     try {
         const schedule = await Schedule.create({
-            writer: req.user.id,
+            writer_id: req.user.id,
             title: title,
             content: content,
             date: date,
         })
 
-        const timers = await Timer.bulkCreate(scheduleList)
-        
+        const modefiedList = scheduleList.map(item => ({
+            ...item,
+            creater_id: req.user.id,
+            schedule_id: schedule.id,
+        }))
+
+        const timers = await Timer.bulkCreate(modefiedList)
+        await setSchedules()
+
         res.status(200).json({
             id: schedule.id,
-            writer: schedule.writer,
+            writer_id: schedule.writer,
             title: schedule.title,
             date: schedule.date,
             created_at: schedule.created_at
