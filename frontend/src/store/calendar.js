@@ -49,7 +49,7 @@ const createCalendarStore = () => {
         return set(state => ({
             ...state,
             ...data,
-            list: [ ...list ]
+            list
         }))
     }
 
@@ -70,7 +70,7 @@ const createCalendarStore = () => {
         return set(state => ({
             ...state,
             ...data,
-            list: [ ...list ]
+            list
         }))
     }
 
@@ -89,7 +89,7 @@ const createCalendarStore = () => {
             ...state,
             year: year,
             month: month,
-            list: [ ...list ]
+            list
         }))
     }
 
@@ -99,7 +99,7 @@ const createCalendarStore = () => {
 
         return set(state => ({
             ...state,
-            list: [ ...list ]
+            list
         }))
     }
 
@@ -110,12 +110,14 @@ const createCalendarStore = () => {
         if(index === -1) return
 
         return set(state => {
-            const schedules = state.list[index].schedules
-            state.list[index].schedules = [...schedules, { ...data }]
-
+            const list = state.list.map(item => item.index === index ? 
+                { ...item, schedules: [...item.schedules, data] } 
+                : item
+            )
+            
             return {
                 ...state,
-                list: [...state.list]
+                list
             }
         })
     }

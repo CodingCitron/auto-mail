@@ -17,7 +17,7 @@ const Schedules = ({ index }) => {
                 {schedule.title}
             </li>
         ))
-    }, [schedules, index])
+    }, [schedules])
 
     // useEffect(() => {
     //     console.log('schedlues rerender')

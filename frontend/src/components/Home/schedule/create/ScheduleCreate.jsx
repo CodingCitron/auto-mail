@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useCalendarStore } from '../../../../store/calendar'
 import { ko } from 'date-fns/esm/locale'
 import axios from 'axios'
@@ -15,12 +15,10 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
     const [date, setDate] = useState(new Date())
     const [scheduleList, setScheduleList] = useState([])
 
+    const scheduleNextID = useRef(0)
+
     const memorizedKo = useMemo(() => ko, [])
     const setSchedule = useCalendarStore(state => state.setSchedule)
-
-    const addSchedule = useCallback((data) => {
-
-    }, [])
 
     const removeSchedule = useCallback((data) => {
       
@@ -31,7 +29,7 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
             const res = await axios.post('/schedule', {
                 title,
                 content,
-                date: date,
+                date: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
             })
 
             res.data.date = new Date(res.data.date) 
@@ -68,11 +66,11 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
           />
           {/* 메일 보내기 기능 설정 */}
           <ScheduleTimerForm
-            addSchedule={addSchedule}
-            removeSchedule={removeSchedule}
             memorizedKo={memorizedKo}
+            scheduleList={scheduleList}
+            scheduleNextID={scheduleNextID}
+            setScheduleList={setScheduleList}
           >
-            { scheduleList }
           </ScheduleTimerForm>
         </div>
         {/* 일정등록, 취소 버튼 */}

@@ -18,11 +18,6 @@ const Schedule = (sequelize, DataTypes, option) => {
 				type: DataTypes.DATE,
 				allowNull: false
 			},
-			created_at: {
-				type: DataTypes.DATE, // DATETIME(DATE), DATE(DATEONLY) 
-				allowNull: false,
-				defaultValue: DataTypes.NOW,
-			}
 		},
 		{
             ...option,

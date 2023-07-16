@@ -45,4 +45,4 @@ const ScheduleContentForm = ({ title, setTitle, date, setDate, content, setConte
   )
 }
 
-export default ScheduleContentForm
+export default React.memo(ScheduleContentForm)
