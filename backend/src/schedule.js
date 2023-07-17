@@ -35,6 +35,9 @@ const initSchedlues = async () => {
  * 1. Date 값이 있으면 연속 불가 정확한 시간에 보내기
  * 2. Date 값이 없고, time 값이 있으면 반복 가능 
  * - 2번의 경우 count가 0이면 매일 그 시간에 보내기
+ * 
+ * gte >= 5 : 5 
+ * gt > 5 : 5
  */
 const getSchedules = async () => {
     const rows = await Timer.findAll({
@@ -52,7 +55,7 @@ const getSchedules = async () => {
                     },
                     count: {
                         [Op.ne]: 0, // =
-                        [Op.ne]: db.sequelize.col('count_history') // !=
+                        [Op.gt]: db.sequelize.col('count_history') // count_history가 같거나 더 크면
                     }
                 },
                 { // or 
@@ -63,7 +66,7 @@ const getSchedules = async () => {
                     count: {
                         [Op.or]: {
                             [Op.eq]: 0,
-                            [Op.ne]: db.sequelize.col('count_history')
+                            [Op.gt]: db.sequelize.col('count_history') // 크면
                         }
                     }
                 }
@@ -103,20 +106,27 @@ const setSchedule = async (data, callback) => {
 
     if(data.time === null) { // date 만
         date = data.date
-    
+        cron[5] = '0'
         cron[4] = date.getMonth() + 1
         cron[3] = date.getDate()
+        cron[2] = '0'
+        cron[1] = '0'
+        cron[0] = '0'
     }
 
     if(data.date === null) { // time 만
         date = data.time
 
+        cron[5] = '0'
         cron[2] = date.getHours()
         cron[1] = date.getMinutes()
+        cron[0] = '0'
     } 
 
-    cron = cron.join(' ')
+    // 둘다 NULL이 아니면
 
+    cron = cron.join(' ')
+    // console.log(cron)
     const job = schedule.scheduleJob(cron, async (a, b) => {
         // 실행이 되었을 때 
         // 데이터 가져오기
@@ -187,6 +197,7 @@ const setSchedule = async (data, callback) => {
             // console.log(job)
             // list에 넣기
             scheduleList.push({ id: data.id, job: job })
+            console.log(scheduleList)
         } catch (error) {
             console.log(error)
         }

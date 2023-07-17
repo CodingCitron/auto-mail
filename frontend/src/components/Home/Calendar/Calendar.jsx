@@ -15,7 +15,7 @@ const CalendarMain = styled.div`
 
 // https://im-designloper.tistory.com/87
 const Calendar = () => {
-    const { year, month, day, prev, next, initData, getDate, setDate, setSchedule } = useCalendarStore(state => {
+    const { year, month, day, prev, next, initData, getDate, setDate, setSchedule, selectDay } = useCalendarStore(state => {
         return {
             year: state.year,
             month: state.month,
@@ -26,6 +26,7 @@ const Calendar = () => {
             setDate: state.setDate,
             setSchedule: state.setSchedule,
             initData: state.initData,
+            selectDay: state.selectDay
         }
     }, shallow)
     
@@ -54,6 +55,7 @@ const Calendar = () => {
             <Days 
                 year={year}
                 month={month}
+                selectDay={selectDay}
             />
         </CalendarMain>
         <CalendarFooter 

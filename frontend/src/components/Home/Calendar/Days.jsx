@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo } from 'react'
 import { dateFor, getStartDate } from '../../../services/calendar'
 import Schedules from './Schedules'
 
-const Days = ({ year, month }) => {
+const Days = ({ year, month, selectDay }) => {
     const day = useCallback((date) => date.getDate(), [])
     const className = useCallback((date) => {
         if(date.toDateString() === new Date().toDateString()) {
@@ -20,7 +20,8 @@ const Days = ({ year, month }) => {
                 return (
                     <div 
                         key={index}
-                        className='flex flex-col' 
+                        className='flex flex-col'
+                        onClick={() => selectDay(index)}
                         // onClick={() => setDate(date)}
                     >
                         <div className={className(curDate)}>

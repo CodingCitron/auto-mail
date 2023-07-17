@@ -73,7 +73,7 @@ app.listen(port, async () => {
         await db.sequelize.sync()
         console.log('sql connected')
 
-        initSpecialDay(false)
+        // initSpecialDay(false)
         initSchedlues()
     } catch (error) {
         console.log(error)

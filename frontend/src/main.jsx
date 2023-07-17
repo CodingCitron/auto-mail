@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css"
 import "./assets/css/customDatePicker.css"
 import './assets/css/calendar.css'
 import './assets/css/button.css'
-import './index.css'
+import './assets/css/index.css'
 
 import App from './App.jsx'
 import axios from "axios"

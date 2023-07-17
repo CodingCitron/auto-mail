@@ -6,7 +6,7 @@ const DEFAULT_PROPS = {
     month: null,
     day: null,
     list: [], 
-    selected: null, /* 선택된 스케줄 id */
+    selectedDay: null, /* 선택된 스케줄 id */
 }
 
 const initProps = () => {
@@ -123,8 +123,28 @@ const createCalendarStore = () => {
         })
     }
 
-    function setSelected(id, set, get) {
-        console.log(id)
+    function selectDay(index, set, get) {
+        console.log(index)
+        return set(state => {
+            return {
+                ...state,
+                selectedDay: {
+                    ...state.list[index],
+                    schedules: [...state.list[index].schedules]
+                }
+            }
+        })
+    }
+
+    function selectSchedule(index, set, get) {
+        // return set(state => {
+        //     console.log(state.list[index])
+
+        //     return {
+        //         ...state,
+        //         selectedDay: null
+        //     }
+        // })
     }
 
     return create((set, get) => ({
@@ -143,7 +163,8 @@ const createCalendarStore = () => {
         updateSchedule: () => set((state) => {}),
 
         /* selected schedule */
-        setSelected: (id) => setSelected(id, set, get)
+        selectDay: (index) => selectDay(index, set, get),
+        selectSchedule: (id) => selectSchedule(id, set, get)
     }))
 } 
 
