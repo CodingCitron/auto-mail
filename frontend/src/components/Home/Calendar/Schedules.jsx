@@ -3,8 +3,9 @@ import { useCalendarStore } from '../../../store/calendar'
 import { shallow } from 'zustand/shallow'
 
 const Schedules = ({ index }) => {
-    const { schedules } = useCalendarStore(state => {
+    const { schedules, setSelected } = useCalendarStore(state => {
         return {
+            setSelected: state.setSelected,
             schedules: state.list[index].schedules
         }
     }, shallow)
@@ -12,6 +13,7 @@ const Schedules = ({ index }) => {
     const memorizedList = useMemo(() => {
         return schedules.map(schedule => (
             <li 
+                onClick={e => setSelected(schedule.id)}
                 key={schedule.id}
             >
                 {schedule.title}

@@ -5,7 +5,8 @@ const DEFAULT_PROPS = {
     year: null,
     month: null,
     day: null,
-    list: [],
+    list: [], 
+    selected: null, /* 선택된 스케줄 id */
 }
 
 const initProps = () => {
@@ -122,6 +123,10 @@ const createCalendarStore = () => {
         })
     }
 
+    function setSelected(id, set, get) {
+        console.log(id)
+    }
+
     return create((set, get) => ({
         ...DEFAULT_PROPS,
         ...initProps(),
@@ -130,10 +135,15 @@ const createCalendarStore = () => {
         setDate: date => setDate(date, set),
         prev: () => prev(set, get),
         next: () => next(set, get),
+        
+        /* schedule crud */
         getSchedules: () => get().list,
         setSchedule: data => setSchedule(data, set, get),
         removeSchedule: () => set((state) => {}),
         updateSchedule: () => set((state) => {}),
+
+        /* selected schedule */
+        setSelected: (id) => setSelected(id, set, get)
     }))
 } 
 
