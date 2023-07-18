@@ -21,12 +21,13 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
     const setSchedule = useCalendarStore(state => state.setSchedule)
 
     const removeSchedule = useCallback((data) => {
-      
-    }, [])
+      const list = scheduleList.filter(item => item.id !== data.id)
+      setScheduleList([...list])
+    }, [scheduleList])
 
     const handleClickSubmit = useCallback(async () => {
         const newList = []
-        
+
         scheduleList.forEach(schdule => {
           const types = schdule.some.split(',')
         
@@ -88,6 +89,7 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
             scheduleList={scheduleList}
             scheduleNextID={scheduleNextID}
             setScheduleList={setScheduleList}
+            removeSchedule={removeSchedule}
           >
           </ScheduleTimerForm>
         </div>

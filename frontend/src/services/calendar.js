@@ -134,6 +134,17 @@ export async function setSchedules(year, month) {
 
     } catch (error) {
         console.log(error)
+
+        return dateFor(
+            startDate, 42, 
+            ({ curDate }, index) => {
+            
+            return {
+                index,
+                date: curDate,
+                schedules: []
+            }
+        })
     }
 }
 

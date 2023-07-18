@@ -10,8 +10,8 @@ const Home = () => {
           <Calendar />
         </div>
         <div className='schedule-detail'>
-          <ListView />
           <DetailView />
+          <ListView />
         </div>
     </main>
   )

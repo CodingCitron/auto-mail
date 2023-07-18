@@ -21,7 +21,7 @@ const checkList = [
 ]
 
 // https://stackoverflow.com/questions/54633690/how-can-i-use-multiple-refs-for-an-array-of-elements-with-hooks
-const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memorizedKo }) => {
+const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memorizedKo, removeSchedule }) => {
     const [date, setDate] = useState(null)
     const [time, setTime] = useState(null)
     const [count, setCount] = useInput(1)
@@ -88,10 +88,6 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
         console.log(scheduleList)
     }
 
-    const removeSchedule = () => {
-        
-    }
-
     const dateFormat = useCallback(date => {
         if(!date) return
         const year = date.getFullYear(),
@@ -140,7 +136,7 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
                                 <div className='flex gap-1'>
                                     <span>{ dateFormat(data.date) }</span>
                                     <span>{ timeFormat(data.time) }</span>
-                                    <button>삭제</button>
+                                    <button onClick={() => removeSchedule(data)}>삭제</button>
                                 </div>
                             </li>
                         ))
@@ -194,7 +190,6 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
                 </div>
                 <div>
                     <button onClick={addSchedule}>추가</button>
-                    <button onClick={removeSchedule}>삭제</button>
                 </div>
             </div>
         </div>

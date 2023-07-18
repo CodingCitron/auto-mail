@@ -126,7 +126,6 @@ const createCalendarStore = () => {
     }
 
     function selectDay(index, set, get) {
-        console.log(index)
         return set(state => {
             return {
                 ...state,
@@ -139,25 +138,26 @@ const createCalendarStore = () => {
     }
 
     async function selectSchedule(info, set, get) {
-        console.log(info)
         selectDay(info.index, set, get)
 
         try {
-            // axios.get('/schedule', {
-            //     id: info.id
-            // })
-    
+            const res = await axios.get(`/schedule/${info.id}`)
+
+            const data = res.data
+            
+            set(state => ({
+                ...state,
+                selectedSchedule: {
+                    ...data,
+                    user: data.User.email,
+                    timers: [...data.Timers]
+                }
+            }))
+
+            console.log(get())
         } catch (error) {
-
+            console.log(error)
         }
-        // return set(state => {
-        //     console.log(state.list[index])
-
-        //     return {
-        //         ...state,
-        //         selectedDay: null
-        //     }
-        // })
     }
 
     return create((set, get) => ({

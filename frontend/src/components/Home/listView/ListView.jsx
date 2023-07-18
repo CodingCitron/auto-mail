@@ -14,8 +14,17 @@ const ListView = () => {
                 {   
                     day &&
                     day.schedules.map(schedule => (
-                        <li key={schedule.id}>
-                            {schedule.title}
+                        <li 
+                            key={schedule.id}
+                            className='flex justify-between'
+                        >
+                            <div>
+                                {schedule.title}
+                            </div>
+                            <div className='flex justify-between gap-1'>
+                                <button>수정</button>
+                                <button>삭제</button>
+                            </div>
                         </li>
                     ))
                 }
