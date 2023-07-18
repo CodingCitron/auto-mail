@@ -9,7 +9,6 @@ const ListView = () => {
     })
 
     const schedules = useMemo(() => {
-        console.log(day)
         return (
             <ul>
                 {   
@@ -24,10 +23,24 @@ const ListView = () => {
         )
     }, [day])
 
+    const date = useMemo(() => {
+        if(!day) return 
+        const { date } = day
+        return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`
+    }, [day])
+
   return (
-    <div>
+    <section className='w-[400px] border p-1'>
+        <h3 className='flex justify-between'>
+            <div>
+                스케줄 목록
+            </div>
+            <div>
+                { date }
+            </div>
+        </h3>
         { schedules }
-    </div>
+    </section>
   )
 }
 

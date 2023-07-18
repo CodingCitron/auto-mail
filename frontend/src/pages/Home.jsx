@@ -1,6 +1,7 @@
 import React from 'react'
 import Calendar from '../components/home/calendar/Calendar'
 import ListView from '../components/home/listView/ListView'
+import DetailView from '../components/home/detailView/DetailView'
 
 const Home = () => {
   return (
@@ -8,8 +9,9 @@ const Home = () => {
         <div className='calendar-wrap'>
           <Calendar />
         </div>
-        <div>
+        <div className='schedule-detail'>
           <ListView />
+          <DetailView />
         </div>
     </main>
   )

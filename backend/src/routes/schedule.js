@@ -15,7 +15,7 @@ async function getSchedule(req, res, next) {
 // https://stackoverflow.com/questions/29798357/sequelize-where-statement-with-date
 async function getSchedules(req, res, next) {
     // console.log(req, res)
-    const  { startDate, endDate, date, keyword, title, content, attribute, include, order } = req.query
+    const  { id, startDate, endDate, date, keyword, title, content, attribute, include, order } = req.query
 
     try {
         // 날짜 기간 검색 

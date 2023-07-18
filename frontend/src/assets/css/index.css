@@ -54,7 +54,8 @@ body {
 }
 
 .header .inner-header,
-.footer .inner-footer{
+.footer .inner-footer,
+.schedule-detail {
     max-width: 1200px;
     width: 100%;
     padding: 0 32px;
@@ -75,4 +76,10 @@ body {
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, .3);
+}
+
+.schedule-detail {
+    display: flex;
+    margin-top: 16px;
+    gap: 16px;
 }

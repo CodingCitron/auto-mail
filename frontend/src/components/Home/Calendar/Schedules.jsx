@@ -10,16 +10,19 @@ const Schedules = ({ index }) => {
         }
     }, shallow)
 
-    const select = useCallback((e, id) => {
+    const select = useCallback((e, info) => {
         e.stopPropagation()
-        selectSchedule(id)
+        selectSchedule(info)
     })
 
     const memorizedList = useMemo(() => {
         return schedules.map(schedule => (
             <li 
                 className='bg-red-300 mb-[2px] rounded-md'
-                onClick={e => select(e, schedule.id)}
+                onClick={e => select(e, {
+                    index,
+                    id: schedule.id
+                })}
                 key={schedule.id}
             >
                 {schedule.title}

@@ -101,26 +101,23 @@ const setSchedules = async () => {
  */
 const setSchedule = async (data, callback) => {
     let date
-    let cron = '******'
+    let cron = '00000*'
     cron = [...cron]
 
     if(data.time === null) { // date 만
         date = data.date
-        cron[5] = '0'
+
         cron[4] = date.getMonth() + 1
         cron[3] = date.getDate()
-        cron[2] = '0'
-        cron[1] = '0'
-        cron[0] = '0'
     }
 
     if(data.date === null) { // time 만
         date = data.time
 
-        cron[5] = '0'
+        cron[4] = '*'
+        cron[3] = '*'
         cron[2] = date.getHours()
         cron[1] = date.getMinutes()
-        cron[0] = '0'
     } 
 
     // 둘다 NULL이 아니면
@@ -196,7 +193,11 @@ const setSchedule = async (data, callback) => {
             console.log('job 생성')
             // console.log(job)
             // list에 넣기
-            scheduleList.push({ id: data.id, job: job })
+            scheduleList.push({ 
+                id: data.id, 
+                cron: cron,
+                job: job 
+            })
             console.log(scheduleList)
         } catch (error) {
             console.log(error)

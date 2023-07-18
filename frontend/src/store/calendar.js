@@ -1,12 +1,14 @@
 import { create } from 'zustand'
 import { dateFor, filteredData, findIndex, getStartDate, setSchedules } from '../services/calendar'
+import axios from 'axios'
 
 const DEFAULT_PROPS = {
     year: null,
     month: null,
     day: null,
     list: [], 
-    selectedDay: null, /* 선택된 스케줄 id */
+    selectedDay: null, /* 선택된 Day */
+    selectedSchedule: null /* 선택된 schedule 정보 */
 }
 
 const initProps = () => {
@@ -136,7 +138,18 @@ const createCalendarStore = () => {
         })
     }
 
-    function selectSchedule(index, set, get) {
+    async function selectSchedule(info, set, get) {
+        console.log(info)
+        selectDay(info.index, set, get)
+
+        try {
+            // axios.get('/schedule', {
+            //     id: info.id
+            // })
+    
+        } catch (error) {
+
+        }
         // return set(state => {
         //     console.log(state.list[index])
 
@@ -164,7 +177,7 @@ const createCalendarStore = () => {
 
         /* selected schedule */
         selectDay: (index) => selectDay(index, set, get),
-        selectSchedule: (id) => selectSchedule(id, set, get)
+        selectSchedule: (info) => selectSchedule(info, set, get)
     }))
 } 
 
