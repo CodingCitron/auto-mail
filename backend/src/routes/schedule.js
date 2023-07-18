@@ -8,12 +8,37 @@ import { setSchedules } from "../schedule.js";
 const router = Router()
 
 async function getSchedule(req, res, next) {
-    console.log(req, res)
+    const id = req.params.id
+
+    try {
+        const schedules = await Schedule.findOne({
+            where: {
+                id,
+                writer_id: req.user.id,
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: ['email']
+                },
+                {
+                    model: Timer,
+                }
+            ],
+        })
+
+        res.status(200).json(schedules)
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+
 }
 
 // https://s0n9h2.tistory.com/110
 // https://stackoverflow.com/questions/29798357/sequelize-where-statement-with-date
 async function getSchedules(req, res, next) {
+    console.log(' 여기? ㄴ')
     // console.log(req, res)
     const  { id, startDate, endDate, date, keyword, title, content, attribute, include, order } = req.query
 
@@ -103,6 +128,7 @@ async function scheduleDetail(req, res, next) {
  *                      type: object
  */
 router.get('/', isLoggedIn, getSchedules)
+router.get('/:id', isLoggedIn, getSchedule)
 router.post('/', isLoggedIn, createSchedule)
 
 export default router
