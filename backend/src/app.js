@@ -15,6 +15,7 @@ import { fileURLToPath } from "url"
 import { swaggerUi, specs } from "./swagger.js"
 import scheduleRouter from './routes/schedule.js'
 import userRouter from './routes/user.js'
+import fileRouter from './routes/file.js'
 
 import initSpecialDay from "./special-day.js"
 import { getSchedules, setSchedule, cancelSchedule, initSchedlues } from "./schedule.js" 
@@ -58,6 +59,8 @@ app.use("/api/user", userRouter)
  *   description: 계획 정보 관리
  */
 app.use("/api/schedule", scheduleRouter)
+
+app.use("/api/file", fileRouter)
 
 // app.get("/", (_, res) => res.send("running"))
 // 에러 처리 미들웨어 에러시 동작 변경할 떄 사용

@@ -9,6 +9,7 @@ import UserModel from './User.js';
 import ScheduleModel from './Schedule.js';
 import TimerModel from './Timer.js';
 import SpecialDayModel from './SpecialDay.js';
+import FileModel from './File.js';
 
 const env = process.env.NODE_ENV || 'development';
 const config = Config[env];
@@ -35,6 +36,7 @@ db.User = UserModel(sequelize, Sequelize, defaultOption)
 db.Schedule = ScheduleModel(sequelize, Sequelize, defaultOption)
 db.Timer = TimerModel(sequelize, Sequelize, defaultOption)
 db.SpecialDay = SpecialDayModel(sequelize, Sequelize, defaultOption)
+db.File = FileModel(sequelize, Sequelize, defaultOption)
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
@@ -46,4 +48,4 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 export default db
-export const { User, Schedule, Timer, SpecialDay } = db
+export const { User, Schedule, Timer, SpecialDay, File } = db

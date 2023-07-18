@@ -32,13 +32,11 @@ async function getSchedule(req, res, next) {
         console.log(error)
         next(error)
     }
-
 }
 
 // https://s0n9h2.tistory.com/110
 // https://stackoverflow.com/questions/29798357/sequelize-where-statement-with-date
 async function getSchedules(req, res, next) {
-    console.log(' 여기? ㄴ')
     // console.log(req, res)
     const  { id, startDate, endDate, date, keyword, title, content, attribute, include, order } = req.query
 
