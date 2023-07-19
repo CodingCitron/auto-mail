@@ -142,7 +142,6 @@ const createCalendarStore = () => {
 
         try {
             const res = await axios.get(`/schedule/${info.id}`)
-
             const data = res.data
             
             set(state => ({
@@ -154,7 +153,7 @@ const createCalendarStore = () => {
                 }
             }))
 
-            console.log(get())
+            // console.log(get())
         } catch (error) {
             console.log(error)
         }

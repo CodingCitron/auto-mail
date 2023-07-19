@@ -100,8 +100,47 @@ async function createSchedule(req, res, next) {
     }   
 }
 
-async function scheduleDetail(req, res, next) {
-    console.log(req, res)
+async function updateSchedule(req, res, next) {
+    const id = req.params.id
+    const { title, content, startDate, endDate, date, scheduleList } = req.body
+
+    try {
+        const schedule = await Schedule.update({
+            title,
+            content,
+            date,
+        }, {
+            where: {
+                id
+            }
+        })
+
+        // 타이머 수정 시
+        // 프론트쪽에서 시간 값을 비교해서 변경했으면 count를 0으로 변경해서 setschedule 다시 호출 
+        const timers = await Timer.bulkCreate(modefiedList)
+        await setSchedules()
+
+    } catch(error) {
+        console.log(error)
+        next(error)
+    }
+}
+
+async function deleteSchedule(req, res, next) {
+    const id = req.params.id
+
+    try {
+        const schedule = await Schedule.destroy({
+            where: {
+                id
+            }
+        })
+
+        // schedule 목록에 있는 Timer id로 검색 후 삭제
+    } catch(error) {
+        console.log(error)
+        next(error)
+    }
 }
 
 /**
@@ -128,5 +167,7 @@ async function scheduleDetail(req, res, next) {
 router.get('/', isLoggedIn, getSchedules)
 router.get('/:id', isLoggedIn, getSchedule)
 router.post('/', isLoggedIn, createSchedule)
+router.patch('/:id', isLoggedIn, updateSchedule)
+router.delete('/:id', isLoggedIn, deleteSchedule)
 
 export default router
