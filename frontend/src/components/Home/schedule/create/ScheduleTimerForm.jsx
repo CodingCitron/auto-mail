@@ -99,6 +99,8 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
 
     const timeFormat = useCallback(time => {
         if(!time) return 
+        if(typeof time === 'string') time = new Date(time)
+        
         const hour = time.getHours()
         const min = time.getMinutes()
 

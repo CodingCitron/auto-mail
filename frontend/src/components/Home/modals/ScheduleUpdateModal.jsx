@@ -8,7 +8,7 @@ ReactModal.setAppElement('#root')
 
 // react modal style
 // https://reactcommunity.org/react-modal/styles/
-const ScheduleUpdateModal = ({ onSubmit, onClose }) => {
+const ScheduleUpdateModal = ({ id, title, content, date, user, timers, onSubmit, onClose }) => {
   const ModalStyle = useMemo(() => ({
     overlay: {
       display: 'flex',
@@ -26,14 +26,20 @@ const ScheduleUpdateModal = ({ onSubmit, onClose }) => {
       overflow: 'initial'
     }
   }))
-
+  
   return (
     <>
       <ReactModal 
         isOpen
         style={ModalStyle}
       >
-          <ScheduleUpdate 
+          <ScheduleUpdate
+            id={id}
+            initTitle={title}
+            initContent={content}
+            initDate={date}
+            user={user}
+            timers={timers}
             onClose={onClose}
             onSubmit={onSubmit}
           />
@@ -42,4 +48,4 @@ const ScheduleUpdateModal = ({ onSubmit, onClose }) => {
   )
 }
 
-export default React.memo(ScheduleCreateModal)
+export default React.memo(ScheduleUpdateModal)

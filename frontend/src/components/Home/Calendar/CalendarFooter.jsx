@@ -5,7 +5,7 @@ import ScheduleCreateModal from '../modals/ScheduleCreateModal'
 const CalendarFooter = () => {
     const { openModal } = useModals()
 
-    const openPlanCreateView = useCallback(() => {
+    const openScheduleCreateView = useCallback(() => {
         // Component, props
         openModal (
             ScheduleCreateModal,
@@ -20,7 +20,7 @@ const CalendarFooter = () => {
   return (
     <div className='calendar-tool mt-2 flex items-start w-full'>
         <button 
-            onClick={openPlanCreateView}
+            onClick={openScheduleCreateView}
             className='btn-normal p-1 auto rounded-sm'
         >
             일정등록

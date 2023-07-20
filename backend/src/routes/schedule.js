@@ -120,6 +120,7 @@ async function updateSchedule(req, res, next) {
         const timers = await Timer.bulkCreate(modefiedList)
         await setSchedules()
 
+        res.status(200).send('success')
     } catch(error) {
         console.log(error)
         next(error)

@@ -1,7 +1,13 @@
 import React, { useCallback, useMemo } from 'react'
 import { useCalendarStore } from '../../../store/calendar'
+import useModals from '../../../hooks/useModal'
+
+import ScheduleUpdateModal from '../modals/ScheduleUpdateModal'
+import axios from 'axios'
 
 const DetailView = () => {
+    const { openModal } = useModals()
+
     const { schedule, deleteSchedule } = useCalendarStore(state => {
         return {
             schedule: state.selectedSchedule,
@@ -13,11 +19,32 @@ const DetailView = () => {
         return schedule ? schedule.content : null
     }, [schedule])
 
-    const updateHandler = useCallback(() => {
-        console.log(schedule)
+    const updateHandler = useCallback(async () => {
+        if(!schedule.id) return
+        
+        try {
+            const res = await axios.get(`/schedule/${schedule.id}`)
+            const { id, Timers, User, title, content, date } = res.data
+
+            openModal (
+                ScheduleUpdateModal,
+                {
+                    id,
+                    title,
+                    content,
+                    date,
+                    user: User.email,
+                    timers: Timers,
+                }
+            )
+        } catch (error) {
+            console.log(error)
+        }
     }, [schedule])
 
     const deleteHandler = useCallback(async () => {
+        if(!schedule.id) return
+
         deleteSchedule(schedule)
     }, [schedule])
 

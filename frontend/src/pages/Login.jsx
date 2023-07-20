@@ -8,7 +8,7 @@ import useInput from '../hooks/useInput'
 const Login = () => {
   const [email, setEmail] = useInput('')
   const [password, setPassword] = useInput('')
-  const [errors, setErrors] = useInput('')
+  const [errors, setErrors] = useState('')
 
   // const navigate = useNavigate()
   const { login } = useAuthStore(state => state)

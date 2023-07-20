@@ -14,7 +14,7 @@ export default () => {
             })
 
             if(!user) {
-                return done(null, false, { reason: '존재하지 않는 사용자입니다.' }) 
+                return done(null, false, { email: '존재하지 않는 사용자입니다.' }) 
             }
 
             const result = await bcrypt.compare(password, user.password)
@@ -23,7 +23,7 @@ export default () => {
                 return done(null, user)
             }
 
-            return done(null, false, { reason: '비밀번호가 틀렸습니다.' }) // 첫 번째 매개변수 서버 에러
+            return done(null, false, { password: '비밀번호가 틀렸습니다.' }) // 첫 번째 매개변수 서버 에러
         } catch (error) {
             return done(error)
         }

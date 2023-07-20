@@ -28,7 +28,7 @@ const Schedule = (sequelize, DataTypes, option) => {
 
 	Schedule.associate = (db) => {
         db.Schedule.belongsTo(db.User, { foreignKey: 'writer_id', targetKey: 'id', onDelete: 'cascade' })
-		db.Schedule.hasMany(db.Timer, { foreignKey: 'creater_id', sourceKey: 'id' })
+		db.Schedule.hasMany(db.Timer, { foreignKey: 'schedule_id', sourceKey: 'id' })
 	};
 
 	return Schedule;

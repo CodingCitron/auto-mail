@@ -41,7 +41,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         }
 
         if(clientError) {
-            return res.status(401).status(clientError.reason) // 401 허가되지 않은 에러
+            return res.status(401).json(clientError) // 401 허가되지 않은 에러
         }
 
         return req.login(user, async (loginErr) => {
