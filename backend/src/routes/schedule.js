@@ -11,7 +11,7 @@ async function getSchedule(req, res, next) {
     const id = req.params.id
 
     try {
-        const schedules = await Schedule.findOne({
+        const schedule = await Schedule.findOne({
             where: {
                 id,
                 writer_id: req.user.id,
@@ -27,7 +27,7 @@ async function getSchedule(req, res, next) {
             ],
         })
 
-        res.status(200).json(schedules)
+        res.status(200).json(schedule)
     } catch (error) {
         console.log(error)
         next(error)
@@ -105,7 +105,7 @@ async function updateSchedule(req, res, next) {
     const { title, content, startDate, endDate, date, scheduleList } = req.body
 
     try {
-        const schedule = await Schedule.update({
+        const updateSchedule = await Schedule.update({
             title,
             content,
             date,
@@ -115,12 +115,54 @@ async function updateSchedule(req, res, next) {
             }
         })
 
+        // 삭제 목록
+        const removeist = scheduleList.filter(item => item.isDelete === true)
+        .map(item => item.id)
+
+        // 수정 목록
+        const modefiedList = scheduleList.filter(item => item.isDelete !== true)
+        .map(item => {
+            return {
+                id: item.id,
+                date: item.date,
+                time: item.time,
+                type: item.type,
+                count: item.count,
+            }
+        })
+
+        // console.log(removeist)
+        await Timer.destroy({
+            where: {
+                id: removeist
+            }
+        })
+
+        // console.log(modefiedList)
         // 타이머 수정 시
         // 프론트쪽에서 시간 값을 비교해서 변경했으면 count를 0으로 변경해서 setschedule 다시 호출 
-        const timers = await Timer.bulkCreate(modefiedList)
+        const timers = await Timer.bulkCreate(modefiedList, {
+            updateOnDuplicate: ['id'] 
+        })
         await setSchedules()
 
-        res.status(200).send('success')
+        const schedule = await Schedule.findOne({
+            where: {
+                id,
+                writer_id: req.user.id,
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: ['email']
+                },
+                {
+                    model: Timer,
+                }
+            ],
+        })
+
+        res.status(200).send(schedule)
     } catch(error) {
         console.log(error)
         next(error)

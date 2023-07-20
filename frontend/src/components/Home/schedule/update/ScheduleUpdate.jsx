@@ -6,11 +6,10 @@ import useInput from '../../../../hooks/useInput'
 
 import ScheduleCreateHeader from '../create/ScheduleCreateHeader'
 import ScheduleContentForm from '../create/ScheduleContentForm'
-import ScheduleTimerForm from '../create/ScheduleTimerForm'
+import ScheduleTimerForm from './ScheduleTimerForm'
 import ScheduleCreateFooter from '../create/ScheduleCreateFooter'
 
 const ScheduleUpdate = ({ onClose, onSubmit, id, initTitle, initContent, initDate, user, timers }) => {
-  console.log(timers)
     const [title, setTitle] = useInput(initTitle)
     const [content, setContent] = useState(initContent)
     const [date, setDate] = useState(new Date(initDate))
@@ -19,10 +18,18 @@ const ScheduleUpdate = ({ onClose, onSubmit, id, initTitle, initContent, initDat
     const scheduleNextID = useRef(0)
 
     const memorizedKo = useMemo(() => ko, [])
-    const setSchedule = useCalendarStore(state => state.setSchedule)
+    const updateSchedule = useCalendarStore(state => state.updateSchedule)
 
     const removeSchedule = useCallback((data) => {
-      const list = scheduleList.filter(item => item.id !== data.id)
+      // const list = scheduleList.filter(item => item.id !== data.id)
+      const list = scheduleList.map(item => {
+        if(item.id === data.id) {
+          item.isDelete = true
+        } 
+
+        return item
+      })
+
       setScheduleList([...list])
     }, [scheduleList])
 
@@ -36,7 +43,8 @@ const ScheduleUpdate = ({ onClose, onSubmit, id, initTitle, initContent, initDat
               date: scheduleList[i].date,
               time: scheduleList[i].time,
               type: scheduleList[i].type,
-              count: scheduleList[i].count
+              count: scheduleList[i].count,
+              isDelete: scheduleList[i].isDelete,
             }
           )
         }
@@ -51,7 +59,10 @@ const ScheduleUpdate = ({ onClose, onSubmit, id, initTitle, initContent, initDat
 
             res.data.date = new Date(res.data.date) 
 
-            setSchedule(res.data)
+            // index 같으면 교체 
+            updateSchedule(res.data)
+
+            // 다르면 변경할 필요 없음
             return onSubmit()
         } catch (error) {
             console.log(error)

@@ -26,6 +26,11 @@ const DetailView = () => {
             const res = await axios.get(`/schedule/${schedule.id}`)
             const { id, Timers, User, title, content, date } = res.data
 
+            const timers = Timers.map(item => {
+                item.isDelete = null
+                return item
+            })
+
             openModal (
                 ScheduleUpdateModal,
                 {
@@ -34,7 +39,7 @@ const DetailView = () => {
                     content,
                     date,
                     user: User.email,
-                    timers: Timers,
+                    timers
                 }
             )
         } catch (error) {

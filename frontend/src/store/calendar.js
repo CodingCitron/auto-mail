@@ -203,6 +203,17 @@ const createCalendarStore = () => {
         }
     }
 
+    async function updateSchedule(data, set, get) {
+        set(state => ({
+            ...state,
+            selectedSchedule: {
+                ...data,
+                user: data.User.email,
+                timers: [...data.Timers],
+            }
+        }))
+    }
+
     return create((set, get) => ({
         ...DEFAULT_PROPS,
         ...initProps(),
@@ -216,7 +227,7 @@ const createCalendarStore = () => {
         getSchedules: () => get().list,
         setSchedule: data => setSchedule(data, set, get),
         deleteSchedule: data => deleteSchedule(data, set, get),
-        updateSchedule: () => set((state) => {}),
+        updateSchedule: data => updateSchedule(data, set, get),
 
         /* selected schedule */
         selectDay: (index) => selectDay(index, set, get),
