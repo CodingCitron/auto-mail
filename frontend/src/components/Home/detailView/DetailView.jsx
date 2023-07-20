@@ -1,9 +1,13 @@
 import React, { useCallback, useMemo } from 'react'
 import { useCalendarStore } from '../../../store/calendar'
-import axios from 'axios'
 
 const DetailView = () => {
-    const schedule = useCalendarStore(state => state.selectedSchedule)
+    const { schedule, deleteSchedule } = useCalendarStore(state => {
+        return {
+            schedule: state.selectedSchedule,
+            deleteSchedule: state.deleteSchedule 
+        }
+    })
 
     const content = useMemo(() => {
         return schedule ? schedule.content : null
@@ -13,15 +17,9 @@ const DetailView = () => {
         console.log(schedule)
     }, [schedule])
 
-    const removeHandler = useCallback(async () => {
-        console.log(schedule)
-        try {
-            
-        } catch (error) {
-            console.log(error)
-        }
+    const deleteHandler = useCallback(async () => {
+        deleteSchedule(schedule)
     }, [schedule])
-
 
   return (
     <section className='flex-1 border p-1'>
@@ -31,7 +29,7 @@ const DetailView = () => {
             </div>
             <div className='flex gap-1'>
                 <button onClick={updateHandler}>수정</button>
-                <button onClick={removeHandler}>삭제</button>
+                <button onClick={deleteHandler}>삭제</button>
             </div>
         </h4>
         <div dangerouslySetInnerHTML={{ __html: content }}>

@@ -2,7 +2,7 @@ import { Router } from "express";
 import { isLoggedIn } from "../middlewares/auth.js";
 import { Schedule, User, Timer } from "../models/index.js";
 import { and, or, Op } from "sequelize";
-import { setSchedules } from "../schedule.js";
+import { setSchedules, deleteScheduleInList } from "../schedule.js";
 // 시퀄라이즈: https://velog.io/@jujube0/Sequelize-%EB%AC%B8%EC%A0%9C%ED%95%B4%EA%B2%B0
 
 const router = Router()
@@ -137,6 +137,8 @@ async function deleteSchedule(req, res, next) {
         })
 
         // schedule 목록에 있는 Timer id로 검색 후 삭제
+        deleteScheduleInList(id)
+        res.status(200).send('success')
     } catch(error) {
         console.log(error)
         next(error)

@@ -8,7 +8,15 @@ const DEFAULT_PROPS = {
     day: null,
     list: [], 
     selectedDay: null, /* 선택된 Day */
-    selectedSchedule: null /* 선택된 schedule 정보 */
+    selectedSchedule: {
+        /* 선택된 schedule 정보 */
+        id: null,
+        index: null,
+        Timers: [],
+        title: null,
+        user: null,
+        content: null
+    } 
 }
 
 const initProps = () => {
@@ -132,6 +140,9 @@ const createCalendarStore = () => {
                 selectedDay: {
                     ...state.list[index],
                     schedules: [...state.list[index].schedules]
+                },
+                selectedSchedule: {
+                    ...DEFAULT_PROPS.selectedSchedule
                 }
             }
         })
@@ -139,7 +150,7 @@ const createCalendarStore = () => {
 
     async function selectSchedule(info, set, get) {
         selectDay(info.index, set, get)
-
+        
         try {
             const res = await axios.get(`/schedule/${info.id}`)
             const data = res.data
@@ -149,11 +160,44 @@ const createCalendarStore = () => {
                 selectedSchedule: {
                     ...data,
                     user: data.User.email,
-                    timers: [...data.Timers]
+                    timers: [...data.Timers],
+                    index: info.index
                 }
             }))
 
             // console.log(get())
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function deleteSchedule(data, set, get) {
+        console.log(data)
+        try {
+            const res = await axios.delete(`/schedule/${data.id}`)
+            
+            return set(state => {
+                const filterd = state.list[data.index].schedules.filter(schedule => schedule.id !== data.id)
+
+                const list = state.list.map(item => item.index === data.index ? 
+                    { ...item, schedules: [...filterd]  } 
+                    : item
+                )
+                
+                let selectedSchedule = state.selectedSchedule
+
+                if(selectedSchedule.id === data.id) { // 선택된거가 삭제된 거라면 초기화
+                    selectedSchedule = DEFAULT_PROPS.selectedSchedule
+                }
+                    
+                return {
+                    ...state,
+                    list,
+                    selectedSchedule: {
+                        ...selectedSchedule
+                    }
+                }
+            })
         } catch (error) {
             console.log(error)
         }
@@ -171,7 +215,7 @@ const createCalendarStore = () => {
         /* schedule crud */
         getSchedules: () => get().list,
         setSchedule: data => setSchedule(data, set, get),
-        removeSchedule: () => set((state) => {}),
+        deleteSchedule: data => deleteSchedule(data, set, get),
         updateSchedule: () => set((state) => {}),
 
         /* selected schedule */

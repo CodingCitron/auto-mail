@@ -205,6 +205,14 @@ const setSchedule = async (data, callback) => {
     }
 }
 
+const deleteScheduleInList = (id) => {
+    const index = scheduleList.findIndex(schedule => schedule.id === id)
+    
+    if(index !== -1) {
+        cancelSchedule(scheduleList.splice(index, 1))
+    }
+}
+
 const cancelSchedule = (job, callback) => {
     job.cancel()
 }
@@ -215,4 +223,5 @@ export {
     setSchedule,
     setSchedules,
     cancelSchedule,
+    deleteScheduleInList
 }
