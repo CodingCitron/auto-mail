@@ -5,7 +5,7 @@ const InputGroup = ({ className, type, name, placeholder, value, error, setValue
     <div className={className}>
       <input
           type={type}
-          className='w-full p-2  border border-[#999]'    
+          className='w-full p-2  border border-[#999] outline-none'    
           placeholder={placeholder}
           value={value}
           name={name}

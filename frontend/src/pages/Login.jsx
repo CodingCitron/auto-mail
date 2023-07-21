@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import InputGroup from '../components/common/InputGroup'
 import axios from 'axios'
@@ -6,20 +6,19 @@ import { useAuthStore } from '../store/auth'
 import useInput from '../hooks/useInput'
 
 const Login = () => {
-  const [email, setEmail] = useInput('')
-  const [password, setPassword] = useInput('')
   const [errors, setErrors] = useState('')
 
   // const navigate = useNavigate()
   const { login } = useAuthStore(state => state)
 
-  const onSubmit = async (e) => {
+  const onSubmit = useCallback(async (e) => {
     e.preventDefault()
+    const { email, password } = e.currentTarget
 
     try {
       const res = await axios.post('/user/login', {
-        email,
-        password,
+        email: email.value,
+        password: password.value,
       })
 
       login(res.data)
@@ -28,8 +27,18 @@ const Login = () => {
       console.error(error)
       setErrors(error.response.data || {})
     }
-  }
-  
+  }, [errors])
+
+  const missingCredential = useMemo(() => {
+    if(!errors.message) return
+
+    return (
+      <small className='fopt-medium text-red-500 mt-2'>
+        { errors.message }
+      </small>
+    )
+  }, [errors])
+
   return (
     <main className='center flex-1 flex-col'>
       <div className='w-[400px]'>
@@ -39,8 +48,6 @@ const Login = () => {
               className="mb-2" 
               type="email" 
               name="email"
-              value={email}
-              setValue={setEmail} 
               error={errors.email}
               placeholder="이메일" 
             />
@@ -48,14 +55,13 @@ const Login = () => {
               className="mb-2" 
               type="password" 
               name="password"
-              value={password}
-              setValue={setPassword} 
               error={errors.password}
               placeholder="비밀번호" 
             />
             <button className='btn-normal mb-2 p-2'>로그인</button>
             <Link to="/" className='btn-normal p-2'>취소</Link>
         </form>
+        { missingCredential }
       </div>
     </main>
   )
