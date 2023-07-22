@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import axios from 'axios'
 import InputGroup from '../components/common/InputGroup'
 import { Link, useNavigate } from 'react-router-dom'
@@ -13,21 +13,19 @@ const Wrapper = styled.main`
 `
 
 const Register = () => {
-  const [email, setEmail] = useInput('')
-  const [password, setPassword] = useInput('')
-  const [confirmPassword, setConfirmPassword] = useInput('')
   const [errors, setErrors] = useState({})
 
   const navigate = useNavigate()
 
-  const onSubmit = async (e) => {
+  const onSubmit = useCallback(async (e) => {
     e.preventDefault()
+    const { email, password, confirmPassword } = e.currentTarget 
 
     try {
       const res = await axios.post('/user/register', {
-        email,
-        password,
-        confirmPassword
+        email: email.value,
+        password: password.value,
+        confirmPassword: confirmPassword.value
       })
 
       // console.log(res)
@@ -36,7 +34,7 @@ const Register = () => {
       console.error(error)
       setErrors(error.response.data || {})
     }
-  }
+  }, [errors])
 
   return (
     <Wrapper className='center flex-1 flex-col'>
@@ -47,8 +45,6 @@ const Register = () => {
             className="mb-2" 
             type="email"
             name="email" 
-            value={email}
-            setValue={setEmail} 
             error={errors.email}
             placeholder="이메일" 
           />
@@ -56,8 +52,6 @@ const Register = () => {
             className="mb-2" 
             type="password"
             name="password" 
-            value={password}
-            setValue={setPassword} 
             error={errors.password}
             placeholder="비밀번호" 
           />
@@ -65,8 +59,6 @@ const Register = () => {
             className="mb-2" 
             type="password"
             name="confirmPassword" 
-            value={confirmPassword}
-            setValue={setConfirmPassword} 
             error={errors.confirmPassword}
             placeholder="비밀번호 확인" 
           />
