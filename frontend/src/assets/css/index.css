@@ -1,17 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 14px;
+    font-family: 'Pretendard', sans-serif;
+    font-size: var(--font-size-base);
 }
 
 .center {
@@ -20,66 +21,52 @@ body {
     align-items: center;
 }
 
-.base-layout {
+/*
+기본 모드
+다크 모드
+참조: https://www.youtube.com/watch?v=oMOe_32M6ss
+참조: https://19-97.tistory.com/159
+*/
+.negative {
+    color: var(--negative);
+}
+
+/* login-page */
+.login-page {
+    @apply  flex items-center flex-1 mx-auto;
+}
+
+.login-page-inner {
+    @apply w-[400px];
+}
+/* login-page */
+
+.home-page {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.home-page-sidebar {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    background-color: var(--gray-800);
+    color: var(--secondary);
+    width: 3rem;
+    min-width: 3rem;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    height: 60px;
-    /* border-bottom: 1px solid black; */
-    background-color: rgb(26, 26, 26);
-    color: white;
-}
-
-.header .title {
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.header .inner-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    margin: 0 auto;
-}
-
-.header .inner-header .right {
-    display: flex;
-    gap: 16px;
-}
-
-.header .inner-header,
-.footer .inner-footer,
-.schedule-detail {
-    max-width: 1200px;
-    width: 100%;
-    padding: 0 32px;
-}
-
-.input {
-    width: 100%;
-    border: 1px solid black;
-}
-
-.modal-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.home-page-sidebar .sidebar-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, .3);
+    width: 100%;
+    height: 45px;
+    font-size: 30px;
+    transition: background 0.2s ease-in-out;
 }
 
-.schedule-detail {
-    display: flex;
-    margin-top: 16px;
-    gap: 16px;
+.home-page-sidebar .sidebar-button.active,
+.home-page-sidebar .sidebar-button:hover {
+    background-color: var(--gray-600);
 }

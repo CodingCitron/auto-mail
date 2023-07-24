@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import InputGroup from '../components/common/InputGroup'
 import axios from 'axios'
 import { useAuthStore } from '../store/auth'
-import useInput from '../hooks/useInput'
 
 const Login = () => {
   const [errors, setErrors] = useState('')
@@ -33,15 +32,15 @@ const Login = () => {
     if(!errors.message) return
 
     return (
-      <small className='fopt-medium text-red-500 mt-2'>
+      <small className='font-medium negative mt-2'>
         { errors.message }
       </small>
     )
   }, [errors])
 
   return (
-    <main className='center flex-1 flex-col'>
-      <div className='w-[400px]'>
+    <div className='login-page'>
+      <div className='login-page-inner'>
         <h3 className='w-full mb-3 font-semibold text-[18px]'>로그인</h3>
         <form onSubmit={onSubmit}>
           <InputGroup
@@ -58,12 +57,12 @@ const Login = () => {
               error={errors.password}
               placeholder="비밀번호" 
             />
-            <button className='btn-normal mb-2 p-2'>로그인</button>
+            <button className='btn-normal mb-2 p-2 w-full'>로그인</button>
             <Link to="/" className='btn-normal p-2'>취소</Link>
         </form>
         { missingCredential }
       </div>
-    </main>
+    </div>
   )
 }
 

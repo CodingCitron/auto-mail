@@ -1,13 +1,18 @@
 .calendar-wrap {
-    max-width: 1200px;
     width: 100%;
-    padding: 0 32px;
-    margin-top: 32px;
+    padding: 0 1rem;
+    margin-top: 1rem;
 }
 
 .calendar-wrap .title {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+}
+
+.calendar-wrap .title,
+.calendar-wrap .pagination {
+    height: 24px;
 }
 
 .calendar-wrap .title h3 {
@@ -25,26 +30,27 @@
 }
 
 .calendar-wrap .calendar {
-    margin-top: 16px;
+    margin-top: 8px;
     border-width: 1px;
+    color: var(--gray-700)
 }
 
 .calendar-wrap .calendar .week > div {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60px;
+    height: 32px;
     font-weight: 600;
-    color: #444
+    background-color: var(--gray-100);
 }
-
+/* 
 .calendar-wrap .calendar .week > div.sunday {
-    color: #222;
-}
-
+    color: var(--red-500);
+} */
+/* 
 .calendar-wrap .calendar .week > div.saturday {
     color: #222;
-}
+} */
 
 .calendar-wrap .calendar .date > div {
     height: 120px;

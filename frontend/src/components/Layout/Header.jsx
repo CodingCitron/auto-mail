@@ -31,7 +31,7 @@ const Header = () => {
               </Link>
             </h1>
         </div>
-        <div className='right'>
+        <div className='inner-header-right'>
           { user.isLogin ? (
             <>
               <button>{ user.email }</button>

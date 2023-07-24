@@ -41,26 +41,28 @@ const Calendar = () => {
 
   return (
     <>
-        <CalendarHeader 
-            year={year}
-            month={month}
-            day={day}
-            getDate={memorized.getDate}
-            setDate={memorized.setDate}
-            prev={memorized.prev}
-            next={memorized.next}
-        />
-        <CalendarMain className='calendar'>
-            <Week />
-            <Days 
+        <div className='calendar-wrap'>
+            <CalendarHeader 
                 year={year}
                 month={month}
-                selectDay={selectDay}
+                day={day}
+                getDate={memorized.getDate}
+                setDate={memorized.setDate}
+                prev={memorized.prev}
+                next={memorized.next}
             />
-        </CalendarMain>
-        <CalendarFooter 
-            setSchedule={memorized.setSchedule}
-        />
+            <CalendarMain className='calendar'>
+                <Week />
+                <Days 
+                    year={year}
+                    month={month}
+                    selectDay={selectDay}
+                />
+            </CalendarMain>
+            <CalendarFooter 
+                setSchedule={memorized.setSchedule}
+            />
+        </div>
     </>
   )
 }

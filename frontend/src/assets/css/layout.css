@@ -1,0 +1,49 @@
+/*
+    레이아웃 요소
+    헤더,
+    푸터,
+    메인 콘텐츠
+*/
+
+.base-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    /* border-bottom: 1px solid black; */
+    background-color: var(--gray-800);
+    color: var(--secondary);
+}
+
+.header .title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.header .inner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.header .inner-header .inner-header-right {
+    display: flex;
+    gap: 1rem;
+}
+/* footer */
+
+.contents-layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
