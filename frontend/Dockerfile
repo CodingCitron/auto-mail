@@ -1,4 +1,4 @@
-FROM node:16 as builder
+FROM node:18 as builder
 
 RUN mkdir -p /usr/src/app
 RUN chmod -R 777 /usr/src/app
