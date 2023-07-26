@@ -8,7 +8,7 @@ import BaseLayout from "./layouts/BaseLayout"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Reigster from './pages/Register'
-import Modals from './components/common/Modals'
+import Modals from './components/common/Modals.jsx'
 
 const PrivateRoute = ({ children }) => {
   const user = useAuthStore(state => state.user)
