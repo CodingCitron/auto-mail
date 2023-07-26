@@ -9,9 +9,13 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Reigster from './pages/Register'
 import Modals from './components/common/Modals.jsx'
+import { useModalStore } from "./store/modal"
+import ScheduleDetail from './pages/ScheduleDetail'
+import ScheduleList from './pages/ScheduleList'
 
 const PrivateRoute = ({ children }) => {
   const user = useAuthStore(state => state.user)
+  const modals = useModalStore(state => state)
 
   if (!user.isLogin) {
     return <Navigate to="/login" replace />
@@ -51,13 +55,30 @@ function App() {
     loadUser()
   }, [])
 
+  // https://www.robinwieruch.de/react-router-private-routes/
   return (
     <>
       <BaseLayout>
         <Routes>
-          <Route path="/" element={
+          <Route 
+            path="/" 
+            element={
             <PrivateRoute>
               <Home />
+            </PrivateRoute>
+          } />
+          <Route 
+            path="/detail/:id" 
+            element={
+            <PrivateRoute>
+              <ScheduleDetail />
+            </PrivateRoute>
+          } />
+          <Route 
+            path="/list" 
+            element={
+            <PrivateRoute>
+              <ScheduleList />
             </PrivateRoute>
           } />
           <Route 

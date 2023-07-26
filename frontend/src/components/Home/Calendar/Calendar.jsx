@@ -6,12 +6,6 @@ import CalendarHeader from './CalendarHeader'
 import CalendarFooter from './CalendarFooter'
 import Week from './Week'
 import Days from './Days'
-import { styled } from 'styled-components'
-
-const CalendarMain = styled.div`
-    margin-top: 16px;
-    border-width: 1px;
-`
 
 // https://im-designloper.tistory.com/87
 const Calendar = () => {
@@ -51,14 +45,14 @@ const Calendar = () => {
                 prev={memorized.prev}
                 next={memorized.next}
             />
-            <CalendarMain className='calendar'>
+            <div className='calendar'>
                 <Week />
                 <Days 
                     year={year}
                     month={month}
                     selectDay={selectDay}
                 />
-            </CalendarMain>
+            </div>
             <CalendarFooter 
                 setSchedule={memorized.setSchedule}
             />

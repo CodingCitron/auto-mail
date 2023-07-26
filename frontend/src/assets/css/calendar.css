@@ -1,22 +1,31 @@
 .calendar-wrap {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     padding: 0 1rem;
-    margin-top: 1rem;
+    margin: 1rem 0;
 }
 
-.calendar-wrap .title {
+.calendar-wrap .calendar-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.calendar-wrap .title,
+.calendar-wrap .calendar-header,
 .calendar-wrap .pagination {
     height: 24px;
 }
 
-.calendar-wrap .title h3 {
+.calendar-wrap .calendar-header h3 {
     font-weight: 600;
+}
+
+.calendar-wrap .calendar {
+    flex: 1;
+    margin-top: 8px;
+    border-width: 1px;
+    color: var(--gray-700)
 }
 
 .calendar-wrap .calendar .week {
@@ -29,10 +38,9 @@
     grid-template-columns: repeat(7, 1fr);
 }
 
-.calendar-wrap .calendar {
-    margin-top: 8px;
-    border-width: 1px;
-    color: var(--gray-700)
+.calendar-wrap .calendar .date {
+    height: calc(100% - 32px);
+    grid-template-rows: repeat(6, 1fr);
 }
 
 .calendar-wrap .calendar .week > div {
@@ -53,7 +61,6 @@
 } */
 
 .calendar-wrap .calendar .date > div {
-    height: 120px;
     overflow: auto;
 }
 

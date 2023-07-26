@@ -10,7 +10,7 @@ const CalendarHeader = ({ year, month, day, prev, next, setDate }) => {
     // })
 
   return (
-    <header className='title'>
+    <header className='calendar-header'>
         <ReactDatePicker
             locale={ko}
             dateFormat="yyyy년 MM월"

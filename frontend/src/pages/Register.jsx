@@ -2,15 +2,6 @@ import React, { useCallback, useState } from 'react'
 import axios from 'axios'
 import InputGroup from '../components/common/InputGroup'
 import { Link, useNavigate } from 'react-router-dom'
-import useInput from '../hooks/useInput'
-import { styled } from 'styled-components'
-
-const Wrapper = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-`
 
 const Register = () => {
   const [errors, setErrors] = useState({})
@@ -37,7 +28,7 @@ const Register = () => {
   }, [errors])
 
   return (
-    <Wrapper className='center flex-1 flex-col'>
+    <main className='register-page'>
       <div className='w-[400px]'>
       <h3 className='w-full mb-3 font-semibold text-[18px]'>회원가입</h3>
         <form onSubmit={onSubmit}>
@@ -62,11 +53,11 @@ const Register = () => {
             error={errors.confirmPassword}
             placeholder="비밀번호 확인" 
           />
-          <button className='btn-normal mb-2 p-2'>가입하기</button>
+          <button className='btn-normal mb-2 p-2 w-full'>가입하기</button>
           <Link to='/'className='btn-normal p-2'>취소</Link>
         </form>
       </div>
-    </Wrapper>
+    </main>
   )
 }
 

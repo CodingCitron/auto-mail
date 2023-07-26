@@ -1,11 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { styled } from 'styled-components'
 import ReactDatePicker from 'react-datepicker'
 import useInput from '../../../../hooks/useInput'
-
-const AlarmWrap = styled.div`
-  margin-top: 12px;
-`
 
 const checkList = [
     {
@@ -132,7 +127,7 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
     }, [scheduleList])
 
   return (
-    <AlarmWrap>
+    <div className='mt-[12px]'>
         <div>
             <div>
                 <h3>알람 설정</h3> {/* 추후에 로컬 프로그램으로 개발해서 알람 기능 구현 생각 */}
@@ -197,7 +192,7 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
                 </div>
             </div>
         </div>
-    </AlarmWrap>
+    </div>
   )
 }
 

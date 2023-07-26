@@ -41,6 +41,10 @@ body {
 }
 /* login-page */
 
+.register-page {
+    @apply flex flex-col items-center justify-center flex-1; 
+}
+
 .home-page {
     display: flex;
     flex: 1;

@@ -1,13 +1,12 @@
 import React from 'react'
-import Calendar from '../components/home/calendar/Calendar'
 import HomeLaytout from '../layouts/HomeLaytout'
 
-const Home = () => {
+const ScheduleDetail = () => {
   return (
     <HomeLaytout>
-      <Calendar />
+      <div>ScheduleDetail</div>
     </HomeLaytout>
   )
 }
 
-export default React.memo(Home)
+export default ScheduleDetail
