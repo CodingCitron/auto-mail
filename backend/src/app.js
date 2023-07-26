@@ -24,7 +24,7 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url))
 dotenv.config({ path: path.join(__dirname, '..', '.env') })
 
 const app = express() // express 서버를 생성
-const origin = `http://localhost:3000` 
+const origin = `http://localhost:4000` 
 passportConfig()
 
 app.use(cors({
