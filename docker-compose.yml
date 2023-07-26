@@ -24,7 +24,7 @@ services:
   express:
     build:
       context: ./backend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     volumes:

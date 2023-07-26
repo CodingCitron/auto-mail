@@ -15,3 +15,6 @@ jobs:
 
       - name: Build the Docker image
         run: docker-compose up --build
+      
+      - name: docker compose down
+        run: docker-compose down
