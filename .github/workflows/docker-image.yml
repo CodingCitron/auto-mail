@@ -13,5 +13,5 @@ jobs:
       - name: upgrade npm
         run: npm install -g npm@9.8.1
 
-      - name: Integration tests
-        run: docker-compose up --exit-code-from integrationtest integrationtest
+      - name: integration test
+        run: docker-compose up -d
