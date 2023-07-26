@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -13,8 +13,5 @@ jobs:
       - name: upgrade npm
         run: npm install -g npm@9.8.1
 
-      - name: Build the Docker image
-        run: docker-compose up --build
-      
-      - name: docker compose down
-        run: docker-compose down
+      - name: Integration tests
+        run: docker-compose up --exit-code-from integrationtest integrationtest
