@@ -1,10 +1,10 @@
 import { create } from 'zustand'
 
 const DEFAULT_PROPS = {
-    list: []
+    modals: []
 }
 
-const store = (set) => ({
+const store = (set, get) => ({
     ...DEFAULT_PROPS
 })
 

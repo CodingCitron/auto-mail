@@ -21,6 +21,13 @@ body {
     align-items: center;
 }
 
+/* ...처리 */
+.text-elipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /*
 기본 모드
 다크 모드

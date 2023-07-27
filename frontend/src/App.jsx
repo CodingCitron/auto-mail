@@ -15,7 +15,6 @@ import ScheduleList from './pages/ScheduleList'
 
 const PrivateRoute = ({ children }) => {
   const user = useAuthStore(state => state.user)
-  const modals = useModalStore(state => state)
 
   if (!user.isLogin) {
     return <Navigate to="/login" replace />
@@ -36,6 +35,7 @@ const PublicRoute = ({ children }) => {
 
 function App() {
   const { login } = useAuthStore(state => state)
+  const { modals } = useModalStore(state => state)
 
   useEffect(() => {
     async function loadUser () {
