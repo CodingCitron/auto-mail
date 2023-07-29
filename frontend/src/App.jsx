@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 import { useAuthStore } from "./store/auth"
 import axios from "axios"
@@ -9,7 +9,6 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Reigster from './pages/Register'
 import Modals from './components/common/Modals.jsx'
-import { useModalStore } from "./store/modal"
 import ScheduleDetail from './pages/ScheduleDetail'
 import ScheduleList from './pages/ScheduleList'
 
@@ -35,7 +34,6 @@ const PublicRoute = ({ children }) => {
 
 function App() {
   const { login } = useAuthStore(state => state)
-  const { modals } = useModalStore(state => state)
 
   useEffect(() => {
     async function loadUser () {

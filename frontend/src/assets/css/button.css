@@ -4,3 +4,17 @@
     color: white;
     text-align: center;
 }
+
+.btn-normal-white {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.modal__icon-color {
+    color: var(--gray-500);
+}
+
+.modal__icon-color:hover {
+    color: initial;
+}

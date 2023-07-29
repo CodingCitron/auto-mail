@@ -9,7 +9,7 @@ import ScheduleContentForm from './ScheduleContentForm'
 import ScheduleTimerForm from './ScheduleTimerForm'
 import ScheduleCreateFooter from './ScheduleCreateFooter'
 
-const ScheduleCreate = ({ onClose, onSubmit }) => {
+const ScheduleCreate = ({ onClose }) => {
     const [title, setTitle] = useInput('')
     const [content, setContent] = useState('')
     const [date, setDate] = useState(new Date())
@@ -54,7 +54,7 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
             res.data.date = new Date(res.data.date) 
 
             setSchedule(res.data)
-            return onSubmit()
+            return onClose()
         } catch (error) {
             console.log(error)
             // 생성 안됨
@@ -73,7 +73,7 @@ const ScheduleCreate = ({ onClose, onSubmit }) => {
         <ScheduleCreateHeader 
           handleClickCancel={handleClickCancel}
         />
-        <div className='mt-4'>
+        <div className='scheduleModal__main'>
           <ScheduleContentForm
             title={title}
             setTitle={setTitle}

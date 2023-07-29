@@ -1,17 +1,13 @@
 import React, { useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import useModals from '../../../hooks/useModal'
 import ScheduleCreateModal from '../modals/ScheduleCreateModal'
+import { useModalStore } from '../../../store/modal'
 
 const Sidebar = () => {
-    const { openModal } = useModals()
+    const { open } = useModalStore(state => state)
 
     const openScheduleCreateView = useCallback(() => {
-        // Component, props
-        openModal (
-            ScheduleCreateModal,
-            {}
-        )
+        open(ScheduleCreateModal, {})
     }, [])
 
   return (

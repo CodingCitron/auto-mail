@@ -81,3 +81,64 @@ body {
 .home-page-sidebar .sidebar-button:hover {
     background-color: var(--gray-600);
 }
+
+/* schedule-create-modal */
+.scheduleModal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px 0px;
+    border-radius: 8px 8px 0 0;
+}
+
+.scheduleModal__header-title {
+    font-weight: 600;
+    font-size: 20px;
+} 
+
+.scheduleModal__main {
+    margin-top: 16px;
+    padding: 0 16px;
+    font-size: 16px;
+} 
+
+.scheduleModal__main input {
+    background-color: var(--secondary);
+    border: initial;
+    border-radius: 4px;
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+    outline: none;
+    padding: 6px 8px;
+}
+
+.scheduleModal__main input[type="checkbox"] {
+    box-shadow: initial;
+}
+
+.scheduleModal__main .quill {
+    background-color: var(--secondary);
+    border-radius: 4px;
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.scheduleModal__main .quill .ql-container.ql-snow,
+.scheduleModal__main .quill .ql-toolbar.ql-snow {
+    border: initial;
+}
+
+.scheduleModal__main .react-datepicker-wrapper {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.scheduleModal__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 8px;
+    padding: 24px 16px;
+    background-color: var(--secondary);
+    border-radius: 0 0 8px 8px;
+    font-size: 16px;
+}
+/* schedule-create-modal */

@@ -95,9 +95,9 @@ const ScheduleContentForm = ({ title, setTitle, date, setDate, content, setConte
   return (
     <>
         {/* 일정명, 일시 */}
-        <div className='mb-3'>
-            <div className='flex gap-4 mb-3'>
-                <h4 className='py-1 min-w-[50px] text-left'>일정명</h4>
+        <div className='mb-4'>
+            <div className='flex gap-4 mb-4'>
+                <h4 className='py-1 min-w-[50px] text-left font-semibold'>일정명</h4>
                 <input 
                     type='text'
                     value={title}
@@ -106,7 +106,7 @@ const ScheduleContentForm = ({ title, setTitle, date, setDate, content, setConte
                 />
             </div>
             <div className='flex gap-4'>
-                <h4 className='py-1 min-w-[50px] text-left'>일시</h4>
+                <h4 className='py-1 min-w-[50px] text-left font-semibold'>일시</h4>
                 <div className='flex-1 custom-datepicker'>
                     <ReactDatePicker
                         placeholder="일정 상세 작성"

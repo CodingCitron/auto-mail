@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import ReactModal from 'react-modal'
 import ScheduleCreate from '../schedule/create/ScheduleCreate'
+import { useModalStore } from '../../../store/modal'
 
 // 리액트 모달 에러
 // https://velog.io/@seungsang00/React-React-Modal
@@ -8,7 +9,9 @@ ReactModal.setAppElement('#root')
 
 // react modal style
 // https://reactcommunity.org/react-modal/styles/
-const ScheduleCreateModal = ({ onSubmit, onClose }) => {
+const ScheduleCreateModal = ({ id }) => {
+  const { close } = useModalStore(state => state)
+
   const ModalStyle = useMemo(() => ({
     overlay: {
       display: 'flex',
@@ -19,13 +22,18 @@ const ScheduleCreateModal = ({ onSubmit, onClose }) => {
     content: {
       position: 'relative',
       inset: 'initial',
-      // maxWidth: '400px',
-      padding: '12px 16px',
+      borderRadius: '8px',
+      padding: '0',
       maxWidth: '600px',
       width: '100%',
-      overflow: 'initial'
+      overflow: 'initial',
+      border: 'initial'
     }
-  }))
+  }), [])
+
+  const onClose = useCallback((callback) => {
+    close(id, callback)
+  }, [])
 
   return (
     <>
@@ -33,10 +41,11 @@ const ScheduleCreateModal = ({ onSubmit, onClose }) => {
         isOpen
         style={ModalStyle}
       >
-          <ScheduleCreate 
+        <div className='scheduleModal'>
+          <ScheduleCreate
             onClose={onClose}
-            onSubmit={onSubmit}
           />
+        </div>
       </ReactModal>
     </>
   )

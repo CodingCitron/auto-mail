@@ -172,7 +172,6 @@ const createCalendarStore = () => {
     }
 
     async function deleteSchedule(data, set, get) {
-        console.log(data)
         try {
             const res = await axios.delete(`/schedule/${data.id}`)
             

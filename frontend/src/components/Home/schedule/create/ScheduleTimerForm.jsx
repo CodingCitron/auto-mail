@@ -12,6 +12,7 @@ const checkList = [
         id: 1,
         name: '카카오톡',
         checked: false,
+        disabled: true
     }
 ]
 
@@ -38,23 +39,29 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
         )))
     }, [check])
 
-    const labelClickHandler = useCallback((id, index) => {
+    const labelClickHandler = useCallback((data, index) => {
+        if(data.disabled) return
+        
         checkEls.current[index].focus()
-        checkHandler(id)
+        checkHandler(data.id)
     }, [check])
 
     const checkElement = useMemo(() => (
         checkList.map((data, index) => (
-            <div key={data.id}>
+            <div 
+                key={data.id}
+                className='flex gap-1 w-1/2'
+            >
                 <input 
                     type='checkbox' 
                     selected 
                     value={data.name}
                     checked={check[index].checked}
                     ref={el => checkEls.current[index] = el}
-                    onChange={e => checkHandler(data.id)} 
+                    onChange={e => checkHandler(data.id)}
+                    disabled={data.disabled || false}
                 /><label 
-                    onClick={e => labelClickHandler(data.id, index)}
+                    onClick={e => labelClickHandler(data, index)}
                 >
                     {data.name}
                 </label>
@@ -108,19 +115,19 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
     }, [focus])
 
   return (
-    <div className='mt-[12px]'>
-        <div>
+    <div className='mt-4'>
+        <div className='mb-1'>
             <div>
-                <h3>알람 설정</h3> {/* 추후에 로컬 프로그램으로 개발해서 알람 기능 구현 생각 */}
+                <h3 className='font-semibold'>알람 설정</h3> {/* 추후에 로컬 프로그램으로 개발해서 알람 기능 구현 생각 */}
             </div>
             <div>
 
             </div>
         </div>
-        <div className='flex gap-[12px]'>
-            <div className='border flex-1'>
+        <div className='flex gap-4'>
+            <div className='flex-1'>
                 <ul>
-                    {
+                    {   scheduleList.length > 0 &&
                         scheduleList.map((data, index) => (
                             <li 
                                 key={index}
@@ -138,9 +145,17 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
                             </li>
                         ))
                     }
+                    {
+                        scheduleList.length === 0 &&
+                        (
+                            <li>
+                                생성된 알람이 없습니다.
+                            </li>
+                        )
+                    }
                 </ul>
             </div>  
-            <div className='border flex-1'>
+            <div className='flex-1'>
                 <ReactDatePicker
                     dateFormat="yyyy년 MM월 dd일"
                     className='p-1 border text-center w-full'
@@ -166,27 +181,31 @@ const ScheduleTimerForm = ({ scheduleList, setScheduleList, scheduleNextID, memo
                 <div>
                     { error.time }
                 </div>
-                <div>
-                    <label>횟수</label>
-                    <input 
-                        type="number"
-                        min="0"
-                        placeholder='횟수 0 = ∞'
-                        value={count}
-                        onChange={setCount}    
-                    />
+                <div className='mb-2'>
+                    <div className='flex justify-between'>
+                        <label className='center font-semibold'>횟수</label>
+                        <input 
+                            type="number"
+                            min="0"
+                            placeholder='횟수 0 = ∞'
+                            value={count}
+                            onChange={setCount}    
+                        />
+                    </div>
                     <div>
                         { error.count }
                     </div>
                 </div>
-                <div>
-                    { checkElement }
+                <div className='mb-2'>
+                    <div className='flex justify-between'>
+                        { checkElement }
+                    </div>
                     <div>
                         { error.check }
                     </div>
                 </div>
-                <div>
-                    <button onClick={addSchedule}>추가</button>
+                <div className='flex justify-end'>
+                    <button onClick={addSchedule}>알람 생성하기</button>
                 </div>
             </div>
         </div>

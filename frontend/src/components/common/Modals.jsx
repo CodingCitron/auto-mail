@@ -1,35 +1,20 @@
-import React, { useContext } from 'react'
-import { ModalDispatchContext, ModalStateContext } from '../../context/modal'
+import React from 'react'
+import { useModalStore } from '../../store/modal'
 
 const Modals = () => {
-    const openedModals = useContext(ModalStateContext)
-    const { close } = useContext(ModalDispatchContext)
+    const { modals } =  useModalStore(state => state)
 
-    return openedModals.map((modal, index) => {
+    return modals.map((modal, index) => {
         const { Component, props } = modal
-        const { onSubmit, ...restProps } = props
+        const { ...restProps } = props
 
-        const onClose = () => {
-            close(Component)
-        }
-
-        const handleSubmit = async () => {
-            if (typeof onSubmit === 'function') {
-              await onSubmit()
-            }
-
-            onClose()
-        }
-      
         return (
             <Component 
                 {...restProps}
                 key={index}
-                onClose={onClose}
-                onSubmit={handleSubmit}
             />
         )
     })
 }
 
-export default Modals
+export default React.memo(Modals)
