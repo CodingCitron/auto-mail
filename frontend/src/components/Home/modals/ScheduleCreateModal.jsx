@@ -9,7 +9,7 @@ ReactModal.setAppElement('#root')
 
 // react modal style
 // https://reactcommunity.org/react-modal/styles/
-const ScheduleCreateModal = ({ id }) => {
+const ScheduleCreateModal = ({ modalId }) => {
   const { close } = useModalStore(state => state)
 
   const ModalStyle = useMemo(() => ({
@@ -32,7 +32,7 @@ const ScheduleCreateModal = ({ id }) => {
   }), [])
 
   const onClose = useCallback((callback) => {
-    close(id, callback)
+    close(modalId, callback)
   }, [])
 
   return (

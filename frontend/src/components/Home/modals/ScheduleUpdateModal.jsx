@@ -25,7 +25,7 @@ const ScheduleUpdateModal = ({ id, title, content, date, user, timers, onSubmit,
       width: '100%',
       overflow: 'initial'
     }
-  }))
+  }), [])
   
   return (
     <>

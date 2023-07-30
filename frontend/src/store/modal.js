@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { create } from 'zustand'
 
 const DEFAULT_PROPS = {
@@ -16,27 +15,31 @@ function open(Component, props, set, get) {
             Component,  
             props: {
                 ...props,
-                id: nextId
+                modalId: nextId
             },
-            id: nextId
+            modalId: nextId
         }],
     }))
 }
 
-function close(id, callback, set, get) {
+function close(modalId, callback, set, get) {
     set(state => ({
         ...state,
         modals: [
-            ...state.modals.filter(modal => modal.id !== id)
+            ...state.modals.filter(modal => modal.modalId !== modalId)
         ]
     }))
 }
+
+// function getModalInfo (modalId, get) {
+
+// }
 
 const createModalStore = () => {
     return create((set, get) => ({
         ...DEFAULT_PROPS,
         open: (component, props) => open(component, props, set, get),
-        close: (id, callback) => close(id, callback, set, get)
+        close: (modalId, callback) => close(modalId, callback, set, get)
     }))
 }
 
