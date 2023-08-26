@@ -6,7 +6,7 @@
 - 로그인  
 ![image](https://github.com/CodingCitron/vue-to-do/assets/78482307/4cce0177-dfa2-43fc-b307-82e900fc977f)
 
-- 회원가입
+- 회원가입  
 ![image](https://github.com/CodingCitron/vue-to-do/assets/78482307/bc060bc5-912d-4f2a-a342-44ac5c9e480f)
 
 - 캘린더  
