@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "postgres",
-    "password": "postgres",
+    "password": "1234",
     "database": "postgres",
-    "host": "postgres",
+    "host": "localhost",
     "dialect": "postgres",
     "timezone": "+09:00"
   },

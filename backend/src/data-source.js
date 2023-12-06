@@ -2,7 +2,7 @@
 
 // import "reflect-metadata"
 // import { DataSource } from "typeorm"
-import { Sequelize } from 'sequelize'
+import { Sequelize } from "sequelize";
 
 // https://orkhan.gitbook.io/typeorm/docs/usage-with-javascript
 // const AppDataSource = new DataSource({
@@ -24,22 +24,21 @@ import { Sequelize } from 'sequelize'
 // export default AppDataSource
 
 // sequalize 공식: https://sequelize.org/docs/v6/getting-started/
-const sequelize = new Sequelize('postgres', 'postgres', 'postgres', {
-    host: 'postgres',
-    dialect: 'postgres' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-})
+const sequelize = new Sequelize("postgres", "postgres", "1234", {
+  host: "localhost:5432",
+  dialect:
+    "postgres" /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */,
+});
 
 async function connectToPostgres() {
-    try {
-        await sequelize.authenticate()
-        console.log('Connection has been established successfully.')
-        
-        return sequelize
-    } catch (error) {
-        console.error('Unable to connect to the database:', error)
-    }
+  try {
+    await sequelize.authenticate();
+    console.log("Connection has been established successfully.");
+
+    return sequelize;
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
 }
 
-export {
-    connectToPostgres
-}
+export { connectToPostgres };
